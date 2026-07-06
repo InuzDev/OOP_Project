@@ -1,4 +1,4 @@
-# Final Project of Object Oriented Programming [ ENG DOC ]
+# Final Project of Object Oriented Programming [ENG]
 
 ## Developers:
 - Mocaccino [Carlos David]
