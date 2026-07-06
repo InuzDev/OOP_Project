@@ -3,6 +3,7 @@
 ## Developers:
 - Mocaccino [Carlos David]
 - GACT0001-max [Gian]
+- MiguelanyeliOlivo [Miguelan Yeli]
 
 ## How to clone the repo and collaborate
 
