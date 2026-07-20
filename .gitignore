@@ -26,4 +26,4 @@ Thumbs.db
 *.log
 
 # Persisted data files generated at runtime (uncomment if you don't want to track these)
-# *.dat
+*.dat
