@@ -1,3 +1,3 @@
 # Logic Folder
 
-All the code here
+All the logic for the project in this directory code here
