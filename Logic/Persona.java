@@ -1,100 +1,104 @@
 package Logic;
 
 public abstract class Persona {
-	
-	protected static int contId = 1;
-	protected int numIdentificador;
-	protected String nombre;
-	protected String cedula;
-	protected String sexo; 
-	protected String numeroTelefono;
-	protected String correo;
-	protected String provincia;
-	protected boolean isEmpleada;
-	
-	public Persona(String nombre, String cedula, String sexo, String numeroTelefono, String correo, String provincia) {
-		this.numIdentificador = contId++;
-		this.nombre = nombre;
-		this.cedula = cedula;
-		this.sexo = sexo;
-		this.numeroTelefono = numeroTelefono;
-		this.correo = correo;
-		this.provincia = provincia;
-		this.isEmpleada = false;
-	}
 
-	public static int getContId() {
-		return contId;
-	}
+   protected static int contId = 1;
+   protected int numIdentificador;
+   protected String nombre;
+   protected String cedula;
+   protected String sexo;
+   protected String numeroTelefono;
+   protected String correo;
+   protected String provincia;
+   protected boolean isEmpleada;
 
-	public static void setContId(int contId) {
-		Persona.contId = contId;
-	}
+   public Persona(
+      String nombre,
+      String cedula,
+      String sexo,
+      String numeroTelefono,
+      String correo,
+      String provincia
+   ) {
+      this.numIdentificador = contId++;
+      this.nombre = nombre;
+      this.cedula = cedula;
+      this.sexo = sexo;
+      this.numeroTelefono = numeroTelefono;
+      this.correo = correo;
+      this.provincia = provincia;
+      this.isEmpleada = false;
+   }
 
-	public int getNumIdentificador() {
-		return numIdentificador;
-	}
+   public static int getContId() {
+      return contId;
+   }
 
-	public void setNumIdentificador(int numIdentificador) {
-		this.numIdentificador = numIdentificador;
-	}
+   public static void setContId(int contId) {
+      Persona.contId = contId;
+   }
 
-	public String getNombre() {
-		return nombre;
-	}
+   public int getNumIdentificador() {
+      return numIdentificador;
+   }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+   public void setNumIdentificador(int numIdentificador) {
+      this.numIdentificador = numIdentificador;
+   }
 
-	public String getCedula() {
-		return cedula;
-	}
+   public String getNombre() {
+      return nombre;
+   }
 
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
+   public void setNombre(String nombre) {
+      this.nombre = nombre;
+   }
 
-	public String getSexo() {
-		return sexo;
-	}
+   public String getCedula() {
+      return cedula;
+   }
 
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
+   public void setCedula(String cedula) {
+      this.cedula = cedula;
+   }
 
-	public String getNumeroTelefono() {
-		return numeroTelefono;
-	}
+   public String getSexo() {
+      return sexo;
+   }
 
-	public void setNumeroTelefono(String numeroTelefono) {
-		this.numeroTelefono = numeroTelefono;
-	}
+   public void setSexo(String sexo) {
+      this.sexo = sexo;
+   }
 
-	public String getCorreo() {
-		return correo;
-	}
+   public String getNumeroTelefono() {
+      return numeroTelefono;
+   }
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+   public void setNumeroTelefono(String numeroTelefono) {
+      this.numeroTelefono = numeroTelefono;
+   }
 
-	public String getProvincia() {
-		return provincia;
-	}
+   public String getCorreo() {
+      return correo;
+   }
 
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
+   public void setCorreo(String correo) {
+      this.correo = correo;
+   }
 
-	public boolean isEmpleada() {
-		return isEmpleada;
-	}
+   public String getProvincia() {
+      return provincia;
+   }
 
-	public void setEmpleada(boolean isEmpleada) {
-		this.isEmpleada = isEmpleada;
-	}
-	
-	
+   public void setProvincia(String provincia) {
+      this.provincia = provincia;
+   }
 
+   public boolean isEmpleada() {
+      return isEmpleada;
+   }
+
+   public void setEmpleada(boolean isEmpleada) {
+      this.isEmpleada = isEmpleada;
+   }
 }
