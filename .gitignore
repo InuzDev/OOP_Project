@@ -1,1 +1,29 @@
-/Main.class
+# Compiled class files
+*.class
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Build tools
+target/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Persisted data files generated at runtime (uncomment if you don't want to track these)
+# *.dat

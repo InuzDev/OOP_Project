@@ -1,6 +1,7 @@
 # Final Project of Object Oriented Programming [ENG]
 
 ## Developers:
+
 - Mocaccino [Carlos David]
 - GACT0001-max [Gian]
 - MiguelanyeliOlivo [Miguelan Yeli]
@@ -18,4 +19,4 @@ After cloning, you can start working and collaborating in the project.
 
 ## Objective of the final project
 
-. . . `Still waiting teacher aah response`
+The main objective is to create an application that works as a bridge between businesses and people in seek of a job. Allowing direct, and fast communication.
