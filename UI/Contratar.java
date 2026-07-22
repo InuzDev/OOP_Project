@@ -8,10 +8,16 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class Contratar extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private JTable todosSolicitTable;
+	private JTable ofertasTable;
+	private JTable mejoresSolicitTable;
 
 	/**
 	 * Launch the application.
@@ -40,6 +46,15 @@ public class Contratar extends JDialog {
 			JPanel panel = new JPanel();
 			panel.setBounds(34, 51, 402, 233);
 			contentPanel.add(panel);
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			{
+				JScrollPane scrollPane = new JScrollPane();
+				panel.add(scrollPane);
+				{
+					ofertasTable = new JTable();
+					scrollPane.setViewportView(ofertasTable);
+				}
+			}
 		}
 		{
 			JLabel lblNewLabel = new JLabel("Ofertas de mi empresa:");
@@ -50,11 +65,29 @@ public class Contratar extends JDialog {
 			JPanel panel = new JPanel();
 			panel.setBounds(471, 51, 397, 385);
 			contentPanel.add(panel);
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			{
+				JScrollPane scrollPane = new JScrollPane();
+				panel.add(scrollPane);
+				{
+					todosSolicitTable = new JTable();
+					scrollPane.setViewportView(todosSolicitTable);
+				}
+			}
 		}
 		{
 			JPanel panel = new JPanel();
 			panel.setBounds(34, 336, 402, 100);
 			contentPanel.add(panel);
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			{
+				JScrollPane scrollPane = new JScrollPane();
+				panel.add(scrollPane);
+				{
+					mejoresSolicitTable = new JTable();
+					scrollPane.setViewportView(mejoresSolicitTable);
+				}
+			}
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Solicitantes con mejor compatibilidad:");
@@ -62,9 +95,9 @@ public class Contratar extends JDialog {
 			contentPanel.add(lblNewLabel_1);
 		}
 		{
-			JButton btnNewButton = new JButton("Contratar");
-			btnNewButton.setBounds(339, 449, 97, 25);
-			contentPanel.add(btnNewButton);
+			JButton contratarSolitBtn = new JButton("Contratar");
+			contratarSolitBtn.setBounds(339, 449, 97, 25);
+			contentPanel.add(contratarSolitBtn);
 		}
 		{
 			JLabel lblNewLabel_2 = new JLabel("Solicitantes segun la oferta:");
@@ -76,10 +109,10 @@ public class Contratar extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("Guardar");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
+				JButton guardarButton = new JButton("Guardar");
+				guardarButton.setActionCommand("OK");
+				buttonPane.add(guardarButton);
+				getRootPane().setDefaultButton(guardarButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
