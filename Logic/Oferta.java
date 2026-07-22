@@ -1,6 +1,10 @@
 package Logic;
 
-public class Oferta {
+import java.io.Serializable;
+
+public class Oferta implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    private String codigo;
    private String puesto;
@@ -161,5 +165,9 @@ public class Oferta {
 
    public void completarOferta() {
       this.activa = false;
+   }
+
+   public boolean estaCompleta() {
+      return cantidadPuestos == 0;
    }
 }

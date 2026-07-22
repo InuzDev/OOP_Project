@@ -1,19 +1,23 @@
 package Logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Empresa {
+public class Empresa implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    private String rnc;
    private String nombre;
    private String direccion;
    private String telefono;
+   private String provincia;
+   private String correo;
    private String sitioWeb;
-   private String representante;
    private String tipo;
 
-   private String username;
-   private String password;
+   private Representante representante;
+   private Usuario usuario;
 
    private ArrayList<Oferta> misOfertas;
 
@@ -21,24 +25,24 @@ public class Empresa {
       String rnc,
       String nombre,
       String direccion,
+      String provincia,
       String telefono,
+      String correo,
       String sitioWeb,
-      String representante,
       String tipo,
-      String username,
-      String password
+      Representante representante,
+      Usuario usuario
    ) {
       this.rnc = rnc;
       this.nombre = nombre;
       this.direccion = direccion;
+      this.provincia = provincia;
       this.telefono = telefono;
+      this.correo = correo;
       this.sitioWeb = sitioWeb;
-      this.representante = representante;
       this.tipo = tipo;
-      this.username = username;
-      this.password = password;
-
-      misOfertas = new ArrayList<>();
+      this.representante = representante;
+      this.usuario = usuario;
    }
 
    public String getRnc() {
@@ -65,12 +69,28 @@ public class Empresa {
       this.direccion = direccion;
    }
 
+   public String getProvincia() {
+      return provincia;
+   }
+
+   public void setProvincia(String provincia) {
+      this.provincia = provincia;
+   }
+
    public String getTelefono() {
       return telefono;
    }
 
    public void setTelefono(String telefono) {
       this.telefono = telefono;
+   }
+
+   public String getCorreo() {
+      return correo;
+   }
+
+   public void setCorreo(String correo) {
+      this.correo = correo;
    }
 
    public String getSitioWeb() {
@@ -81,14 +101,6 @@ public class Empresa {
       this.sitioWeb = sitioWeb;
    }
 
-   public String getRepresentante() {
-      return representante;
-   }
-
-   public void setRepresentante(String representante) {
-      this.representante = representante;
-   }
-
    public String getTipo() {
       return tipo;
    }
@@ -97,20 +109,20 @@ public class Empresa {
       this.tipo = tipo;
    }
 
-   public String getUsername() {
-      return username;
+   public Representante getRepresentante() {
+      return representante;
    }
 
-   public void setUsername(String username) {
-      this.username = username;
+   public void setRepresentante(Representante representante) {
+      this.representante = representante;
    }
 
-   public String getPassword() {
-      return password;
+   public Usuario getUsuario() {
+      return usuario;
    }
 
-   public void setPassword(String password) {
-      this.password = password;
+   public void setUsuario(Usuario usuario) {
+      this.usuario = usuario;
    }
 
    public ArrayList<Oferta> getMisOfertas() {
@@ -159,5 +171,5 @@ public class Empresa {
    }
 
    // Este método será utilizado cuando implementen el algoritmo de búsqueda de candidatos.
-   public void buscarCandidatos() {}
+   // public void buscarCandidatos() { }
 }
