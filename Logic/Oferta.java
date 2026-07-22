@@ -1,6 +1,10 @@
 package Logic;
 
-public class Oferta {
+import java.io.Serializable;
+
+public class Oferta implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String codigo;
 	private String puesto;
@@ -9,19 +13,23 @@ public class Oferta {
 	private boolean requiereLicencia;
 	private boolean dispuestoMudarse;
 	private String tipoTrabajo;
-	private float salarioMinimo;
-	private float salarioMaximo;
+	private double salarioMinimo;
+	private double salarioMaximo;
 	private String provincia;
 	private int experienciaRequerida;
 	private String descripcion;
 	private double porcentajeCoincidencia;
 	private boolean activa;
 
-	public Oferta(String codigo, String puesto, int cantidadPuestos,
-			String sexo, boolean requiereLicencia,
-			boolean dispuestoMudarse, String tipoTrabajo,
-			float salarioMinimo, float salarioMaximo,
-			String provincia, int experienciaRequerida,
+	public Oferta(String codigo, String puesto,
+			int cantidadPuestos, String sexo,
+			boolean requiereLicencia,
+			boolean dispuestoMudarse,
+			String tipoTrabajo,
+			double salarioMinimo,
+			double salarioMaximo,
+			String provincia,
+			int experienciaRequerida,
 			String descripcion) {
 
 		this.codigo = codigo;
@@ -36,11 +44,10 @@ public class Oferta {
 		this.provincia = provincia;
 		this.experienciaRequerida = experienciaRequerida;
 		this.descripcion = descripcion;
+
 		this.porcentajeCoincidencia = 0;
 		this.activa = true;
 	}
-
-
 
 	public String getCodigo() {
 		return codigo;
@@ -98,19 +105,19 @@ public class Oferta {
 		this.tipoTrabajo = tipoTrabajo;
 	}
 
-	public float getSalarioMinimo() {
+	public double getSalarioMinimo() {
 		return salarioMinimo;
 	}
 
-	public void setSalarioMinimo(float salarioMinimo) {
+	public void setSalarioMinimo(double salarioMinimo) {
 		this.salarioMinimo = salarioMinimo;
 	}
 
-	public float getSalarioMaximo() {
+	public double getSalarioMaximo() {
 		return salarioMaximo;
 	}
 
-	public void setSalarioMaximo(float salarioMaximo) {
+	public void setSalarioMaximo(double salarioMaximo) {
 		this.salarioMaximo = salarioMaximo;
 	}
 
@@ -153,10 +160,16 @@ public class Oferta {
 	public void setActiva(boolean activa) {
 		this.activa = activa;
 	}
-	
+
 	public void completarOferta() {
+
+		this.cantidadPuestos = 0;
 		this.activa = false;
+
 	}
 
+	public boolean estaCompleta() {
+		return cantidadPuestos == 0;
+	}
 
 }
