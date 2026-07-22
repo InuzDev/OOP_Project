@@ -78,4 +78,8 @@ public class BolsaEmpleo {
       }
       return null;
    }
+
+   public Persona searchPersonalByRNC(String rnc) {
+      for (Persona pers : listPersonal) {}
+   }
 }

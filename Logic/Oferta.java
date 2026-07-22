@@ -47,6 +47,7 @@ public class Oferta implements Serializable {
       this.provincia = provincia;
       this.experienciaRequerida = experienciaRequerida;
       this.descripcion = descripcion;
+
       this.porcentajeCoincidencia = 0;
       this.activa = true;
    }
@@ -164,6 +165,7 @@ public class Oferta implements Serializable {
    }
 
    public void completarOferta() {
+      this.cantidadPuestos = 0;
       this.activa = false;
    }
 
