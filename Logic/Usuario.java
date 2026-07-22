@@ -6,25 +6,53 @@ public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private int id;
+	private String correo;
 	private String username;
 	private String password;
-	private String tipoUsuario;
+	private String rol;
 	private boolean activo;
 
-	public Usuario(String username, String password, String tipoUsuario) {
+	public Usuario(int id, String correo, String password, String rol) {
 
-		this.username = username;
+		this.id = id;
+		this.correo = correo;
+		this.username = generarUsername(correo);
 		this.password = password;
-		this.tipoUsuario = tipoUsuario;
+		this.rol = rol;
 		this.activo = true;
+	}
+
+	private String generarUsername(String correo) {
+
+		int posicion = correo.indexOf("@");
+
+		if (posicion != -1) {
+			return correo.substring(0, posicion);
+		}
+
+		return correo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+		this.username = generarUsername(correo);
 	}
 
 	public String getUsername() {
 		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -35,12 +63,12 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
-	public String getTipoUsuario() {
-		return tipoUsuario;
+	public String getRol() {
+		return rol;
 	}
 
-	public void setTipoUsuario(String tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
 	public boolean isActivo() {
@@ -50,5 +78,4 @@ public class Usuario implements Serializable {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-
 }
