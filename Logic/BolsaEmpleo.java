@@ -1,3 +1,6 @@
+// Falta por hacer:
+// - Conectar la logica con el UI.
+
 package Logic;
 
 import java.io.*;
@@ -54,7 +57,9 @@ public class BolsaEmpleo {
       }
    }
 
-   public void registrarPersonal(Persona persona) {
+   // Funciones orientadas al personal
+
+   public void registerPersonal(Persona persona) {
       listPersonal.add(persona);
       saveList(listPersonal, filePersonal);
    }
@@ -79,7 +84,167 @@ public class BolsaEmpleo {
       return null;
    }
 
-   public Persona searchPersonalByRNC(String rnc) {
-      for (Persona pers : listPersonal) {}
+   public Persona searchPersonalByPersonalId(String PersonalId) {
+      for (Persona pers : listPersonal) {
+         if (pers.getCedula().equalsIgnoreCase(PersonalId)) {
+            return pers;
+         }
+      }
+      return null;
+   }
+
+   public ArrayList<Persona> showListPersonal() {
+      return listPersonal;
+   }
+
+   public ArrayList<Tecnico> showListTecnicians() {
+      ArrayList<Tecnico> resultList = new ArrayList<>();
+
+      for (Persona pers : listPersonal) {
+         if (pers instanceof Tecnico) {
+            resultList.add((Tecnico) pers);
+         }
+      }
+      return resultList;
+   }
+
+   public ArrayList<Universitario> listCollegeStudent() {
+      ArrayList<Universitario> resultList = new ArrayList<>();
+
+      for (Persona pers : listPersonal) {
+         if (pers instanceof Universitario) {
+            resultList.add((Universitario) pers);
+         }
+      }
+      return resultList;
+   }
+
+   public ArrayList<Obrero> listLaborer() {
+      ArrayList<Obrero> resultList = new ArrayList<>();
+
+      for (Persona pers : listPersonal) {
+         if (pers instanceof Obrero) {
+            resultList.add((Obrero) pers);
+         }
+      }
+      return resultList;
+   }
+
+   // Funciones orientada a las empresas y sus representates
+
+   public void registerEmpresa(Empresa business) {
+      listEmpresas.add(business);
+      saveList(listEmpresas, fileEmpresas);
+   }
+
+   public boolean removeEmpresa(String rnc) {
+      Empresa found = searchEmpresaByRNC(rnc);
+
+      if (found == null) {
+         return false;
+      }
+
+      listEmpresas.remove(found);
+      saveList(listEmpresas, fileEmpresas);
+
+      return true;
+   }
+
+   public Empresa searchEmpresaByRNC(String rnc) {
+      for (Empresa business : listEmpresas) {
+         if (business.getRnc().equalsIgnoreCase(rnc)) {
+            return business;
+         }
+      }
+
+      return null;
+   }
+
+   public ArrayList<Empresa> showListEmpresa() {
+      return listEmpresas;
+   }
+
+   public ArrayList<Empresa> showListEmpresaByType(String type) {
+      ArrayList<Empresa> resultList = new ArrayList<>();
+
+      for (Empresa business : listEmpresas) {
+         if (business.getTipo().equalsIgnoreCase(type)) {
+            resultList.add(business);
+         }
+      }
+
+      return resultList;
+   }
+
+   // Funciones para las solicitudes del personal
+
+   public void createRequestPersonal(Solicitud req) {
+      listSolicitudes.add(req);
+      saveList(listSolicitudes, fileSolicitudes);
+   }
+
+   public boolean removeRequest(Solicitud req) {
+      boolean removed = listSolicitudes.remove(req);
+
+      if (removed) {
+         saveList(listSolicitudes, fileSolicitudes);
+      }
+
+      return removed;
+   }
+
+   public ArrayList<Solicitud> showListSolicitudes() {
+      return listSolicitudes;
+   }
+
+   public ArrayList<Solicitud> showListSolicitudesByPersonalId(
+      Persona persona
+   ) {
+      ArrayList<Solicitud> resultList = new ArrayList<>();
+
+      for (Solicitud req : listSolicitudes) {
+         if (req.getSolicitante().equals(persona)) {
+            resultList.add(req);
+         }
+      }
+
+      return resultList;
+   }
+
+   // Funciones para las ofertas
+
+   public boolean addBusinessJobOffer(String businessRNC, Oferta offer) {
+      Empresa business = searchEmpresaByRNC(businessRNC);
+
+      if (business == null) {
+         return false;
+      }
+
+      business.agregarOferta(offer);
+      saveList(listEmpresas, fileEmpresas);
+
+      return true;
+   }
+
+   public ArrayList<Oferta> showListAllOffers() {
+      ArrayList<Oferta> resultList = new ArrayList<>();
+
+      for (Empresa business : listEmpresas) {
+         resultList.addAll(business.getMisOfertas());
+      }
+
+      return resultList;
+   }
+
+   public ArrayList<Oferta> showActiveOffers() {
+      ArrayList<Oferta> resultList = new ArrayList<>();
+
+      for (Oferta offer : showListAllOffers()) {
+         if (offer.isActiva()) {
+            resultList.add(offer);
+         }
+      }
+
+      return resultList;
    }
 }
