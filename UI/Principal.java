@@ -15,12 +15,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTabbedPane;
 
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
-	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -59,42 +58,21 @@ public class Principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 47, 987, 539);
+		contentPane.add(tabbedPane);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setToolTipText("");
+		tabbedPane.addTab("Empresa", null, panel_2, null);
+		
 		JPanel panel = new JPanel();
-		panel.setBounds(29, 42, 421, 478);
-		contentPane.add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		
-		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tabbedPane.addTab("Empleado", null, panel, null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(515, 83, 444, 437);
-		contentPane.add(panel_1);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+		tabbedPane.addTab("New tab", null, panel_1, null);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		panel_1.add(scrollPane_1);
-		
-		table_1 = new JTable();
-		scrollPane_1.setViewportView(table_1);
-		
-		JLabel lblNewLabel = new JLabel("Empresas");
-		lblNewLabel.setBounds(381, 26, 56, 16);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Ofertas");
-		lblNewLabel_1.setBounds(515, 56, 56, 16);
-		contentPane.add(lblNewLabel_1);
-		
-		JButton btnNewButton = new JButton("Agregar Oferta");
-		btnNewButton.setBounds(317, 523, 133, 25);
-		contentPane.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Solicitar");
-		btnNewButton_1.setBounds(862, 523, 97, 25);
-		contentPane.add(btnNewButton_1);
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("New tab", null, panel_3, null);
 	}
 }
