@@ -11,9 +11,10 @@ public class Usuario implements Serializable {
 	private String username;
 	private String password;
 	private String rol;
+	private boolean isEmpresa; //verdadero si es empresa, falso si es empleado.
 	private boolean activo;
 
-	public Usuario(int id, String correo, String password, String rol) {
+	public Usuario(int id, String correo, String password, String rol, boolean isEmpresa) {
 
 		this.id = id;
 		this.correo = correo;
@@ -21,6 +22,7 @@ public class Usuario implements Serializable {
 		this.password = password;
 		this.rol = rol;
 		this.activo = true;
+		this.isEmpresa = isEmpresa;
 	}
 
 	private String generarUsername(String correo) {
@@ -78,4 +80,13 @@ public class Usuario implements Serializable {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
+
+	public boolean isEmpresa() {
+		return isEmpresa;
+	}
+
+	public void setEmpresa(boolean isEmpresa) {
+		this.isEmpresa = isEmpresa;
+	}
+	
 }

@@ -4,6 +4,7 @@ public abstract class Persona {
 
    protected static int contId = 1;
    protected int numIdentificador;
+   protected Usuario usuarioEmpleado;
    protected String nombre;
    protected String cedula;
    protected String sexo;
