@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class Registrar extends JDialog {
 
@@ -59,6 +60,60 @@ public class Registrar extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
+		JPanel panelUniversitario = new JPanel();
+		panelUniversitario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelUniversitario.setBounds(8, 376, 489, 99);
+		contentPanel.add(panelUniversitario);
+		panelUniversitario.setLayout(null);
+		
+		JLabel lblNewLabel_6 = new JLabel("Carrera:");
+		lblNewLabel_6.setBounds(12, 13, 56, 16);
+		panelUniversitario.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("Universidad:");
+		lblNewLabel_7.setBounds(12, 68, 71, 16);
+		panelUniversitario.add(lblNewLabel_7);
+		
+		universidadTxt = new JTextField();
+		universidadTxt.setBounds(95, 65, 285, 22);
+		panelUniversitario.add(universidadTxt);
+		universidadTxt.setColumns(10);
+		
+		carreraTxt = new JTextField();
+		carreraTxt.setColumns(10);
+		carreraTxt.setBounds(95, 10, 285, 22);
+		panelUniversitario.add(carreraTxt);
+		
+		JPanel panelTecnico = new JPanel();
+		panelTecnico.setLayout(null);
+		panelTecnico.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelTecnico.setBounds(8, 376, 489, 99);
+		contentPanel.add(panelTecnico);
+		
+		JLabel lblTecnicoProf = new JLabel("Tecnico:");
+		lblTecnicoProf.setBounds(12, 45, 80, 16);
+		panelTecnico.add(lblTecnicoProf);
+		
+		tecnicoTxt = new JTextField();
+		tecnicoTxt.setColumns(10);
+		tecnicoTxt.setBounds(87, 42, 285, 22);
+		panelTecnico.add(tecnicoTxt);
+		
+		JPanel panelObrero = new JPanel();
+		panelObrero.setLayout(null);
+		panelObrero.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelObrero.setBounds(8, 376, 489, 99);
+		contentPanel.add(panelObrero);
+		
+		JLabel lblHabilidades = new JLabel("Habilidades:");
+		lblHabilidades.setBounds(12, 45, 80, 16);
+		panelObrero.add(lblHabilidades);
+		
+		habilidadesTxt = new JTextField();
+		habilidadesTxt.setColumns(10);
+		habilidadesTxt.setBounds(89, 42, 285, 22);
+		panelObrero.add(habilidadesTxt);
+		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Empresa");
 		rdbtnNewRadioButton.setBounds(139, 9, 127, 25);
 		contentPanel.add(rdbtnNewRadioButton);
@@ -74,27 +129,27 @@ public class Registrar extends JDialog {
 		panelSolicitante.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nombre: ");
-		lblNewLabel.setBounds(12, 26, 56, 16);
+		lblNewLabel.setBounds(12, 13, 56, 16);
 		panelSolicitante.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Cedula: ");
-		lblNewLabel_1.setBounds(12, 110, 56, 16);
+		lblNewLabel_1.setBounds(12, 99, 56, 16);
 		panelSolicitante.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Sexo:");
-		lblNewLabel_2.setBounds(12, 152, 56, 16);
+		lblNewLabel_2.setBounds(12, 142, 56, 16);
 		panelSolicitante.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Telefono:");
-		lblNewLabel_3.setBounds(234, 152, 62, 16);
+		lblNewLabel_3.setBounds(237, 142, 62, 16);
 		panelSolicitante.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Correo:");
-		lblNewLabel_4.setBounds(12, 194, 56, 16);
+		lblNewLabel_4.setBounds(12, 185, 56, 16);
 		panelSolicitante.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Provincia:");
-		lblNewLabel_5.setBounds(12, 236, 56, 16);
+		lblNewLabel_5.setBounds(12, 228, 56, 16);
 		panelSolicitante.add(lblNewLabel_5);
 		
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("Universitario");
@@ -110,104 +165,51 @@ public class Registrar extends JDialog {
 		panelSolicitante.add(rdbtnNewRadioButton_4);
 		
 		nombreTxt = new JTextField();
-		nombreTxt.setBounds(72, 23, 363, 22);
+		nombreTxt.setBounds(94, 10, 356, 22);
 		panelSolicitante.add(nombreTxt);
 		nombreTxt.setColumns(10);
 		
 		cedulaTxt = new JTextField();
 		cedulaTxt.setColumns(10);
-		cedulaTxt.setBounds(72, 107, 363, 22);
+		cedulaTxt.setBounds(94, 96, 356, 22);
 		panelSolicitante.add(cedulaTxt);
 		
 		correoTxt = new JTextField();
 		correoTxt.setColumns(10);
-		correoTxt.setBounds(72, 191, 363, 22);
+		correoTxt.setBounds(94, 182, 356, 22);
 		panelSolicitante.add(correoTxt);
 		
 		provinciaTxt = new JTextField();
 		provinciaTxt.setColumns(10);
-		provinciaTxt.setBounds(72, 233, 363, 22);
+		provinciaTxt.setBounds(94, 225, 356, 22);
 		panelSolicitante.add(provinciaTxt);
 		
 		JComboBox sexoCbx = new JComboBox();
-		sexoCbx.setBounds(72, 149, 115, 22);
+		sexoCbx.setModel(new DefaultComboBoxModel(new String[] {"Masculino", "Femenino"}));
+		sexoCbx.setBounds(94, 139, 115, 22);
 		panelSolicitante.add(sexoCbx);
 		
 		telefonoTxt = new JTextField();
 		telefonoTxt.setColumns(10);
-		telefonoTxt.setBounds(308, 149, 127, 22);
+		telefonoTxt.setBounds(311, 139, 138, 22);
 		panelSolicitante.add(telefonoTxt);
 		
 		JLabel lblNewLabel_9 = new JLabel("Clave:");
-		lblNewLabel_9.setBounds(12, 68, 82, 16);
+		lblNewLabel_9.setBounds(12, 56, 82, 16);
 		panelSolicitante.add(lblNewLabel_9);
 		
 		claveSoliTxt = new JTextField();
 		claveSoliTxt.setColumns(10);
-		claveSoliTxt.setBounds(72, 65, 363, 22);
+		claveSoliTxt.setBounds(94, 53, 356, 22);
 		panelSolicitante.add(claveSoliTxt);
 		
-		JPanel panelTecnico = new JPanel();
-		panelTecnico.setLayout(null);
-		panelTecnico.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelTecnico.setBounds(8, 376, 489, 99);
-		contentPanel.add(panelTecnico);
+		JLabel lblNewLabel_16 = new JLabel("Experiencia:");
+		lblNewLabel_16.setBounds(12, 271, 70, 16);
+		panelSolicitante.add(lblNewLabel_16);
 		
-		JLabel lblHabilidades = new JLabel("Habilidades:");
-		lblHabilidades.setBounds(12, 45, 80, 16);
-		panelTecnico.add(lblHabilidades);
-		
-		habilidadesTxt = new JTextField();
-		habilidadesTxt.setColumns(10);
-		habilidadesTxt.setBounds(89, 42, 285, 22);
-		panelTecnico.add(habilidadesTxt);
-		
-		JPanel panelUniversitario = new JPanel();
-		panelUniversitario.setLayout(null);
-		panelUniversitario.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelUniversitario.setBounds(8, 376, 489, 99);
-		contentPanel.add(panelUniversitario);
-		
-		JLabel lblTecnicoProf = new JLabel("Tecnico:");
-		lblTecnicoProf.setBounds(12, 13, 80, 16);
-		panelUniversitario.add(lblTecnicoProf);
-		
-		JLabel lblExperiencia = new JLabel("Años de experiencia:");
-		lblExperiencia.setBounds(12, 68, 126, 16);
-		panelUniversitario.add(lblExperiencia);
-		
-		tecnicoTxt = new JTextField();
-		tecnicoTxt.setColumns(10);
-		tecnicoTxt.setBounds(95, 10, 285, 22);
-		panelUniversitario.add(tecnicoTxt);
-		
-		JSpinner AniosExperienciaSpn = new JSpinner();
-		AniosExperienciaSpn.setBounds(137, 65, 58, 22);
-		panelUniversitario.add(AniosExperienciaSpn);
-		
-		JPanel panelObrero = new JPanel();
-		panelObrero.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelObrero.setBounds(8, 376, 489, 99);
-		contentPanel.add(panelObrero);
-		panelObrero.setLayout(null);
-		
-		JLabel lblNewLabel_6 = new JLabel("Carrera:");
-		lblNewLabel_6.setBounds(12, 13, 56, 16);
-		panelObrero.add(lblNewLabel_6);
-		
-		JLabel lblNewLabel_7 = new JLabel("Universidad:");
-		lblNewLabel_7.setBounds(12, 68, 71, 16);
-		panelObrero.add(lblNewLabel_7);
-		
-		universidadTxt = new JTextField();
-		universidadTxt.setBounds(95, 65, 285, 22);
-		panelObrero.add(universidadTxt);
-		universidadTxt.setColumns(10);
-		
-		carreraTxt = new JTextField();
-		carreraTxt.setColumns(10);
-		carreraTxt.setBounds(95, 10, 285, 22);
-		panelObrero.add(carreraTxt);
+		JSpinner spnExperienciaAnios = new JSpinner();
+		spnExperienciaAnios.setBounds(94, 269, 103, 22);
+		panelSolicitante.add(spnExperienciaAnios);
 		
 		JPanel panelEmpresa = new JPanel();
 		panelEmpresa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
