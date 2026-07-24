@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 
 public class Registrar extends JDialog {
 
@@ -210,6 +211,10 @@ public class Registrar extends JDialog {
 		JSpinner spnExperienciaAnios = new JSpinner();
 		spnExperienciaAnios.setBounds(94, 269, 103, 22);
 		panelSolicitante.add(spnExperienciaAnios);
+		
+		JCheckBox chckBxLicenciado = new JCheckBox("Licenciado");
+		chckBxLicenciado.setBounds(235, 268, 113, 25);
+		panelSolicitante.add(chckBxLicenciado);
 		
 		JPanel panelEmpresa = new JPanel();
 		panelEmpresa.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
