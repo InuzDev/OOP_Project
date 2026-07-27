@@ -169,7 +169,6 @@ public class Registrar extends JDialog {
       rdbtnSolicitante.setBounds(8, 9, 127, 25);
       contentPanel.add(rdbtnSolicitante);
 
-      // Grupo para que "Empresa" y "Solicitante" sean mutuamente excluyentes.
       ButtonGroup grupoTipoUsuario = new ButtonGroup();
       grupoTipoUsuario.add(rdbtnEmpresa);
       grupoTipoUsuario.add(rdbtnSolicitante);
@@ -225,7 +224,6 @@ public class Registrar extends JDialog {
       rdbtnObrero.setBounds(335, 300, 127, 25);
       panelSolicitante.add(rdbtnObrero);
 
-      // Grupo para que solo un subtipo de solicitante pueda seleccionarse a la vez.
       ButtonGroup grupoSubtipo = new ButtonGroup();
       grupoSubtipo.add(rdbtnUniversitario);
       grupoSubtipo.add(rdbtnTecnico);
