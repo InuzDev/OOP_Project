@@ -1,6 +1,10 @@
 package Logic;
 
-public abstract class Persona {
+import java.io.Serializable;
+
+public abstract class Persona implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    protected static int contId = 1;
    protected int numIdentificador;
@@ -101,5 +105,13 @@ public abstract class Persona {
 
    public void setEmpleada(boolean isEmpleada) {
       this.isEmpleada = isEmpleada;
+   }
+
+   public Usuario getUsuarioEmpleado() {
+      return usuarioEmpleado;
+   }
+
+   public void setUsuarioEmpleado(Usuario usuarioEmpleado) {
+      this.usuarioEmpleado = usuarioEmpleado;
    }
 }

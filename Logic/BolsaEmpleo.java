@@ -1,6 +1,3 @@
-// Falta por hacer:
-// - Conectar la logica con el UI.
-
 package Logic;
 
 import java.io.*;
@@ -8,15 +5,17 @@ import java.util.ArrayList;
 
 public class BolsaEmpleo {
 
-   private String filePersonal = "personal.dat";
-   private String fileEmpresas = "centros.dat";
-   private String fileSolicitudes = "solicitudes.dat";
+   private String filePersonal = "Logs/personal.dat";
+   private String fileEmpresas = "Logs/centros.dat";
+   private String fileSolicitudes = "Logs/solicitudes.dat";
 
    private ArrayList<Persona> listPersonal;
    private ArrayList<Empresa> listEmpresas;
    private ArrayList<Solicitud> listSolicitudes;
 
    public BolsaEmpleo() {
+      new File("Logs").mkdirs();
+
       listPersonal = loadList(filePersonal);
       listEmpresas = loadList(fileEmpresas);
       listSolicitudes = loadList(fileSolicitudes);
@@ -57,7 +56,33 @@ public class BolsaEmpleo {
       }
    }
 
-   // Funciones orientadas al personal
+   public Object login(String username, String password) {
+      for (Persona pers : listPersonal) {
+         Usuario user = pers.getUsuarioEmpleado();
+         if (
+            user != null &&
+            user.isActivo() &&
+            user.getUsername().equalsIgnoreCase(username) &&
+            user.getPassword().equals(password)
+         ) {
+            return pers;
+         }
+      }
+
+      for (Empresa business : listEmpresas) {
+         Usuario user = business.getUsuario();
+         if (
+            user != null &&
+            user.isActivo() &&
+            user.getUsername().equalsIgnoreCase(username) &&
+            user.getPassword().equals(password)
+         ) {
+            return business;
+         }
+      }
+
+      return null;
+   }
 
    public void registerPersonal(Persona persona) {
       listPersonal.add(persona);
@@ -130,8 +155,6 @@ public class BolsaEmpleo {
       return resultList;
    }
 
-   // Funciones orientada a las empresas y sus representates
-
    public void registerEmpresa(Empresa business) {
       listEmpresas.add(business);
       saveList(listEmpresas, fileEmpresas);
@@ -176,8 +199,6 @@ public class BolsaEmpleo {
       return resultList;
    }
 
-   // Funciones para las solicitudes del personal
-
    public void createRequestPersonal(Solicitud req) {
       listSolicitudes.add(req);
       saveList(listSolicitudes, fileSolicitudes);
@@ -210,8 +231,6 @@ public class BolsaEmpleo {
 
       return resultList;
    }
-
-   // Funciones para las ofertas
 
    public boolean addBusinessJobOffer(String businessRNC, Oferta offer) {
       Empresa business = searchEmpresaByRNC(businessRNC);
@@ -246,5 +265,54 @@ public class BolsaEmpleo {
       }
 
       return resultList;
+   }
+
+   public boolean contratar(Solicitud solicitud, Oferta oferta) {
+      if (solicitud == null || oferta == null) {
+         return false;
+      }
+
+      Persona persona = solicitud.getSolicitante();
+      persona.setEmpleada(true);
+      saveList(listPersonal, filePersonal);
+
+      oferta.setCantidadPuestos(oferta.getCantidadPuestos() - 1);
+      if (oferta.getCantidadPuestos() <= 0) {
+         oferta.completarOferta();
+      }
+      saveList(listEmpresas, fileEmpresas);
+
+      listSolicitudes.remove(solicitud);
+      saveList(listSolicitudes, fileSolicitudes);
+
+      return true;
+   }
+
+   public boolean renunciar(Persona persona) {
+      if (persona == null || !persona.isEmpleada()) {
+         return false;
+      }
+
+      persona.setEmpleada(false);
+      saveList(listPersonal, filePersonal);
+
+      return true;
+   }
+
+   public boolean toggleOfertaActiva(String rncEmpresa, String codigoOferta) {
+      Empresa business = searchEmpresaByRNC(rncEmpresa);
+      if (business == null) {
+         return false;
+      }
+
+      Oferta oferta = business.buscarOferta(codigoOferta);
+      if (oferta == null) {
+         return false;
+      }
+
+      oferta.setActiva(!oferta.isActiva());
+      saveList(listEmpresas, fileEmpresas);
+
+      return true;
    }
 }

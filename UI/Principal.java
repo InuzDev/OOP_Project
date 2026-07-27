@@ -1,8 +1,18 @@
 package UI;
 
+import Logic.BolsaEmpleo;
+import Logic.Empresa;
+import Logic.Obrero;
+import Logic.Oferta;
+import Logic.Persona;
+import Logic.Solicitud;
+import Logic.Tecnico;
+import Logic.Universitario;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,11 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Principal extends JFrame {
 
@@ -26,6 +38,16 @@ public class Principal extends JFrame {
    private JTable tblOfertasEnSolicitud;
    private JTable tblMisSolicitudes;
 
+   private BolsaEmpleo controlador;
+   private Persona personaActual;
+   private Empresa empresaActual;
+
+   private List<Solicitud> misSolicitudesActuales = new ArrayList<>();
+   private List<Oferta> ofertasEnSolicitud = new ArrayList<>();
+   private List<Oferta> ofertasDeMiEmpresa = new ArrayList<>();
+   private List<Oferta> ofertasActivasParaContratar = new ArrayList<>();
+   private List<Solicitud> solicitudesParaContratar = new ArrayList<>();
+
    /**
     * Launch the application.
     */
@@ -34,7 +56,7 @@ public class Principal extends JFrame {
          new Runnable() {
             public void run() {
                try {
-                  Principal frame = new Principal();
+                  Principal frame = new Principal(new BolsaEmpleo(), null);
                   frame.setVisible(true);
                } catch (Exception e) {
                   e.printStackTrace();
@@ -46,8 +68,19 @@ public class Principal extends JFrame {
 
    /**
     * Create the frame.
+    *
+    * @param controlador   instancia compartida de BolsaEmpleo
+    * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
-   public Principal() {
+   public Principal(BolsaEmpleo controlador, Object usuarioActual) {
+      this.controlador = controlador;
+
+      if (usuarioActual instanceof Persona) {
+         this.personaActual = (Persona) usuarioActual;
+      } else if (usuarioActual instanceof Empresa) {
+         this.empresaActual = (Empresa) usuarioActual;
+      }
+
       setTitle("Bolsa de Empleos");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 1057, 751);
@@ -488,5 +521,400 @@ public class Principal extends JFrame {
       JButton btnNewButton_1 = new JButton("Contratar");
       btnNewButton_1.setBounds(838, 559, 97, 25);
       panelContratEmpresa.add(btnNewButton_1);
+
+      if (empresaActual != null) {
+         tabbedPane.setEnabledAt(0, false);
+         tabbedPane.setEnabledAt(1, false);
+      } else if (personaActual != null) {
+         tabbedPane.setEnabledAt(2, false);
+         tabbedPane.setEnabledAt(3, false);
+      }
+
+      if (personaActual != null) {
+         lblNombreEmp.setText(personaActual.getNombre());
+         lblCedulaEmp.setText(personaActual.getCedula());
+         lblTelefonoEmp.setText(personaActual.getNumeroTelefono());
+         lblSexoEmp.setText(personaActual.getSexo());
+         lblCorreoEmp.setText(personaActual.getCorreo());
+         lblProvinciaEmp.setText(personaActual.getProvincia());
+
+         if (personaActual instanceof Tecnico) {
+            lblTipoEmpleado.setText("Tecnico");
+         } else if (personaActual instanceof Universitario) {
+            lblTipoEmpleado.setText("Universitario");
+         } else if (personaActual instanceof Obrero) {
+            lblTipoEmpleado.setText("Obrero");
+         }
+
+         lblEstaEmpleado.setText(personaActual.isEmpleada() ? "Si" : "No");
+      }
+
+      final Runnable cargarMisSolicitudes = new Runnable() {
+         public void run() {
+            misSolicitudesActuales.clear();
+            DefaultTableModel modelo = new DefaultTableModel(
+               new Object[] {
+                  "Puesto",
+                  "Salario Min",
+                  "Salario Max",
+                  "Mudanza",
+               },
+               0
+            );
+
+            if (personaActual != null) {
+               misSolicitudesActuales.addAll(
+                  controlador.showListSolicitudesByPersonalId(personaActual)
+               );
+               for (Solicitud s : misSolicitudesActuales) {
+                  modelo.addRow(new Object[] {
+                     s.getPuestoDeseado(),
+                     s.getSalarioMinDeseado(),
+                     s.getSalarioMaxDeseado(),
+                     s.isDispMudanza() ? "Si" : "No",
+                  });
+               }
+            }
+
+            tblMisSolicitudes.setModel(modelo);
+         }
+      };
+      cargarMisSolicitudes.run();
+
+      btnRetirarSolicitud.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               int fila = tblMisSolicitudes.getSelectedRow();
+               if (fila < 0 || fila >= misSolicitudesActuales.size()) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Seleccione una solicitud.",
+                     "Retirar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+               controlador.removeRequest(misSolicitudesActuales.get(fila));
+               cargarMisSolicitudes.run();
+            }
+         }
+      );
+
+      btnRenunciarEmpleo.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               if (personaActual == null) {
+                  return;
+               }
+               boolean ok = controlador.renunciar(personaActual);
+               if (ok) {
+                  lblEstaEmpleado.setText("No");
+               } else {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "No estas empleado actualmente.",
+                     "Renunciar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+               }
+            }
+         }
+      );
+
+      final Runnable cargarOfertasParaSolicitar = new Runnable() {
+         public void run() {
+            ofertasEnSolicitud.clear();
+            ofertasEnSolicitud.addAll(controlador.showActiveOffers());
+
+            DefaultTableModel modelo = new DefaultTableModel(
+               new Object[] { "Puesto", "Vacantes", "Provincia" },
+               0
+            );
+            for (Oferta o : ofertasEnSolicitud) {
+               modelo.addRow(new Object[] {
+                  o.getPuesto(),
+                  o.getCantidadPuestos(),
+                  o.getProvincia(),
+               });
+            }
+            tblOfertasEnSolicitud.setModel(modelo);
+         }
+      };
+      cargarOfertasParaSolicitar.run();
+
+      tblOfertasEnSolicitud.getSelectionModel().addListSelectionListener(
+         new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+               if (e.getValueIsAdjusting()) {
+                  return;
+               }
+               int fila = tblOfertasEnSolicitud.getSelectedRow();
+               if (fila < 0 || fila >= ofertasEnSolicitud.size()) {
+                  return;
+               }
+               Oferta o = ofertasEnSolicitud.get(fila);
+               lblPuestoSolicitar.setText(o.getPuesto());
+               lblVacantesSolicitar.setText(
+                  String.valueOf(o.getCantidadPuestos())
+               );
+               lblLicenciaNecesitada.setText(
+                  o.isRequiereLicencia() ? "Si" : "No"
+               );
+               lblSexoSolicitar.setText(o.getSexo());
+               lblMudanzaSolicitar.setText(
+                  o.isDispuestoMudarse() ? "Si" : "No"
+               );
+               lblSalarioMinSolicitar.setText(
+                  String.valueOf(o.getSalarioMinimo())
+               );
+               lblSalarioMaxSolic.setText(String.valueOf(o.getSalarioMaximo()));
+               lblProvinciaSoli.setText(o.getProvincia());
+               lblExperienciaSoli.setText(
+                  String.valueOf(o.getExperienciaRequerida())
+               );
+               lblDescripcionSoli.setText(o.getDescripcion());
+               lblEstadoOfertaSoli.setText(
+                  o.isActiva() ? "Activa" : "Inactiva"
+               );
+            }
+         }
+      );
+
+      btnSolicitar.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               if (personaActual == null) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Solo un solicitante puede aplicar a ofertas.",
+                     "Solicitar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+               int fila = tblOfertasEnSolicitud.getSelectedRow();
+               if (fila < 0 || fila >= ofertasEnSolicitud.size()) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Seleccione una oferta.",
+                     "Solicitar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+               Oferta o = ofertasEnSolicitud.get(fila);
+               Solicitar dialogo = new Solicitar(
+                  controlador,
+                  personaActual,
+                  o.getPuesto(),
+                  o.getExperienciaRequerida()
+               );
+               dialogo.setModal(true);
+               dialogo.setVisible(true);
+               cargarMisSolicitudes.run();
+            }
+         }
+      );
+
+      final Runnable cargarOfertasEmpresa = new Runnable() {
+         public void run() {
+            ofertasDeMiEmpresa.clear();
+            DefaultTableModel modelo = new DefaultTableModel(
+               new Object[] { "Codigo", "Puesto", "Vacantes", "Activa" },
+               0
+            );
+
+            if (empresaActual != null) {
+               ofertasDeMiEmpresa.addAll(empresaActual.getMisOfertas());
+               for (Oferta o : ofertasDeMiEmpresa) {
+                  modelo.addRow(new Object[] {
+                     o.getCodigo(),
+                     o.getPuesto(),
+                     o.getCantidadPuestos(),
+                     o.isActiva() ? "Si" : "No",
+                  });
+               }
+            }
+
+            ofertasEmpresaTbl.setModel(modelo);
+         }
+      };
+      cargarOfertasEmpresa.run();
+
+      ofertasEmpresaTbl.getSelectionModel().addListSelectionListener(
+         new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+               if (e.getValueIsAdjusting()) {
+                  return;
+               }
+               int fila = ofertasEmpresaTbl.getSelectedRow();
+               if (fila < 0 || fila >= ofertasDeMiEmpresa.size()) {
+                  return;
+               }
+               Oferta o = ofertasDeMiEmpresa.get(fila);
+               lblNewLabel_12.setText(o.getPuesto());
+               label.setText(String.valueOf(o.getCantidadPuestos()));
+               label_1.setText(o.isRequiereLicencia() ? "Si" : "No");
+               label_2.setText(o.getSexo());
+               label_3.setText(o.isDispuestoMudarse() ? "Si" : "No");
+               label_4.setText(String.valueOf(o.getSalarioMinimo()));
+               label_5.setText(String.valueOf(o.getSalarioMaximo()));
+               label_6.setText(o.getProvincia());
+               label_7.setText(String.valueOf(o.getExperienciaRequerida()));
+               label_8.setText(o.getDescripcion());
+               label_9.setText(o.isActiva() ? "Activa" : "Inactiva");
+            }
+         }
+      );
+
+      agregarOfertaBtn.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               if (empresaActual == null) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Solo una empresa puede agregar ofertas.",
+                     "Agregar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+               AgregarOferta dialogo = new AgregarOferta(
+                  controlador,
+                  empresaActual.getRnc()
+               );
+               dialogo.setModal(true);
+               dialogo.setVisible(true);
+               cargarOfertasEmpresa.run();
+            }
+         }
+      );
+
+      btnHabilDeshabil.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               int fila = ofertasEmpresaTbl.getSelectedRow();
+               if (
+                  empresaActual == null ||
+                  fila < 0 ||
+                  fila >= ofertasDeMiEmpresa.size()
+               ) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Seleccione una oferta.",
+                     "Habilitar/Deshabilitar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+               Oferta o = ofertasDeMiEmpresa.get(fila);
+               controlador.toggleOfertaActiva(
+                  empresaActual.getRnc(),
+                  o.getCodigo()
+               );
+               cargarOfertasEmpresa.run();
+            }
+         }
+      );
+
+      final Runnable cargarContratar = new Runnable() {
+         public void run() {
+            ofertasActivasParaContratar.clear();
+            solicitudesParaContratar.clear();
+
+            DefaultTableModel modeloOfertas = new DefaultTableModel(
+               new Object[] { "Codigo", "Puesto", "Vacantes" },
+               0
+            );
+            DefaultTableModel modeloSolicitudes = new DefaultTableModel(
+               new Object[] { "Puesto Deseado", "Salario Min", "Salario Max" },
+               0
+            );
+
+            if (empresaActual != null) {
+               ofertasActivasParaContratar.addAll(
+                  empresaActual.getOfertasActivas()
+               );
+               for (Oferta o : ofertasActivasParaContratar) {
+                  modeloOfertas.addRow(new Object[] {
+                     o.getCodigo(),
+                     o.getPuesto(),
+                     o.getCantidadPuestos(),
+                  });
+               }
+
+               // Nota: idealmente esto se filtraria a las solicitudes relevantes para
+               // cada oferta. Por ahora se muestran todas las solicitudes activas del
+               // sistema, ya que el algoritmo de coincidencia aun no esta implementado.
+               solicitudesParaContratar.addAll(
+                  controlador.showListSolicitudes()
+               );
+               for (Solicitud s : solicitudesParaContratar) {
+                  modeloSolicitudes.addRow(new Object[] {
+                     s.getPuestoDeseado(),
+                     s.getSalarioMinDeseado(),
+                     s.getSalarioMaxDeseado(),
+                  });
+               }
+            }
+
+            ofertasContratTbl.setModel(modeloOfertas);
+            solicitudesContratTbl.setModel(modeloSolicitudes);
+
+            // La tabla de "mayor coincidencia" depende de Oferta.porcentajeCoincidencia,
+            // que necesita un algoritmo de comparacion aun no definido. Se deja vacia
+            // hasta que el equipo decida los criterios de coincidencia.
+         }
+      };
+      cargarContratar.run();
+
+      btnNewButton_1.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               int filaOferta = ofertasContratTbl.getSelectedRow();
+               int filaSolicitud = solicitudesContratTbl.getSelectedRow();
+
+               if (
+                  filaOferta < 0 ||
+                  filaOferta >= ofertasActivasParaContratar.size() ||
+                  filaSolicitud < 0 ||
+                  filaSolicitud >= solicitudesParaContratar.size()
+               ) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Seleccione una oferta y una solicitud.",
+                     "Contratar",
+                     JOptionPane.WARNING_MESSAGE
+                  );
+                  return;
+               }
+
+               Oferta oferta = ofertasActivasParaContratar.get(filaOferta);
+               Solicitud solicitud = solicitudesParaContratar.get(
+                  filaSolicitud
+               );
+
+               boolean contratado = controlador.contratar(solicitud, oferta);
+
+               if (contratado) {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "Contratacion exitosa.",
+                     "Contratar",
+                     JOptionPane.INFORMATION_MESSAGE
+                  );
+                  cargarContratar.run();
+                  cargarOfertasEmpresa.run();
+               } else {
+                  JOptionPane.showMessageDialog(
+                     Principal.this,
+                     "No se pudo completar la contratacion.",
+                     "Contratar",
+                     JOptionPane.ERROR_MESSAGE
+                  );
+               }
+            }
+         }
+      );
    }
 }

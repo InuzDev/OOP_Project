@@ -43,6 +43,8 @@ public class Empresa implements Serializable {
       this.tipo = tipo;
       this.representante = representante;
       this.usuario = usuario;
+
+      this.misOfertas = new ArrayList<>();
    }
 
    public String getRnc() {
@@ -170,6 +172,6 @@ public class Empresa implements Serializable {
       return activas;
    }
 
-   // Este método será utilizado cuando implementen el algoritmo de búsqueda de candidatos.
+   // Este metodo sera utilizado cuando implementen el algoritmo de b&#65533;squeda de candidatos.
    // public void buscarCandidatos() { }
 }

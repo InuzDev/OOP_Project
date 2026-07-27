@@ -1,6 +1,10 @@
 package Logic;
 
-public class Solicitud {
+import java.io.Serializable;
+
+public class Solicitud implements Serializable {
+
+   private static final long serialVersionUID = 1L;
 
    private Persona solicitante;
    private String puestoDeseado;

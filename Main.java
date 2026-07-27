@@ -1,7 +1,20 @@
-// Main class ; runs the UI and Logic.
+import Logic.BolsaEmpleo;
+import UI.Login;
+import java.awt.EventQueue;
+
 public class Main {
 
    public static void main(String[] args) {
-      // Add function caller to start the UI.
+      EventQueue.invokeLater(
+         new Runnable() {
+            public void run() {
+               BolsaEmpleo controlador = new BolsaEmpleo();
+               Login login = new Login(controlador);
+               login.setModal(true);
+               login.setDefaultCloseOperation(Login.DISPOSE_ON_CLOSE);
+               login.setVisible(true);
+            }
+         }
+      );
    }
 }
