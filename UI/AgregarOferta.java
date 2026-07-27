@@ -183,7 +183,6 @@ public class AgregarOferta extends JDialog {
       cmbxTipoTrabajo.setBounds(120, 476, 200, 22);
       contentPanel.add(cmbxTipoTrabajo);
 
-      // Campo agregado: Oferta requiere provincia, pero el formulario original no lo pedia.
       JLabel lblProvincia = new JLabel("Provincia:");
       lblProvincia.setBounds(12, 534, 77, 16);
       contentPanel.add(lblProvincia);
