@@ -21,9 +21,6 @@ public class Login extends JDialog {
    private JPasswordField textFieldPassword;
    private BolsaEmpleo controlador;
 
-   /**
-    * Launch the application (standalone testing only).
-    */
    public static void main(String[] args) {
       try {
          Login dialog = new Login(new BolsaEmpleo());
@@ -34,9 +31,6 @@ public class Login extends JDialog {
       }
    }
 
-   /**
-    * Create the dialog.
-    */
    public Login(BolsaEmpleo controlador) {
       this.controlador = controlador;
 
@@ -69,7 +63,6 @@ public class Login extends JDialog {
       contentPanel.add(textField);
       textField.setColumns(10);
 
-      // Cambiado de JTextField a JPasswordField para no mostrar la clave en texto plano.
       textFieldPassword = new JPasswordField();
       textFieldPassword.setColumns(10);
       textFieldPassword.setBounds(110, 113, 195, 22);

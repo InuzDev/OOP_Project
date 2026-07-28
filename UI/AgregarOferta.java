@@ -43,9 +43,6 @@ public class AgregarOferta extends JDialog {
       }
    }
 
-   /**
-    * Create the dialog.
-    */
    public AgregarOferta(BolsaEmpleo controlador, String rncEmpresa) {
       this.controlador = controlador;
       this.rncEmpresa = rncEmpresa;
@@ -225,8 +222,6 @@ public class AgregarOferta extends JDialog {
                         return;
                      }
 
-                     // Codigo unico generado automaticamente, ya que Oferta no cuenta
-                     // con un contador estatico como Persona/Representante.
                      String codigo =
                         "OF-" +
                         UUID.randomUUID()

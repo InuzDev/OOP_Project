@@ -27,9 +27,6 @@ public class Solicitar extends JDialog {
    private BolsaEmpleo controlador;
    private Persona solicitante;
 
-   /**
-    * Launch the application (standalone testing only).
-    */
    public static void main(String[] args) {
       try {
          Solicitar dialog = new Solicitar(
@@ -45,14 +42,6 @@ public class Solicitar extends JDialog {
       }
    }
 
-   /**
-    * Create the dialog.
-    *
-    * @param controlador          instancia compartida de BolsaEmpleo
-    * @param solicitante          la Persona que esta aplicando
-    * @param puestoSugerido       puesto de la oferta que el usuario estaba viendo (solo referencia)
-    * @param experienciaSugerida  experiencia requerida por esa oferta (solo referencia)
-    */
    public Solicitar(
       BolsaEmpleo controlador,
       Persona solicitante,
