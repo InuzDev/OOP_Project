@@ -172,6 +172,5 @@ public class Empresa implements Serializable {
       return activas;
    }
 
-   // Este metodo sera utilizado cuando implementen el algoritmo de b&#65533;squeda de candidatos.
-   // public void buscarCandidatos() { }
+   
 }
