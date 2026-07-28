@@ -47,6 +47,7 @@ public class Principal extends JFrame {
    private List<Oferta> ofertasDeMiEmpresa = new ArrayList<>();
    private List<Oferta> ofertasActivasParaContratar = new ArrayList<>();
    private List<Solicitud> solicitudesParaContratar = new ArrayList<>();
+   private List<Solicitud> mejoresCandidatos = new ArrayList<>();
 
    /**
     * Launch the application.
@@ -864,21 +865,75 @@ public class Principal extends JFrame {
             // La tabla de "mayor coincidencia" depende de Oferta.porcentajeCoincidencia,
             // que necesita un algoritmo de comparacion aun no definido. Se deja vacia
             // hasta que el equipo decida los criterios de coincidencia.
+            
+            DefaultTableModel modeloMayor = new DefaultTableModel(
+            	    new Object[]{"Nombre", "Puesto", "Coincidencia"},
+            	    0
+            	);
+
+            	solitMayorCoinTbl.setModel(modeloMayor);
          }
       };
       cargarContratar.run();
+      
+      ofertasContratTbl.getSelectionModel().addListSelectionListener(
+    		    new javax.swing.event.ListSelectionListener() {
+
+    		        @Override
+    		        public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+
+    		            if (e.getValueIsAdjusting()) {
+    		                return;
+    		            }
+
+    		            int fila = ofertasContratTbl.getSelectedRow();
+
+    		            if (fila < 0) {
+    		                return;
+    		            }
+
+    		            Oferta ofertaSeleccionada =
+    		                    ofertasActivasParaContratar.get(fila);
+
+    		            mejoresCandidatos.clear();
+    		            mejoresCandidatos.addAll(
+    		                    controlador.buscarMejoresCandidatos(ofertaSeleccionada));
+
+    		            DefaultTableModel modelo =
+    		                    new DefaultTableModel(
+    		                            new Object[]{"Nombre","Puesto","Coincidencia"},
+    		                            0);
+
+    		            for (Solicitud s : mejoresCandidatos) {
+
+    		                double porcentaje =
+    		                        controlador.calcularCoincidencia(
+    		                                ofertaSeleccionada,
+    		                                s);
+
+    		                modelo.addRow(new Object[]{
+    		                        s.getSolicitante().getNombre(),
+    		                        s.getPuestoDeseado(),
+    		                        porcentaje + "%"
+    		                });
+    		            }
+
+    		            solitMayorCoinTbl.setModel(modelo);
+    		        }
+    		    }
+    		);
 
       btnNewButton_1.addActionListener(
          new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               int filaOferta = ofertasContratTbl.getSelectedRow();
-               int filaSolicitud = solicitudesContratTbl.getSelectedRow();
+            	int filaOferta = ofertasContratTbl.getSelectedRow();
+            	int filaSolicitud = solitMayorCoinTbl.getSelectedRow();
 
                if (
                   filaOferta < 0 ||
                   filaOferta >= ofertasActivasParaContratar.size() ||
                   filaSolicitud < 0 ||
-                  filaSolicitud >= solicitudesParaContratar.size()
+                  filaSolicitud >=  mejoresCandidatos.size()
                ) {
                   JOptionPane.showMessageDialog(
                      Principal.this,
@@ -890,9 +945,9 @@ public class Principal extends JFrame {
                }
 
                Oferta oferta = ofertasActivasParaContratar.get(filaOferta);
-               Solicitud solicitud = solicitudesParaContratar.get(
-                  filaSolicitud
-               );
+               Solicitud solicitud =
+            	        mejoresCandidatos.get(filaSolicitud);
+
 
                boolean contratado = controlador.contratar(solicitud, oferta);
 
@@ -903,7 +958,7 @@ public class Principal extends JFrame {
                      "Contratar",
                      JOptionPane.INFORMATION_MESSAGE
                   );
-                  cargarContratar.run();
+                  
                   cargarOfertasEmpresa.run();
                } else {
                   JOptionPane.showMessageDialog(
