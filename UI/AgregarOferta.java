@@ -19,6 +19,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 public class AgregarOferta extends JDialog {
 
@@ -50,21 +53,18 @@ public class AgregarOferta extends JDialog {
     * Create the dialog.
     */
    public AgregarOferta(BolsaEmpleo controlador, String rncEmpresa) {
+   	setForeground(new Color(205, 133, 63));
+   	setBackground(new Color(205, 133, 63));
       this.controlador = controlador;
       this.rncEmpresa = rncEmpresa;
 
       setTitle("Ofertar");
       setBounds(100, 100, 530, 690);
       getContentPane().setLayout(new BorderLayout());
+      contentPanel.setForeground(new Color(205, 133, 63));
+      contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(160, 82, 45))
       );
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
@@ -110,6 +110,7 @@ public class AgregarOferta extends JDialog {
       }
 
       JCheckBox checkBxLicencia = new JCheckBox("Requerida");
+      checkBxLicencia.setBackground(new Color(255, 255, 240));
       checkBxLicencia.setBounds(92, 200, 113, 25);
       contentPanel.add(checkBxLicencia);
 
@@ -118,6 +119,7 @@ public class AgregarOferta extends JDialog {
       contentPanel.add(lblMudanza);
 
       JCheckBox chckBxDispuestoMudanza = new JCheckBox("Requerida");
+      chckBxDispuestoMudanza.setBackground(new Color(255, 255, 240));
       chckBxDispuestoMudanza.setBounds(92, 255, 113, 25);
       contentPanel.add(chckBxDispuestoMudanza);
 
@@ -194,20 +196,17 @@ public class AgregarOferta extends JDialog {
 
       {
          JPanel buttonPane = new JPanel();
+         buttonPane.setForeground(new Color(205, 133, 63));
+         buttonPane.setBackground(new Color(255, 255, 240));
          buttonPane.setBorder(
-            new TitledBorder(
-               null,
-               "",
-               TitledBorder.LEADING,
-               TitledBorder.TOP,
-               null,
-               null
-            )
+            new LineBorder(new Color(160, 82, 45))
          );
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
-            JButton okButton = new JButton("OK");
+            JButton okButton = new JButton("Agregar");
+            okButton.setForeground(new Color(255, 255, 255));
+            okButton.setBackground(new Color(205, 133, 63));
             okButton.setActionCommand("OK");
             buttonPane.add(okButton);
             getRootPane().setDefaultButton(okButton);
@@ -280,7 +279,9 @@ public class AgregarOferta extends JDialog {
             );
          }
          {
-            JButton cancelButton = new JButton("Cancel");
+            JButton cancelButton = new JButton("Cancelar");
+            cancelButton.setForeground(new Color(255, 255, 255));
+            cancelButton.setBackground(new Color(205, 133, 63));
             cancelButton.setActionCommand("Cancel");
             cancelButton.addActionListener(
                new ActionListener() {

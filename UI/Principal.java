@@ -27,6 +27,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class Principal extends JFrame {
 
@@ -74,6 +76,7 @@ public class Principal extends JFrame {
     * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
    public Principal(BolsaEmpleo controlador, Object usuarioActual) {
+   	setForeground(new Color(0, 0, 0));
       this.controlador = controlador;
 
       if (usuarioActual instanceof Persona) {
@@ -87,6 +90,7 @@ public class Principal extends JFrame {
       setBounds(100, 100, 1057, 751);
 
       JMenuBar menuBar = new JMenuBar();
+      menuBar.setBackground(new Color(255, 255, 240));
       setJMenuBar(menuBar);
 
       JMenu mnNewMenu = new JMenu("Administracion");
@@ -109,10 +113,14 @@ public class Principal extends JFrame {
       contentPane.setLayout(null);
 
       JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+      tabbedPane.setBackground(new Color(255, 255, 255));
+      tabbedPane.setBorder(new LineBorder(new Color(160, 82, 45)));
       tabbedPane.setBounds(0, 47, 1039, 631);
       contentPane.add(tabbedPane);
 
       JPanel panelEmpleado = new JPanel();
+      panelEmpleado.setBorder(new LineBorder(new Color(139, 69, 19)));
+      panelEmpleado.setBackground(new Color(255, 255, 240));
       tabbedPane.addTab("Empleado", null, panelEmpleado, null);
       panelEmpleado.setLayout(null);
 
@@ -128,15 +136,19 @@ public class Principal extends JFrame {
       scrollMisSolicitudes.setViewportView(tblMisSolicitudes);
 
       JLabel lblNewLabel_17 = new JLabel("Mis solicitudes actuales");
+      lblNewLabel_17.setForeground(new Color(139, 69, 19));
       lblNewLabel_17.setBounds(44, 42, 177, 16);
       panelEmpleado.add(lblNewLabel_17);
 
       JButton btnRetirarSolicitud = new JButton("Retirar");
+      btnRetirarSolicitud.setBackground(new Color(255, 255, 255));
+      btnRetirarSolicitud.setForeground(new Color(139, 69, 19));
       btnRetirarSolicitud.setBounds(335, 550, 97, 25);
       panelEmpleado.add(btnRetirarSolicitud);
 
       JLabel lblNewLabel_18 = new JLabel("Mis datos");
-      lblNewLabel_18.setBounds(539, 42, 56, 16);
+      lblNewLabel_18.setForeground(new Color(139, 69, 19));
+      lblNewLabel_18.setBounds(540, 46, 56, 16);
       panelEmpleado.add(lblNewLabel_18);
 
       JPanel panel = new JPanel();
@@ -149,6 +161,8 @@ public class Principal extends JFrame {
       panel.add(lblNewLabel_19);
 
       JButton btnRenunciarEmpleo = new JButton("Renunciar");
+      btnRenunciarEmpleo.setBackground(new Color(255, 255, 255));
+      btnRenunciarEmpleo.setForeground(new Color(139, 69, 19));
       btnRenunciarEmpleo.addActionListener(
          new ActionListener() {
             public void actionPerformed(ActionEvent e) {}
@@ -218,6 +232,8 @@ public class Principal extends JFrame {
       panel.add(lblEstaEmpleado);
 
       JPanel panelSolicitar = new JPanel();
+      panelSolicitar.setBorder(new LineBorder(new Color(139, 69, 19)));
+      panelSolicitar.setBackground(new Color(255, 255, 240));
       tabbedPane.addTab("Solicitar", null, panelSolicitar, null);
       panelSolicitar.setLayout(null);
 
@@ -229,6 +245,7 @@ public class Principal extends JFrame {
       scrollPane.setViewportView(tblOfertasEnSolicitud);
 
       JPanel panel_1 = new JPanel();
+      panel_1.setBorder(new LineBorder(new Color(139, 69, 19)));
       panel_1.setLayout(null);
       panel_1.setBounds(508, 43, 310, 507);
       panelSolicitar.add(panel_1);
@@ -322,25 +339,34 @@ public class Principal extends JFrame {
       panel_1.add(lblEstadoOfertaSoli);
 
       JLabel label_32 = new JLabel("Detalles de la oferta");
+      label_32.setForeground(new Color(139, 69, 19));
       label_32.setBounds(508, 14, 122, 16);
       panelSolicitar.add(label_32);
 
       JLabel lblNewLabel_26 = new JLabel("Ofertas de empleo");
+      lblNewLabel_26.setForeground(new Color(139, 69, 19));
       lblNewLabel_26.setBounds(33, 11, 122, 16);
       panelSolicitar.add(lblNewLabel_26);
 
       JPanel panel_2 = new JPanel();
+      panel_2.setBorder(new LineBorder(new Color(139, 69, 19)));
+      panel_2.setBackground(new Color(255, 255, 255));
       panel_2.setLayout(null);
       panel_2.setBounds(826, 243, 196, 128);
       panelSolicitar.add(panel_2);
 
       JButton btnSolicitar = new JButton("Solicitar");
+      btnSolicitar.setBackground(new Color(255, 255, 255));
+      btnSolicitar.setForeground(new Color(139, 69, 19));
       btnSolicitar.setBounds(8, 31, 180, 59);
       panel_2.add(btnSolicitar);
 
       JPanel panelEmpresa = new JPanel();
+      panelEmpresa.setBackground(new Color(255, 255, 240));
+      panelEmpresa.setBorder(new LineBorder(new Color(139, 69, 19)));
       panelEmpresa.setToolTipText("");
       tabbedPane.addTab("Empresa", null, panelEmpresa, null);
+      tabbedPane.setBackgroundAt(2, new Color(255, 255, 240));
       panelEmpresa.setLayout(null);
 
       JPanel panelOfertaEmpresa = new JPanel();
@@ -357,14 +383,19 @@ public class Principal extends JFrame {
       scrollOfertasEmpresa.setViewportView(ofertasEmpresaTbl);
 
       JLabel lblMisOfertas = new JLabel("Ofertas concurrentes");
+      lblMisOfertas.setForeground(new Color(139, 69, 19));
+      lblMisOfertas.setBackground(new Color(139, 69, 19));
       lblMisOfertas.setBounds(293, 13, 130, 16);
       panelEmpresa.add(lblMisOfertas);
 
       JLabel lblNewLabel = new JLabel("Detalles de la oferta");
+      lblNewLabel.setForeground(new Color(139, 69, 19));
+      lblNewLabel.setBackground(new Color(139, 69, 19));
       lblNewLabel.setBounds(461, 41, 122, 16);
       panelEmpresa.add(lblNewLabel);
 
       JPanel panelDatosOferta = new JPanel();
+      panelDatosOferta.setBorder(new LineBorder(new Color(139, 69, 19)));
       panelDatosOferta.setBounds(461, 70, 310, 507);
       panelEmpresa.add(panelDatosOferta);
       panelDatosOferta.setLayout(null);
@@ -458,23 +489,31 @@ public class Principal extends JFrame {
       panelDatosOferta.add(label_9);
 
       JPanel panelManejoOfertas = new JPanel();
+      panelManejoOfertas.setBorder(new LineBorder(new Color(139, 69, 19)));
       panelManejoOfertas.setBounds(799, 168, 223, 254);
       panelEmpresa.add(panelManejoOfertas);
       panelManejoOfertas.setLayout(null);
 
       JLabel lblNewLabel_13 = new JLabel("Manejo de Ofertas");
+      lblNewLabel_13.setForeground(new Color(139, 69, 19));
       lblNewLabel_13.setBounds(12, 13, 129, 16);
       panelManejoOfertas.add(lblNewLabel_13);
 
       JButton agregarOfertaBtn = new JButton("Agregar ");
+      agregarOfertaBtn.setForeground(new Color(139, 69, 19));
+      agregarOfertaBtn.setBackground(new Color(255, 255, 255));
       agregarOfertaBtn.setBounds(23, 62, 180, 59);
       panelManejoOfertas.add(agregarOfertaBtn);
 
       JButton btnHabilDeshabil = new JButton("Habilitar/Deshabilitar");
+      btnHabilDeshabil.setBackground(new Color(255, 255, 255));
+      btnHabilDeshabil.setForeground(new Color(139, 69, 19));
       btnHabilDeshabil.setBounds(24, 141, 180, 59);
       panelManejoOfertas.add(btnHabilDeshabil);
 
       JPanel panelContratEmpresa = new JPanel();
+      panelContratEmpresa.setBackground(new Color(255, 255, 240));
+      panelContratEmpresa.setBorder(new LineBorder(new Color(139, 69, 19)));
       tabbedPane.addTab("Contratar", null, panelContratEmpresa, null);
       panelContratEmpresa.setLayout(null);
 
@@ -490,10 +529,12 @@ public class Principal extends JFrame {
       scrollOfertasContrat.setViewportView(ofertasContratTbl);
 
       JLabel lblNewLabel_14 = new JLabel("Ofertas concurrentes");
+      lblNewLabel_14.setForeground(new Color(139, 69, 19));
       lblNewLabel_14.setBounds(253, 13, 130, 16);
       panelContratEmpresa.add(lblNewLabel_14);
 
       JLabel lblNewLabel_15 = new JLabel("Solicitudes");
+      lblNewLabel_15.setForeground(new Color(139, 69, 19));
       lblNewLabel_15.setBounds(457, 39, 67, 16);
       panelContratEmpresa.add(lblNewLabel_15);
 
@@ -509,6 +550,7 @@ public class Principal extends JFrame {
       scrollSolicitudesContrat.setViewportView(solicitudesContratTbl);
 
       JLabel lblNewLabel_16 = new JLabel("Solicitudes con mayor coincidencia");
+      lblNewLabel_16.setForeground(new Color(139, 69, 19));
       lblNewLabel_16.setBounds(457, 356, 220, 16);
       panelContratEmpresa.add(lblNewLabel_16);
 
@@ -520,8 +562,16 @@ public class Principal extends JFrame {
       scrollMayorCoin.setViewportView(solitMayorCoinTbl);
 
       JButton btnNewButton_1 = new JButton("Contratar");
+      btnNewButton_1.setForeground(new Color(139, 69, 19));
+      btnNewButton_1.setBackground(new Color(255, 255, 255));
       btnNewButton_1.setBounds(838, 559, 97, 25);
       panelContratEmpresa.add(btnNewButton_1);
+      
+      JPanel panel_5 = new JPanel();
+      panel_5.setBackground(new Color(205, 133, 63));
+      panel_5.setBounds(1, -11, 1036, 82);
+      contentPane.add(panel_5);
+      panel_5.setLayout(null);
 
       if (empresaActual != null) {
          tabbedPane.setEnabledAt(0, false);

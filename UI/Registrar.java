@@ -27,6 +27,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
 
 public class Registrar extends JDialog {
 
@@ -71,25 +73,21 @@ public class Registrar extends JDialog {
     * Create the dialog.
     */
    public Registrar(BolsaEmpleo controlador) {
+   	setBackground(new Color(255, 255, 255));
       this.controlador = controlador;
 
       setTitle("Registrar");
-      setBounds(100, 100, 518, 650);
+      setBounds(100, 100, 518, 682);
       getContentPane().setLayout(new BorderLayout());
-      contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+      contentPanel.setBackground(new Color(255, 255, 240));
+      contentPanel.setBorder(new LineBorder(new Color(205, 133, 63)));
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
 
       JPanel panelUniversitario = new JPanel();
+      panelUniversitario.setBackground(new Color(255, 255, 240));
       panelUniversitario.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(205, 133, 63))
       );
       panelUniversitario.setBounds(8, 376, 489, 99);
       contentPanel.add(panelUniversitario);
@@ -162,10 +160,12 @@ public class Registrar extends JDialog {
       panelObrero.add(habilidadesTxt);
 
       JRadioButton rdbtnEmpresa = new JRadioButton("Empresa");
+      rdbtnEmpresa.setBackground(new Color(255, 255, 240));
       rdbtnEmpresa.setBounds(139, 9, 127, 25);
       contentPanel.add(rdbtnEmpresa);
 
       JRadioButton rdbtnSolicitante = new JRadioButton("Solicitante");
+      rdbtnSolicitante.setBackground(new Color(255, 255, 240));
       rdbtnSolicitante.setBounds(8, 9, 127, 25);
       contentPanel.add(rdbtnSolicitante);
 
@@ -175,15 +175,9 @@ public class Registrar extends JDialog {
       grupoTipoUsuario.add(rdbtnSolicitante);
 
       JPanel panelSolicitante = new JPanel();
+      panelSolicitante.setBackground(new Color(255, 255, 240));
       panelSolicitante.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(205, 133, 63))
       );
       panelSolicitante.setBounds(8, 43, 489, 333);
       contentPanel.add(panelSolicitante);
@@ -214,14 +208,17 @@ public class Registrar extends JDialog {
       panelSolicitante.add(lblNewLabel_5);
 
       JRadioButton rdbtnUniversitario = new JRadioButton("Universitario");
+      rdbtnUniversitario.setBackground(new Color(255, 255, 240));
       rdbtnUniversitario.setBounds(27, 300, 127, 25);
       panelSolicitante.add(rdbtnUniversitario);
 
       JRadioButton rdbtnTecnico = new JRadioButton("Tecnico");
+      rdbtnTecnico.setBackground(new Color(255, 255, 240));
       rdbtnTecnico.setBounds(181, 300, 127, 25);
       panelSolicitante.add(rdbtnTecnico);
 
       JRadioButton rdbtnObrero = new JRadioButton("Obrero");
+      rdbtnObrero.setBackground(new Color(255, 255, 240));
       rdbtnObrero.setBounds(335, 300, 127, 25);
       panelSolicitante.add(rdbtnObrero);
 
@@ -284,21 +281,16 @@ public class Registrar extends JDialog {
       // Nota: esta casilla no corresponde a ningun campo del modelo Tecnico todavia;
       // se deja visible pero no se usa al construir el objeto.
       JCheckBox chckBxLicenciado = new JCheckBox("Licenciado");
+      chckBxLicenciado.setBackground(new Color(255, 255, 240));
       chckBxLicenciado.setBounds(235, 268, 113, 25);
       panelSolicitante.add(chckBxLicenciado);
 
       JPanel panelEmpresa = new JPanel();
+      panelEmpresa.setBackground(new Color(255, 255, 240));
       panelEmpresa.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(205, 133, 63))
       );
-      panelEmpresa.setBounds(8, 43, 489, 545);
+      panelEmpresa.setBounds(0, 43, 500, 555);
       contentPanel.add(panelEmpresa);
       panelEmpresa.setLayout(null);
 
@@ -408,10 +400,13 @@ public class Registrar extends JDialog {
       panelEmpresa.add(representanteTxt);
       {
          JPanel buttonPane = new JPanel();
+         buttonPane.setBorder(new LineBorder(new Color(139, 69, 19)));
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
             JButton okButton = new JButton("Registrar");
+            okButton.setForeground(new Color(255, 255, 255));
+            okButton.setBackground(new Color(205, 133, 63));
             okButton.setActionCommand("OK");
             buttonPane.add(okButton);
             getRootPane().setDefaultButton(okButton);
@@ -589,6 +584,8 @@ public class Registrar extends JDialog {
          }
          {
             JButton cancelButton = new JButton("Cancelar");
+            cancelButton.setBackground(new Color(205, 133, 63));
+            cancelButton.setForeground(new Color(255, 255, 255));
             cancelButton.setActionCommand("Cancel");
             cancelButton.addActionListener(
                new ActionListener() {
