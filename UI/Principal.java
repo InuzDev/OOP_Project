@@ -8,6 +8,7 @@ import Logic.Persona;
 import Logic.Solicitud;
 import Logic.Tecnico;
 import Logic.Universitario;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 public class Principal extends JFrame {
 
@@ -76,8 +76,7 @@ public class Principal extends JFrame {
     * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
    public Principal(BolsaEmpleo controlador, Object usuarioActual) {
-   	setBackground(new Color(255, 255, 240));
-   	setForeground(new Color(0, 0, 0));
+      setForeground(new Color(0, 0, 0));
       this.controlador = controlador;
 
       if (usuarioActual instanceof Persona) {
@@ -567,7 +566,7 @@ public class Principal extends JFrame {
       btnNewButton_1.setBackground(new Color(255, 255, 255));
       btnNewButton_1.setBounds(838, 559, 97, 25);
       panelContratEmpresa.add(btnNewButton_1);
-      
+
       JPanel panel_5 = new JPanel();
       panel_5.setBackground(new Color(205, 133, 63));
       panel_5.setBounds(1, -11, 1036, 82);
@@ -895,6 +894,9 @@ public class Principal extends JFrame {
                   });
                }
 
+               // Nota: idealmente esto se filtraria a las solicitudes relevantes para
+               // cada oferta. Por ahora se muestran todas las solicitudes activas del
+               // sistema, ya que el algoritmo de coincidencia aun no esta implementado.
                solicitudesParaContratar.addAll(
                   controlador.showListSolicitudes()
                );
@@ -909,6 +911,10 @@ public class Principal extends JFrame {
 
             ofertasContratTbl.setModel(modeloOfertas);
             solicitudesContratTbl.setModel(modeloSolicitudes);
+
+            // La tabla de "mayor coincidencia" depende de Oferta.porcentajeCoincidencia,
+            // que necesita un algoritmo de comparacion aun no definido. Se deja vacia
+            // hasta que el equipo decida los criterios de coincidencia.
 
             DefaultTableModel modeloMayor = new DefaultTableModel(
                new Object[] { "Nombre", "Puesto", "Coincidencia" },
