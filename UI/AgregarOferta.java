@@ -3,6 +3,7 @@ package UI;
 import Logic.BolsaEmpleo;
 import Logic.Oferta;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
-import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
 public class AgregarOferta extends JDialog {
@@ -53,8 +51,8 @@ public class AgregarOferta extends JDialog {
     * Create the dialog.
     */
    public AgregarOferta(BolsaEmpleo controlador, String rncEmpresa) {
-   	setForeground(new Color(205, 133, 63));
-   	setBackground(new Color(205, 133, 63));
+      setForeground(new Color(205, 133, 63));
+      setBackground(new Color(205, 133, 63));
       this.controlador = controlador;
       this.rncEmpresa = rncEmpresa;
 
@@ -63,19 +61,48 @@ public class AgregarOferta extends JDialog {
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setForeground(new Color(205, 133, 63));
       contentPanel.setBackground(new Color(255, 255, 240));
-      contentPanel.setBorder(
-         new LineBorder(new Color(160, 82, 45))
-
-
-
-
-
-
-
-      );
+      contentPanel.setBorder(new LineBorder(new Color(160, 82, 45)));
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
-@@ -110,6 +110,7 @@
+      {
+         JLabel lblNewLabel = new JLabel("Puesto: ");
+         lblNewLabel.setBounds(12, 39, 56, 16);
+         contentPanel.add(lblNewLabel);
+      }
+      {
+         txtPuesto = new JTextField();
+         txtPuesto.setBounds(92, 36, 396, 22);
+         contentPanel.add(txtPuesto);
+         txtPuesto.setColumns(10);
+      }
+      {
+         JLabel lblNewLabel_1 = new JLabel("Vacantes:");
+         lblNewLabel_1.setBounds(12, 94, 65, 16);
+         contentPanel.add(lblNewLabel_1);
+      }
+      JSpinner spnCantPuestos = new JSpinner();
+      spnCantPuestos.setModel(new SpinnerNumberModel(1, 1, null, 1));
+      spnCantPuestos.setBounds(92, 91, 123, 22);
+      contentPanel.add(spnCantPuestos);
+      {
+         JLabel lblNewLabel_2 = new JLabel("Sexo:");
+         lblNewLabel_2.setBounds(12, 149, 56, 16);
+         contentPanel.add(lblNewLabel_2);
+      }
+      JComboBox<String> cmbxSexo = new JComboBox<>();
+      cmbxSexo.setModel(
+         new DefaultComboBoxModel<>(new String[] {
+            "Ambos",
+            "Masculino",
+            "Femenino",
+         })
+      );
+      cmbxSexo.setBounds(92, 146, 123, 22);
+      contentPanel.add(cmbxSexo);
+      {
+         JLabel lblNewLabel_3 = new JLabel("Licencia:");
+         lblNewLabel_3.setBounds(12, 204, 56, 16);
+         contentPanel.add(lblNewLabel_3);
       }
 
       JCheckBox checkBxLicencia = new JCheckBox("Requerida");
@@ -83,7 +110,8 @@ public class AgregarOferta extends JDialog {
       checkBxLicencia.setBounds(92, 200, 113, 25);
       contentPanel.add(checkBxLicencia);
 
-@@ -118,6 +119,7 @@
+      JLabel lblMudanza = new JLabel("Mudanza:");
+      lblMudanza.setBounds(12, 259, 56, 16);
       contentPanel.add(lblMudanza);
 
       JCheckBox chckBxDispuestoMudanza = new JCheckBox("Requerida");
@@ -91,23 +119,83 @@ public class AgregarOferta extends JDialog {
       chckBxDispuestoMudanza.setBounds(92, 255, 113, 25);
       contentPanel.add(chckBxDispuestoMudanza);
 
-@@ -193,104 +195,103 @@
+      JLabel lblNewLabel_4 = new JLabel("Rango:");
+      lblNewLabel_4.setBounds(12, 314, 56, 16);
+      contentPanel.add(lblNewLabel_4);
+
+      JLabel lblNewLabel_5 = new JLabel("Minimo:");
+      lblNewLabel_5.setBounds(80, 314, 56, 16);
+      contentPanel.add(lblNewLabel_5);
+
+      JLabel lblMaximo = new JLabel("Maximo:");
+      lblMaximo.setBounds(286, 314, 56, 16);
+      contentPanel.add(lblMaximo);
+
+      JSpinner spnSalarioMin = new JSpinner();
+      spnSalarioMin.setModel(
+         new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1))
+      );
+      spnSalarioMin.setBounds(133, 311, 141, 22);
+      contentPanel.add(spnSalarioMin);
+
+      JSpinner spnSalarioMax = new JSpinner();
+      spnSalarioMax.setModel(
+         new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1))
+      );
+      spnSalarioMax.setBounds(347, 311, 141, 22);
+      contentPanel.add(spnSalarioMax);
+
+      JLabel lblNewLabel_6 = new JLabel("Experiencia:");
+      lblNewLabel_6.setBounds(12, 369, 124, 16);
+      contentPanel.add(lblNewLabel_6);
+      JSpinner spnAniosExperiencia = new JSpinner();
+      spnAniosExperiencia.setModel(new SpinnerNumberModel(0, 0, null, 1));
+      spnAniosExperiencia.setBounds(90, 368, 141, 22);
+      contentPanel.add(spnAniosExperiencia);
+      {
+         JLabel lblNewLabel_7 = new JLabel("Descripcion:");
+         lblNewLabel_7.setBounds(12, 424, 77, 16);
+         contentPanel.add(lblNewLabel_7);
+      }
+      {
+         txtDescripcion = new JTextField();
+         txtDescripcion.setBounds(92, 421, 408, 22);
+         contentPanel.add(txtDescripcion);
+         txtDescripcion.setColumns(10);
+      }
+
+      // Campo agregado: Oferta requiere tipoTrabajo, que representa la categoria
+      // de personal buscada (usada por BolsaEmpleo.calcularCoincidencia).
+      JLabel lblTipoTrabajo = new JLabel("Categoria Buscada:");
+      lblTipoTrabajo.setBounds(12, 479, 100, 16);
+      contentPanel.add(lblTipoTrabajo);
+
+      JComboBox<String> cmbxTipoTrabajo = new JComboBox<>();
+      cmbxTipoTrabajo.setModel(
+         new DefaultComboBoxModel<>(new String[] {
+            "Universitario",
+            "Tecnico",
+            "Obrero",
+         })
+      );
+      cmbxTipoTrabajo.setBounds(120, 476, 200, 22);
+      contentPanel.add(cmbxTipoTrabajo);
+
+      // Campo agregado: Oferta requiere provincia, pero el formulario original no lo pedia.
+      JLabel lblProvincia = new JLabel("Provincia:");
+      lblProvincia.setBounds(12, 534, 77, 16);
+      contentPanel.add(lblProvincia);
+
+      txtProvincia = new JTextField();
+      txtProvincia.setBounds(92, 531, 408, 22);
+      contentPanel.add(txtProvincia);
       txtProvincia.setColumns(10);
 
       {
          JPanel buttonPane = new JPanel();
          buttonPane.setForeground(new Color(205, 133, 63));
          buttonPane.setBackground(new Color(255, 255, 240));
-         buttonPane.setBorder(
-            new LineBorder(new Color(160, 82, 45))
-
-
-
-
-
-
-
-         );
+         buttonPane.setBorder(new LineBorder(new Color(160, 82, 45)));
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
