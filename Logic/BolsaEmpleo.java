@@ -315,85 +315,87 @@ public class BolsaEmpleo {
 
       return true;
    }
-   
+
    public double calcularCoincidencia(Oferta oferta, Solicitud solicitud) {
+      double puntos = 0;
 
-	    double puntos = 0;
+      Persona persona = solicitud.getSolicitante();
 
-	    Persona persona = solicitud.getSolicitante();
+      if (solicitud.getPuestoDeseado().equalsIgnoreCase(oferta.getPuesto())) {
+         puntos += 30;
+      }
 
-	    if (solicitud.getPuestoDeseado().equalsIgnoreCase(oferta.getPuesto())) {
-	        puntos += 30;
-	    }
+      if (persona.getProvincia().equalsIgnoreCase(oferta.getProvincia())) {
+         puntos += 15;
+      }
 
-	    if (persona.getProvincia().equalsIgnoreCase(oferta.getProvincia())) {
-	        puntos += 15;
-	    }
+      if (
+         oferta.getSexo().equalsIgnoreCase("Ambos") ||
+         persona.getSexo().equalsIgnoreCase(oferta.getSexo())
+      ) {
+         puntos += 10;
+      }
 
-	    if (oferta.getSexo().equalsIgnoreCase("Ambos")
-	            || persona.getSexo().equalsIgnoreCase(oferta.getSexo())) {
+      if (solicitud.isDispMudanza() == oferta.isDispuestoMudarse()) {
+         puntos += 10;
+      }
 
-	        puntos += 10;
-	    }
+      if (
+         solicitud.getSalarioMinDeseado() <= oferta.getSalarioMaximo() &&
+         solicitud.getSalarioMaxDeseado() >= oferta.getSalarioMinimo()
+      ) {
+         puntos += 15;
+      }
 
-	
-	    if (solicitud.isDispMudanza() == oferta.isDispuestoMudarse()) {
-	        puntos += 10;
-	    }
+      if (
+         persona instanceof Universitario &&
+         oferta.getTipoTrabajo().equalsIgnoreCase("Universitario")
+      ) {
+         puntos += 10;
+      }
 
-	    if (solicitud.getSalarioMinDeseado() <= oferta.getSalarioMaximo()
-	            && solicitud.getSalarioMaxDeseado() >= oferta.getSalarioMinimo()) {
+      if (
+         persona instanceof Tecnico &&
+         oferta.getTipoTrabajo().equalsIgnoreCase("Tecnico")
+      ) {
+         puntos += 10;
 
-	        puntos += 15;
-	    }
+         Tecnico tecnico = (Tecnico) persona;
 
+         if (
+            tecnico.getAniosExperiencia() >= oferta.getExperienciaRequerida()
+         ) {
+            puntos += 10;
+         }
+      }
 
-	    if (persona instanceof Universitario
-	            && oferta.getTipoTrabajo().equalsIgnoreCase("Universitario")) {
+      if (
+         persona instanceof Obrero &&
+         oferta.getTipoTrabajo().equalsIgnoreCase("Obrero")
+      ) {
+         puntos += 10;
+      }
 
-	        puntos += 10;
-	    }
+      return puntos;
+   }
 
-	    if (persona instanceof Tecnico
-	            && oferta.getTipoTrabajo().equalsIgnoreCase("Tecnico")) {
-
-	        puntos += 10;
-
-	        Tecnico tecnico = (Tecnico) persona;
-
-	        if (tecnico.getAniosExperiencia() >= oferta.getExperienciaRequerida()) {
-	            puntos += 10;
-	        }
-	    }
-
-	    if (persona instanceof Obrero
-	            && oferta.getTipoTrabajo().equalsIgnoreCase("Obrero")) {
-
-	        puntos += 10;
-	    }
-
-	    return puntos;
-	}
-   
    public ArrayList<Solicitud> buscarMejoresCandidatos(Oferta oferta) {
+      ArrayList<Solicitud> candidatos = new ArrayList<>();
 
-	    ArrayList<Solicitud> candidatos = new ArrayList<>();
+      for (Solicitud solicitud : listSolicitudes) {
+         if (!solicitud.getSolicitante().isEmpleada()) {
+            candidatos.add(solicitud);
+         }
+      }
 
-	    for (Solicitud solicitud : listSolicitudes) {
+      candidatos.sort((s1, s2) ->
+         Double.compare(
+            calcularCoincidencia(oferta, s2),
 
-	        if (!solicitud.getSolicitante().isEmpleada()) {
-	            candidatos.add(solicitud);
-	        }
-	    }
+            calcularCoincidencia(oferta, s1)
+         )
+      );
 
-	    candidatos.sort((s1, s2) -> Double.compare(
-
-	            calcularCoincidencia(oferta, s2),
-
-	            calcularCoincidencia(oferta, s1)
-
-	    ));
-
-	    return candidatos;
-	}
+      return candidatos;
+   }
 }
