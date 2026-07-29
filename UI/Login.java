@@ -2,6 +2,7 @@ package UI;
 
 import Logic.BolsaEmpleo;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 public class Login extends JDialog {
 
@@ -23,6 +23,9 @@ public class Login extends JDialog {
    private JPasswordField textFieldPassword;
    private BolsaEmpleo controlador;
 
+   /**
+    * Launch the application (standalone testing only).
+    */
    public static void main(String[] args) {
       try {
          Login dialog = new Login(new BolsaEmpleo());
@@ -33,17 +36,17 @@ public class Login extends JDialog {
       }
    }
 
+   /**
+    * Create the dialog.
+    */
    public Login(BolsaEmpleo controlador) {
-   	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
 
       setTitle("Login");
       setBounds(100, 100, 450, 290);
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(255, 255, 240));
-      contentPanel.setBorder(
-         new LineBorder(new Color(139, 69, 19))
-      );
+      contentPanel.setBorder(new LineBorder(new Color(139, 69, 19)));
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
 
@@ -63,6 +66,7 @@ public class Login extends JDialog {
       contentPanel.add(textField);
       textField.setColumns(10);
 
+      // Cambiado de JTextField a JPasswordField para no mostrar la clave en texto plano.
       textFieldPassword = new JPasswordField();
       textFieldPassword.setColumns(10);
       textFieldPassword.setBounds(110, 113, 195, 22);
@@ -89,9 +93,7 @@ public class Login extends JDialog {
       {
          JPanel buttonPane = new JPanel();
          buttonPane.setBackground(new Color(255, 255, 240));
-         buttonPane.setBorder(
-            new LineBorder(new Color(205, 133, 63))
-         );
+         buttonPane.setBorder(new LineBorder(new Color(205, 133, 63)));
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
