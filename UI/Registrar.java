@@ -73,7 +73,7 @@ public class Registrar extends JDialog {
     * Create the dialog.
     */
    public Registrar(BolsaEmpleo controlador) {
-   	setBackground(new Color(255, 255, 255));
+   	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
 
       setTitle("Registrar");

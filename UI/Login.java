@@ -40,6 +40,7 @@ public class Login extends JDialog {
     * Create the dialog.
     */
    public Login(BolsaEmpleo controlador) {
+   	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
 
       setTitle("Login");

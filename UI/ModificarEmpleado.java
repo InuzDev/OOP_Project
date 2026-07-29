@@ -43,6 +43,7 @@ public class ModificarEmpleado extends JDialog {
 	 * Create the dialog.
 	 */
 	public ModificarEmpleado() {
+		setBackground(new Color(255, 255, 240));
 		getContentPane().setBackground(new Color(205, 133, 63));
 		setTitle("Datos");
 		setBounds(100, 100, 425, 492);

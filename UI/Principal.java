@@ -76,6 +76,7 @@ public class Principal extends JFrame {
     * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
    public Principal(BolsaEmpleo controlador, Object usuarioActual) {
+   	setBackground(new Color(255, 255, 240));
    	setForeground(new Color(0, 0, 0));
       this.controlador = controlador;
 
