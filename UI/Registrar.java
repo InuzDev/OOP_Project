@@ -56,9 +56,6 @@ public class Registrar extends JDialog {
 
    private BolsaEmpleo controlador;
 
-   /**
-    * Launch the application (standalone testing only).
-    */
    public static void main(String[] args) {
       try {
          Registrar dialog = new Registrar(new BolsaEmpleo());
@@ -69,9 +66,6 @@ public class Registrar extends JDialog {
       }
    }
 
-   /**
-    * Create the dialog.
-    */
    public Registrar(BolsaEmpleo controlador) {
    	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
@@ -169,7 +163,6 @@ public class Registrar extends JDialog {
       rdbtnSolicitante.setBounds(8, 9, 127, 25);
       contentPanel.add(rdbtnSolicitante);
 
-      // Grupo para que "Empresa" y "Solicitante" sean mutuamente excluyentes.
       ButtonGroup grupoTipoUsuario = new ButtonGroup();
       grupoTipoUsuario.add(rdbtnEmpresa);
       grupoTipoUsuario.add(rdbtnSolicitante);
@@ -222,7 +215,6 @@ public class Registrar extends JDialog {
       rdbtnObrero.setBounds(335, 300, 127, 25);
       panelSolicitante.add(rdbtnObrero);
 
-      // Grupo para que solo un subtipo de solicitante pueda seleccionarse a la vez.
       ButtonGroup grupoSubtipo = new ButtonGroup();
       grupoSubtipo.add(rdbtnUniversitario);
       grupoSubtipo.add(rdbtnTecnico);
@@ -264,7 +256,6 @@ public class Registrar extends JDialog {
       lblNewLabel_9.setBounds(12, 56, 82, 16);
       panelSolicitante.add(lblNewLabel_9);
 
-      // Cambiado de JTextField a JPasswordField para no mostrar la clave en texto plano.
       claveSoliTxt = new JPasswordField();
       claveSoliTxt.setColumns(10);
       claveSoliTxt.setBounds(94, 53, 356, 22);
@@ -278,8 +269,6 @@ public class Registrar extends JDialog {
       spnExperienciaAnios.setBounds(94, 269, 103, 22);
       panelSolicitante.add(spnExperienciaAnios);
 
-      // Nota: esta casilla no corresponde a ningun campo del modelo Tecnico todavia;
-      // se deja visible pero no se usa al construir el objeto.
       JCheckBox chckBxLicenciado = new JCheckBox("Licenciado");
       chckBxLicenciado.setBackground(new Color(255, 255, 240));
       chckBxLicenciado.setBounds(235, 268, 113, 25);
@@ -307,13 +296,11 @@ public class Registrar extends JDialog {
       lblNewLabel_10.setBounds(12, 69, 56, 16);
       panelEmpresa.add(lblNewLabel_10);
 
-      // Cambiado de JTextField a JPasswordField para no mostrar la clave en texto plano.
       claveEmpresaTxt = new JPasswordField();
       claveEmpresaTxt.setBounds(110, 66, 335, 22);
       panelEmpresa.add(claveEmpresaTxt);
       claveEmpresaTxt.setColumns(10);
 
-      // Campo agregado: Empresa/Usuario requieren un correo, pero el formulario original no lo pedia.
       JLabel lblCorreoEmpresa = new JLabel("Correo:");
       lblCorreoEmpresa.setBounds(12, 124, 56, 16);
       panelEmpresa.add(lblCorreoEmpresa);
@@ -323,7 +310,6 @@ public class Registrar extends JDialog {
       correoEmpresaTxt.setBounds(110, 121, 335, 22);
       panelEmpresa.add(correoEmpresaTxt);
 
-      // Campo agregado: Empresa requiere telefono, pero el formulario original no lo pedia.
       JLabel lblTelefonoEmpresa = new JLabel("Telefono:");
       lblTelefonoEmpresa.setBounds(12, 179, 73, 16);
       panelEmpresa.add(lblTelefonoEmpresa);
@@ -342,7 +328,6 @@ public class Registrar extends JDialog {
       rncTxt.setBounds(110, 231, 335, 22);
       panelEmpresa.add(rncTxt);
 
-      // Campo agregado: Empresa requiere provincia, pero el formulario original no lo pedia.
       JLabel lblProvinciaEmpresa = new JLabel("Provincia:");
       lblProvinciaEmpresa.setBounds(12, 289, 73, 16);
       panelEmpresa.add(lblProvinciaEmpresa);
@@ -374,7 +359,6 @@ public class Registrar extends JDialog {
       lblNewLabel_15.setBounds(12, 454, 56, 16);
       panelEmpresa.add(lblNewLabel_15);
 
-      // Cambiado de JTextField libre a JComboBox con las categorias del enunciado del proyecto.
       tipoEmpresaCbx = new JComboBox<>();
       tipoEmpresaCbx.setModel(
          new DefaultComboBoxModel<>(new String[] {
@@ -598,7 +582,6 @@ public class Registrar extends JDialog {
          }
       }
 
-      // Alternar entre el panel de Empresa y el de Solicitante.
       rdbtnSolicitante.addActionListener(
          new ActionListener() {
             public void actionPerformed(ActionEvent err) {
@@ -625,7 +608,6 @@ public class Registrar extends JDialog {
          }
       );
 
-      // Alternar entre los sub-paneles Universitario/Tecnico/Obrero.
       rdbtnUniversitario.addActionListener(
          new ActionListener() {
             public void actionPerformed(ActionEvent err) {
@@ -654,7 +636,6 @@ public class Registrar extends JDialog {
          }
       );
 
-      // Estado inicial: Solicitante + Universitario seleccionados por defecto.
       rdbtnSolicitante.setSelected(true);
       panelSolicitante.setVisible(true);
       panelEmpresa.setVisible(false);

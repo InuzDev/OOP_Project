@@ -33,9 +33,6 @@ public class AgregarOferta extends JDialog {
    private BolsaEmpleo controlador;
    private String rncEmpresa;
 
-   /**
-    * Launch the application (standalone testing only).
-    */
    public static void main(String[] args) {
       try {
          AgregarOferta dialog = new AgregarOferta(
@@ -49,9 +46,6 @@ public class AgregarOferta extends JDialog {
       }
    }
 
-   /**
-    * Create the dialog.
-    */
    public AgregarOferta(BolsaEmpleo controlador, String rncEmpresa) {
    	setForeground(new Color(205, 133, 63));
    	setBackground(new Color(205, 133, 63));
@@ -168,7 +162,6 @@ public class AgregarOferta extends JDialog {
          txtDescripcion.setColumns(10);
       }
 
-      // Campo agregado: Oferta requiere tipoTrabajo, pero el formulario original no lo pedia.
       JLabel lblTipoTrabajo = new JLabel("Tipo de Trabajo:");
       lblTipoTrabajo.setBounds(12, 479, 100, 16);
       contentPanel.add(lblTipoTrabajo);
@@ -228,8 +221,6 @@ public class AgregarOferta extends JDialog {
                         return;
                      }
 
-                     // Codigo unico generado automaticamente, ya que Oferta no cuenta
-                     // con un contador estatico como Persona/Representante.
                      String codigo =
                         "OF-" +
                         UUID.randomUUID()

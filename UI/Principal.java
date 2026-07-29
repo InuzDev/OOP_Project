@@ -895,9 +895,6 @@ public class Principal extends JFrame {
                   });
                }
 
-               // Nota: idealmente esto se filtraria a las solicitudes relevantes para
-               // cada oferta. Por ahora se muestran todas las solicitudes activas del
-               // sistema, ya que el algoritmo de coincidencia aun no esta implementado.
                solicitudesParaContratar.addAll(
                   controlador.showListSolicitudes()
                );
@@ -913,78 +910,73 @@ public class Principal extends JFrame {
             ofertasContratTbl.setModel(modeloOfertas);
             solicitudesContratTbl.setModel(modeloSolicitudes);
 
-            // La tabla de "mayor coincidencia" depende de Oferta.porcentajeCoincidencia,
-            // que necesita un algoritmo de comparacion aun no definido. Se deja vacia
-            // hasta que el equipo decida los criterios de coincidencia.
-            
             DefaultTableModel modeloMayor = new DefaultTableModel(
-            	    new Object[]{"Nombre", "Puesto", "Coincidencia"},
-            	    0
-            	);
+               new Object[] { "Nombre", "Puesto", "Coincidencia" },
+               0
+            );
 
-            	solitMayorCoinTbl.setModel(modeloMayor);
+            solitMayorCoinTbl.setModel(modeloMayor);
          }
       };
       cargarContratar.run();
-      
+
       ofertasContratTbl.getSelectionModel().addListSelectionListener(
-    		    new javax.swing.event.ListSelectionListener() {
+         new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+               if (e.getValueIsAdjusting()) {
+                  return;
+               }
 
-    		        @Override
-    		        public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+               int fila = ofertasContratTbl.getSelectedRow();
 
-    		            if (e.getValueIsAdjusting()) {
-    		                return;
-    		            }
+               if (fila < 0) {
+                  return;
+               }
 
-    		            int fila = ofertasContratTbl.getSelectedRow();
+               Oferta ofertaSeleccionada = ofertasActivasParaContratar.get(
+                  fila
+               );
 
-    		            if (fila < 0) {
-    		                return;
-    		            }
+               mejoresCandidatos.clear();
+               mejoresCandidatos.addAll(
+                  controlador.buscarMejoresCandidatos(ofertaSeleccionada)
+               );
 
-    		            Oferta ofertaSeleccionada =
-    		                    ofertasActivasParaContratar.get(fila);
+               DefaultTableModel modelo = new DefaultTableModel(
+                  new Object[] { "Nombre", "Puesto", "Coincidencia" },
+                  0
+               );
 
-    		            mejoresCandidatos.clear();
-    		            mejoresCandidatos.addAll(
-    		                    controlador.buscarMejoresCandidatos(ofertaSeleccionada));
+               for (Solicitud s : mejoresCandidatos) {
+                  double porcentaje = controlador.calcularCoincidencia(
+                     ofertaSeleccionada,
+                     s
+                  );
 
-    		            DefaultTableModel modelo =
-    		                    new DefaultTableModel(
-    		                            new Object[]{"Nombre","Puesto","Coincidencia"},
-    		                            0);
+                  modelo.addRow(new Object[] {
+                     s.getSolicitante().getNombre(),
+                     s.getPuestoDeseado(),
+                     porcentaje + "%",
+                  });
+               }
 
-    		            for (Solicitud s : mejoresCandidatos) {
-
-    		                double porcentaje =
-    		                        controlador.calcularCoincidencia(
-    		                                ofertaSeleccionada,
-    		                                s);
-
-    		                modelo.addRow(new Object[]{
-    		                        s.getSolicitante().getNombre(),
-    		                        s.getPuestoDeseado(),
-    		                        porcentaje + "%"
-    		                });
-    		            }
-
-    		            solitMayorCoinTbl.setModel(modelo);
-    		        }
-    		    }
-    		);
+               solitMayorCoinTbl.setModel(modelo);
+            }
+         }
+      );
 
       btnNewButton_1.addActionListener(
          new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	int filaOferta = ofertasContratTbl.getSelectedRow();
-            	int filaSolicitud = solitMayorCoinTbl.getSelectedRow();
+               int filaOferta = ofertasContratTbl.getSelectedRow();
+               int filaSolicitud = solitMayorCoinTbl.getSelectedRow();
 
                if (
                   filaOferta < 0 ||
                   filaOferta >= ofertasActivasParaContratar.size() ||
                   filaSolicitud < 0 ||
-                  filaSolicitud >=  mejoresCandidatos.size()
+                  filaSolicitud >= mejoresCandidatos.size()
                ) {
                   JOptionPane.showMessageDialog(
                      Principal.this,
@@ -996,9 +988,7 @@ public class Principal extends JFrame {
                }
 
                Oferta oferta = ofertasActivasParaContratar.get(filaOferta);
-               Solicitud solicitud =
-            	        mejoresCandidatos.get(filaSolicitud);
-
+               Solicitud solicitud = mejoresCandidatos.get(filaSolicitud);
 
                boolean contratado = controlador.contratar(solicitud, oferta);
 
@@ -1009,7 +999,7 @@ public class Principal extends JFrame {
                      "Contratar",
                      JOptionPane.INFORMATION_MESSAGE
                   );
-                  
+
                   cargarOfertasEmpresa.run();
                } else {
                   JOptionPane.showMessageDialog(
