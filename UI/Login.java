@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class Login extends JDialog {
 
@@ -32,29 +34,27 @@ public class Login extends JDialog {
    }
 
    public Login(BolsaEmpleo controlador) {
+   	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
 
       setTitle("Login");
       setBounds(100, 100, 450, 290);
       getContentPane().setLayout(new BorderLayout());
+      contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(139, 69, 19))
       );
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
 
       JLabel lblNewLabel = new JLabel("Username:");
+      lblNewLabel.setForeground(new Color(160, 82, 45));
       lblNewLabel.setBounds(30, 40, 79, 16);
       contentPanel.add(lblNewLabel);
 
       JLabel lblNewLabel_1 = new JLabel("Contraseña:");
+      lblNewLabel_1.setForeground(new Color(160, 82, 45));
+      lblNewLabel_1.setBackground(new Color(160, 82, 45));
       lblNewLabel_1.setBounds(30, 116, 79, 16);
       contentPanel.add(lblNewLabel_1);
 
@@ -73,6 +73,8 @@ public class Login extends JDialog {
       contentPanel.add(lblNewLabel_2);
 
       JButton btnNewButton = new JButton("Registrar");
+      btnNewButton.setForeground(new Color(255, 255, 255));
+      btnNewButton.setBackground(new Color(205, 133, 63));
       btnNewButton.setBounds(323, 170, 97, 25);
       btnNewButton.addActionListener(
          new ActionListener() {
@@ -86,20 +88,16 @@ public class Login extends JDialog {
       contentPanel.add(btnNewButton);
       {
          JPanel buttonPane = new JPanel();
+         buttonPane.setBackground(new Color(255, 255, 240));
          buttonPane.setBorder(
-            new TitledBorder(
-               null,
-               "",
-               TitledBorder.LEADING,
-               TitledBorder.TOP,
-               null,
-               null
-            )
+            new LineBorder(new Color(205, 133, 63))
          );
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
             JButton okButton = new JButton("Login");
+            okButton.setForeground(new Color(255, 255, 255));
+            okButton.setBackground(new Color(205, 133, 63));
             okButton.setActionCommand("OK");
             okButton.addActionListener(
                new ActionListener() {
@@ -142,6 +140,8 @@ public class Login extends JDialog {
          }
          {
             JButton cancelButton = new JButton("Cancelar");
+            cancelButton.setForeground(new Color(255, 255, 255));
+            cancelButton.setBackground(new Color(205, 133, 63));
             cancelButton.setActionCommand("Cancel");
             cancelButton.addActionListener(
                new ActionListener() {

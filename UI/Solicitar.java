@@ -17,6 +17,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 public class Solicitar extends JDialog {
 
@@ -48,21 +50,16 @@ public class Solicitar extends JDialog {
       String puestoSugerido,
       int experienciaSugerida
    ) {
+   	setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
       this.solicitante = solicitante;
 
       setTitle("Solicitud");
       setBounds(100, 100, 450, 428);
       getContentPane().setLayout(new BorderLayout());
+      contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(
-         new TitledBorder(
-            null,
-            "",
-            TitledBorder.LEADING,
-            TitledBorder.TOP,
-            null,
-            null
-         )
+         new LineBorder(new Color(205, 133, 63))
       );
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
@@ -73,6 +70,7 @@ public class Solicitar extends JDialog {
       }
       {
          textField = new JTextField();
+         textField.setBackground(new Color(255, 255, 255));
          textField.setEditable(false);
          textField.setText(puestoSugerido);
          textField.setBounds(87, 28, 333, 22);
@@ -85,6 +83,7 @@ public class Solicitar extends JDialog {
          contentPanel.add(lblNewLabel_1);
       }
       JCheckBox chckBxDispuestoMudar = new JCheckBox("Dispuesto");
+      chckBxDispuestoMudar.setBackground(new Color(255, 255, 240));
       chckBxDispuestoMudar.setBounds(80, 143, 113, 25);
       contentPanel.add(chckBxDispuestoMudar);
       {
@@ -104,6 +103,7 @@ public class Solicitar extends JDialog {
       }
       {
          textField_1 = new JTextField();
+         textField_1.setBackground(new Color(255, 255, 255));
          textField_1.setEditable(false);
          textField_1.setText(String.valueOf(experienciaSugerida));
          textField_1.setBounds(89, 81, 113, 22);
@@ -125,20 +125,16 @@ public class Solicitar extends JDialog {
       contentPanel.add(spnMaxDeseado);
       {
          JPanel buttonPane = new JPanel();
+         buttonPane.setBackground(new Color(255, 255, 240));
          buttonPane.setBorder(
-            new TitledBorder(
-               null,
-               "",
-               TitledBorder.LEADING,
-               TitledBorder.TOP,
-               null,
-               null
-            )
+            new LineBorder(new Color(205, 133, 63))
          );
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
             JButton okButton = new JButton("Solicitar");
+            okButton.setBackground(new Color(255, 255, 255));
+            okButton.setForeground(new Color(205, 133, 63));
             okButton.setActionCommand("OK");
             buttonPane.add(okButton);
             getRootPane().setDefaultButton(okButton);
@@ -196,6 +192,8 @@ public class Solicitar extends JDialog {
          }
          {
             JButton cancelButton = new JButton("Cancelar");
+            cancelButton.setForeground(new Color(205, 133, 63));
+            cancelButton.setBackground(new Color(255, 255, 255));
             cancelButton.setActionCommand("Cancel");
             cancelButton.addActionListener(
                new ActionListener() {
