@@ -1007,6 +1007,7 @@ public class Principal extends JFrame {
                   );
 
                   cargarOfertasEmpresa.run();
+                  cargarContratar.run();
                } else {
                   JOptionPane.showMessageDialog(
                      Principal.this,
