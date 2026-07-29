@@ -3,7 +3,7 @@ package Logic;
 import java.io.*;
 import java.util.ArrayList;
 
-public class BolsaEmpleo {
+public class BolsaEmpleo implements IBolsaEmpleo {
 
    private String filePersonal = "Logs/personal.dat";
    private String fileEmpresas = "Logs/centros.dat";
