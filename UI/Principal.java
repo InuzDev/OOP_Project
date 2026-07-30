@@ -912,9 +912,7 @@ public class Principal extends JFrame {
             ofertasContratTbl.setModel(modeloOfertas);
             solicitudesContratTbl.setModel(modeloSolicitudes);
 
-            // La tabla de "mayor coincidencia" depende de Oferta.porcentajeCoincidencia,
-            // que necesita un algoritmo de comparacion aun no definido. Se deja vacia
-            // hasta que el equipo decida los criterios de coincidencia.
+           
 
             DefaultTableModel modeloMayor = new DefaultTableModel(
                new Object[] { "Nombre", "Puesto", "Coincidencia" },
