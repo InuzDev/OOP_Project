@@ -37,6 +37,7 @@ public class Peticion implements Serializable {
    public static final String CALCULAR_COINCIDENCIA = "CALCULAR_COINCIDENCIA";
    public static final String BUSCAR_MEJORES_CANDIDATOS =
       "BUSCAR_MEJORES_CANDIDATOS";
+
    public static final String DESCONECTAR = "DESCONECTAR";
 
    private String accion;
