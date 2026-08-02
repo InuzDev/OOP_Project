@@ -7,6 +7,7 @@ public class Empresa implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
+   private int contId;
    private String rnc;
    private String nombre;
    private String direccion;
@@ -22,7 +23,7 @@ public class Empresa implements Serializable {
    private ArrayList<Oferta> misOfertas;
 
    public Empresa(
-      String rnc,
+	  String rnc,
       String nombre,
       String direccion,
       String provincia,
@@ -46,6 +47,14 @@ public class Empresa implements Serializable {
 
       this.misOfertas = new ArrayList<>();
    }
+   
+   public int getContId() {
+	    return contId;
+	}
+
+	public void setContId(int contId) {
+	    this.contId = contId;
+	}
 
    public String getRnc() {
       return rnc;
