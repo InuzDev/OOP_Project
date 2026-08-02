@@ -58,7 +58,7 @@ public class Registrar extends JDialog {
    private IBolsaEmpleo controlador;
 
    /**
-    * Launch the application (standalone testing only).
+    * Launch the application.
     */
    public static void main(String[] args) {
       try {

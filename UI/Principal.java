@@ -72,9 +72,6 @@ public class Principal extends JFrame {
 
    /**
     * Create the frame.
-    *
-    * @param controlador   instancia compartida de BolsaEmpleo
-    * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
    public Principal(IBolsaEmpleo controlador, Object usuarioActual) {
       setForeground(new Color(0, 0, 0));
@@ -897,9 +894,6 @@ public class Principal extends JFrame {
                   });
                }
 
-               // Nota: idealmente esto se filtraria a las solicitudes relevantes para
-               // cada oferta. Por ahora se muestran todas las solicitudes activas del
-               // sistema, ya que el algoritmo de coincidencia aun no esta implementado.
                solicitudesParaContratar.addAll(
                   controlador.showListSolicitudes()
                );
