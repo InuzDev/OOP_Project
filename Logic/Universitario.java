@@ -16,7 +16,15 @@ public class Universitario extends Persona {
       String carrera,
       String universidad
    ) {
-      super(nombre, cedula, sexo, numeroTelefono, correo, provincia,aniosExperiencia);
+      super(
+         nombre,
+         cedula,
+         sexo,
+         numeroTelefono,
+         correo,
+         provincia,
+         aniosExperiencia
+      );
       this.carrera = carrera;
       this.universidad = universidad;
    }

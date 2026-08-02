@@ -1,6 +1,7 @@
 package UI;
 
 import Logic.BolsaEmpleo;
+import Logic.IBolsaEmpleo;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -21,7 +22,7 @@ public class Login extends JDialog {
    private final JPanel contentPanel = new JPanel();
    private JTextField textField;
    private JPasswordField textFieldPassword;
-   private BolsaEmpleo controlador;
+   private IBolsaEmpleo controlador;
 
    /**
     * Launch the application (standalone testing only).
@@ -39,7 +40,7 @@ public class Login extends JDialog {
    /**
     * Create the dialog.
     */
-   public Login(BolsaEmpleo controlador) {
+   public Login(IBolsaEmpleo controlador) {
       this.controlador = controlador;
 
       setTitle("Login");

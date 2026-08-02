@@ -2,6 +2,7 @@ package UI;
 
 import Logic.BolsaEmpleo;
 import Logic.Empresa;
+import Logic.IBolsaEmpleo;
 import Logic.Obrero;
 import Logic.Persona;
 import Logic.Representante;
@@ -54,7 +55,7 @@ public class Registrar extends JDialog {
    private JTextField representanteTxt;
    private JComboBox<String> tipoEmpresaCbx;
 
-   private BolsaEmpleo controlador;
+   private IBolsaEmpleo controlador;
 
    /**
     * Launch the application (standalone testing only).
@@ -72,7 +73,7 @@ public class Registrar extends JDialog {
    /**
     * Create the dialog.
     */
-   public Registrar(BolsaEmpleo controlador) {
+   public Registrar(IBolsaEmpleo controlador) {
       setBackground(new Color(255, 255, 255));
       this.controlador = controlador;
 
@@ -406,7 +407,8 @@ public class Registrar extends JDialog {
                         String correo = correoTxt.getText().trim();
                         String provincia = provinciaTxt.getText().trim();
                         String clave = new String(claveSoliTxt.getPassword());
-                        int aniosExperiencia = (Integer) spnExperienciaAnios.getValue();
+                        int aniosExperiencia =
+                           (Integer) spnExperienciaAnios.getValue();
 
                         if (
                            nombre.isEmpty() ||
@@ -424,7 +426,6 @@ public class Registrar extends JDialog {
                         }
 
                         Persona persona;
-                        
 
                         if (rdbtnUniversitario.isSelected()) {
                            persona = new Universitario(
@@ -439,7 +440,6 @@ public class Registrar extends JDialog {
                               universidadTxt.getText().trim()
                            );
                         } else if (rdbtnTecnico.isSelected()) {
-                          
                            persona = new Tecnico(
                               nombre,
                               cedula,
@@ -484,7 +484,8 @@ public class Registrar extends JDialog {
 
                         JOptionPane.showMessageDialog(
                            Registrar.this,
-                           "Registro exitoso.\nSu usuario es: " + usuario.getUsername(),
+                           "Registro exitoso.\nSu usuario es: " +
+                              usuario.getUsername(),
                            "Registrar",
                            JOptionPane.INFORMATION_MESSAGE
                         );

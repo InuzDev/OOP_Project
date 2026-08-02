@@ -1,6 +1,7 @@
 package UI;
 
 import Logic.BolsaEmpleo;
+import Logic.IBolsaEmpleo;
 import Logic.Oferta;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +29,7 @@ public class AgregarOferta extends JDialog {
    private JTextField txtDescripcion;
    private JTextField txtProvincia;
 
-   private BolsaEmpleo controlador;
+   private IBolsaEmpleo controlador;
    private String rncEmpresa;
 
    /**
@@ -50,7 +51,7 @@ public class AgregarOferta extends JDialog {
    /**
     * Create the dialog.
     */
-   public AgregarOferta(BolsaEmpleo controlador, String rncEmpresa) {
+   public AgregarOferta(IBolsaEmpleo controlador, String rncEmpresa) {
       setForeground(new Color(205, 133, 63));
       setBackground(new Color(205, 133, 63));
       this.controlador = controlador;

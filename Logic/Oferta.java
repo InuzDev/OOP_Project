@@ -172,4 +172,21 @@ public class Oferta implements Serializable {
    public boolean estaCompleta() {
       return cantidadPuestos == 0;
    }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (!(obj instanceof Oferta)) {
+         return false;
+      }
+
+      return this.codigo != null && this.codigo.equals(((Oferta) obj).codigo);
+   }
+
+   @Override
+   public int hashCode() {
+      return codigo == null ? 0 : codigo.hashCode();
+   }
 }

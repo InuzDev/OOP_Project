@@ -272,28 +272,64 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          return false;
       }
 
-      Persona persona = solicitud.getSolicitante();
-      persona.setEmpleada(true);
+      Oferta ofertaReal = buscarOfertaPorCodigo(oferta.getCodigo());
+      if (ofertaReal == null) {
+         return false;
+      }
+
+      int indiceSolicitud = listSolicitudes.indexOf(solicitud);
+      if (indiceSolicitud == -1) {
+         return false;
+      }
+      Solicitud solicitudReal = listSolicitudes.get(indiceSolicitud);
+
+      if (!ofertaReal.isActiva() || ofertaReal.getCantidadPuestos() <= 0) {
+         return false;
+      }
+
+      Persona personaReal = searchPersonalById(
+         solicitudReal.getSolicitante().getNumIdentificador()
+      );
+      if (personaReal == null) {
+         return false;
+      }
+
+      personaReal.setEmpleada(true);
       saveList(listPersonal, filePersonal);
 
-      oferta.setCantidadPuestos(oferta.getCantidadPuestos() - 1);
-      if (oferta.getCantidadPuestos() <= 0) {
-         oferta.completarOferta();
+      ofertaReal.setCantidadPuestos(ofertaReal.getCantidadPuestos() - 1);
+      if (ofertaReal.getCantidadPuestos() <= 0) {
+         ofertaReal.completarOferta();
       }
       saveList(listEmpresas, fileEmpresas);
 
-      listSolicitudes.remove(solicitud);
+      listSolicitudes.remove(indiceSolicitud);
       saveList(listSolicitudes, fileSolicitudes);
 
       return true;
    }
 
+   private Oferta buscarOfertaPorCodigo(String codigo) {
+      for (Empresa business : listEmpresas) {
+         Oferta encontrada = business.buscarOferta(codigo);
+         if (encontrada != null) {
+            return encontrada;
+         }
+      }
+      return null;
+   }
+
    public boolean renunciar(Persona persona) {
-      if (persona == null || !persona.isEmpleada()) {
+      if (persona == null) {
          return false;
       }
 
-      persona.setEmpleada(false);
+      Persona personaReal = searchPersonalById(persona.getNumIdentificador());
+      if (personaReal == null || !personaReal.isEmpleada()) {
+         return false;
+      }
+
+      personaReal.setEmpleada(false);
       saveList(listPersonal, filePersonal);
 
       return true;
@@ -352,6 +388,16 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          oferta.getTipoTrabajo().equalsIgnoreCase("Universitario")
       ) {
          puntos += 10;
+
+         Universitario universitario = (Universitario) persona;
+         if (
+            carreraRelacionadaConPuesto(
+               universitario.getCarrera(),
+               oferta.getPuesto()
+            )
+         ) {
+            puntos += 10;
+         }
       }
 
       if (
@@ -361,19 +407,46 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          puntos += 10;
       }
 
-
       if (
          persona instanceof Obrero &&
          oferta.getTipoTrabajo().equalsIgnoreCase("Obrero")
       ) {
          puntos += 10;
       }
-      
+
       if (persona.getAniosExperiencia() >= oferta.getExperienciaRequerida()) {
-          puntos += 10;
+         puntos += 20;
       }
 
       return puntos;
+   }
+
+   private boolean carreraRelacionadaConPuesto(String carrera, String puesto) {
+      if (carrera == null || puesto == null) {
+         return false;
+      }
+
+      String carreraNormalizada = carrera.trim().toLowerCase();
+      String puestoNormalizado = puesto.trim().toLowerCase();
+
+      if (carreraNormalizada.isEmpty() || puestoNormalizado.isEmpty()) {
+         return false;
+      }
+
+      if (
+         puestoNormalizado.contains(carreraNormalizada) ||
+         carreraNormalizada.contains(puestoNormalizado)
+      ) {
+         return true;
+      }
+
+      for (String palabra : carreraNormalizada.split("\\s+")) {
+         if (palabra.length() > 3 && puestoNormalizado.contains(palabra)) {
+            return true;
+         }
+      }
+
+      return false;
    }
 
    public ArrayList<Solicitud> buscarMejoresCandidatos(Oferta oferta) {
