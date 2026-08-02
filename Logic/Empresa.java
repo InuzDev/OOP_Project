@@ -7,7 +7,8 @@ public class Empresa implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
-   private int contId;
+   private static int contId = 1;
+   private int numIdentificador;
    private String rnc;
    private String nombre;
    private String direccion;
@@ -34,6 +35,7 @@ public class Empresa implements Serializable {
       Representante representante,
       Usuario usuario
    ) {
+	  this.numIdentificador = contId++;
       this.rnc = rnc;
       this.nombre = nombre;
       this.direccion = direccion;
@@ -48,12 +50,20 @@ public class Empresa implements Serializable {
       this.misOfertas = new ArrayList<>();
    }
    
-   public int getContId() {
+   public static int getContId() {
 	    return contId;
 	}
 
-	public void setContId(int contId) {
-	    this.contId = contId;
+	public static void setContId(int contId) {
+	    Empresa.contId = contId;
+	}
+
+	public int getNumIdentificador() {
+	    return numIdentificador;
+	}
+
+	public void setNumIdentificador(int numIdentificador) {
+	    this.numIdentificador = numIdentificador;
 	}
 
    public String getRnc() {
