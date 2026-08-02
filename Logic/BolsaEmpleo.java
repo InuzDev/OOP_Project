@@ -272,6 +272,10 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          return false;
       }
 
+      if (!oferta.isActiva() || oferta.getCantidadPuestos() <= 0) {
+         return false;
+      }
+
       Persona persona = solicitud.getSolicitante();
       persona.setEmpleada(true);
       saveList(listPersonal, filePersonal);
@@ -352,6 +356,16 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          oferta.getTipoTrabajo().equalsIgnoreCase("Universitario")
       ) {
          puntos += 10;
+
+         Universitario universitario = (Universitario) persona;
+         if (
+            carreraRelacionadaConPuesto(
+               universitario.getCarrera(),
+               oferta.getPuesto()
+            )
+         ) {
+            puntos += 10;
+         }
       }
 
       if (
@@ -361,19 +375,60 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          puntos += 10;
       }
 
-
       if (
          persona instanceof Obrero &&
          oferta.getTipoTrabajo().equalsIgnoreCase("Obrero")
       ) {
          puntos += 10;
       }
-      
-      if (persona.getAniosExperiencia() >= oferta.getExperienciaRequerida()) {
-          puntos += 10;
+
+      int aniosExperienciaPersona = obtenerAniosExperiencia(persona);
+      if (aniosExperienciaPersona >= oferta.getExperienciaRequerida()) {
+         puntos += 20;
       }
 
       return puntos;
+   }
+
+   private int obtenerAniosExperiencia(Persona persona) {
+      if (persona instanceof Universitario) {
+         return ((Universitario) persona).getAniosExperiencia();
+      }
+      if (persona instanceof Tecnico) {
+         return ((Tecnico) persona).getAniosExperiencia();
+      }
+      if (persona instanceof Obrero) {
+         return ((Obrero) persona).getAniosExperiencia();
+      }
+      return 0;
+   }
+
+   private boolean carreraRelacionadaConPuesto(String carrera, String puesto) {
+      if (carrera == null || puesto == null) {
+         return false;
+      }
+
+      String carreraNormalizada = carrera.trim().toLowerCase();
+      String puestoNormalizado = puesto.trim().toLowerCase();
+
+      if (carreraNormalizada.isEmpty() || puestoNormalizado.isEmpty()) {
+         return false;
+      }
+
+      if (
+         puestoNormalizado.contains(carreraNormalizada) ||
+         carreraNormalizada.contains(puestoNormalizado)
+      ) {
+         return true;
+      }
+
+      for (String palabra : carreraNormalizada.split("\\s+")) {
+         if (palabra.length() > 3 && puestoNormalizado.contains(palabra)) {
+            return true;
+         }
+      }
+
+      return false;
    }
 
    public ArrayList<Solicitud> buscarMejoresCandidatos(Oferta oferta) {
