@@ -16,6 +16,7 @@ public abstract class Persona implements Serializable {
    protected String correo;
    protected String provincia;
    protected boolean isEmpleada;
+   protected int aniosExperiencia;
 
    public Persona(
       String nombre,
@@ -23,7 +24,8 @@ public abstract class Persona implements Serializable {
       String sexo,
       String numeroTelefono,
       String correo,
-      String provincia
+      String provincia,
+      int aniosExperiencia
    ) {
       this.numIdentificador = contId++;
       this.nombre = nombre;
@@ -32,7 +34,9 @@ public abstract class Persona implements Serializable {
       this.numeroTelefono = numeroTelefono;
       this.correo = correo;
       this.provincia = provincia;
+      this.aniosExperiencia = aniosExperiencia;
       this.isEmpleada = false;
+      
    }
 
    public static int getContId() {
@@ -114,4 +118,11 @@ public abstract class Persona implements Serializable {
    public void setUsuarioEmpleado(Usuario usuarioEmpleado) {
       this.usuarioEmpleado = usuarioEmpleado;
    }
+   public int getAniosExperiencia() {
+	    return aniosExperiencia;
+	}
+
+	public void setAniosExperiencia(int aniosExperiencia) {
+	    this.aniosExperiencia = aniosExperiencia;
+	}
 }

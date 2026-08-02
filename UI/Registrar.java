@@ -406,6 +406,7 @@ public class Registrar extends JDialog {
                         String correo = correoTxt.getText().trim();
                         String provincia = provinciaTxt.getText().trim();
                         String clave = new String(claveSoliTxt.getPassword());
+                        int aniosExperiencia = (Integer) spnExperienciaAnios.getValue();
 
                         if (
                            nombre.isEmpty() ||
@@ -423,6 +424,7 @@ public class Registrar extends JDialog {
                         }
 
                         Persona persona;
+                        
 
                         if (rdbtnUniversitario.isSelected()) {
                            persona = new Universitario(
@@ -432,11 +434,12 @@ public class Registrar extends JDialog {
                               telefono,
                               correo,
                               provincia,
+                              aniosExperiencia,
                               carreraTxt.getText().trim(),
                               universidadTxt.getText().trim()
                            );
                         } else if (rdbtnTecnico.isSelected()) {
-                           int anios = (Integer) spnExperienciaAnios.getValue();
+                          
                            persona = new Tecnico(
                               nombre,
                               cedula,
@@ -445,7 +448,7 @@ public class Registrar extends JDialog {
                               correo,
                               provincia,
                               tecnicoTxt.getText().trim(),
-                              anios
+                              aniosExperiencia
                            );
                         } else if (rdbtnObrero.isSelected()) {
                            persona = new Obrero(
@@ -455,6 +458,7 @@ public class Registrar extends JDialog {
                               telefono,
                               correo,
                               provincia,
+                              aniosExperiencia,
                               habilidadesTxt.getText().trim()
                            );
                         } else {
@@ -480,7 +484,7 @@ public class Registrar extends JDialog {
 
                         JOptionPane.showMessageDialog(
                            Registrar.this,
-                           "Registro exitoso.",
+                           "Registro exitoso.\nSu usuario es: " + usuario.getUsername(),
                            "Registrar",
                            JOptionPane.INFORMATION_MESSAGE
                         );

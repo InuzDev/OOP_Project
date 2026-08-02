@@ -359,21 +359,18 @@ public class BolsaEmpleo implements IBolsaEmpleo {
          oferta.getTipoTrabajo().equalsIgnoreCase("Tecnico")
       ) {
          puntos += 10;
-
-         Tecnico tecnico = (Tecnico) persona;
-
-         if (
-            tecnico.getAniosExperiencia() >= oferta.getExperienciaRequerida()
-         ) {
-            puntos += 10;
-         }
       }
+
 
       if (
          persona instanceof Obrero &&
          oferta.getTipoTrabajo().equalsIgnoreCase("Obrero")
       ) {
          puntos += 10;
+      }
+      
+      if (persona.getAniosExperiencia() >= oferta.getExperienciaRequerida()) {
+          puntos += 10;
       }
 
       return puntos;

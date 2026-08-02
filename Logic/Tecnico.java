@@ -3,7 +3,7 @@ package Logic;
 public class Tecnico extends Persona {
 
    private String tecnicoProfesado;
-   private int aniosExperiencia;
+  
 
    public Tecnico(
       String nombre,
@@ -15,9 +15,9 @@ public class Tecnico extends Persona {
       String tecnicoProfesado,
       int aniosExperiencia
    ) {
-      super(nombre, cedula, sexo, numeroTelefono, correo, provincia);
+      super(nombre, cedula, sexo, numeroTelefono, correo, provincia, aniosExperiencia);
       this.tecnicoProfesado = tecnicoProfesado;
-      this.aniosExperiencia = aniosExperiencia;
+      
    }
 
    public String getTecnicoProfesado() {
@@ -28,11 +28,4 @@ public class Tecnico extends Persona {
       this.tecnicoProfesado = tecnicoProfesado;
    }
 
-   public int getAniosExperiencia() {
-      return aniosExperiencia;
-   }
-
-   public void setAniosExperiencia(int aniosExperiencia) {
-      this.aniosExperiencia = aniosExperiencia;
-   }
 }

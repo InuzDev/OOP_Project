@@ -11,9 +11,10 @@ public class Obrero extends Persona {
       String numeroTelefono,
       String correo,
       String provincia,
+      int aniosExperiencia,
       String habilidades
    ) {
-      super(nombre, cedula, sexo, numeroTelefono, correo, provincia);
+      super(nombre, cedula, sexo, numeroTelefono, correo, provincia, aniosExperiencia);
       this.habilidades = habilidades;
    }
 
