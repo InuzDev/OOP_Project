@@ -36,7 +36,6 @@ public abstract class Persona implements Serializable {
       this.provincia = provincia;
       this.aniosExperiencia = aniosExperiencia;
       this.isEmpleada = false;
-      
    }
 
    public static int getContId() {
@@ -118,11 +117,29 @@ public abstract class Persona implements Serializable {
    public void setUsuarioEmpleado(Usuario usuarioEmpleado) {
       this.usuarioEmpleado = usuarioEmpleado;
    }
-   public int getAniosExperiencia() {
-	    return aniosExperiencia;
-	}
 
-	public void setAniosExperiencia(int aniosExperiencia) {
-	    this.aniosExperiencia = aniosExperiencia;
-	}
+   public int getAniosExperiencia() {
+      return aniosExperiencia;
+   }
+
+   public void setAniosExperiencia(int aniosExperiencia) {
+      this.aniosExperiencia = aniosExperiencia;
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (!(obj instanceof Persona)) {
+         return false;
+      }
+
+      return this.numIdentificador == ((Persona) obj).numIdentificador;
+   }
+
+   @Override
+   public int hashCode() {
+      return Integer.hashCode(numIdentificador);
+   }
 }

@@ -2,6 +2,7 @@ package UI;
 
 import Logic.BolsaEmpleo;
 import Logic.Empresa;
+import Logic.IBolsaEmpleo;
 import Logic.Obrero;
 import Logic.Oferta;
 import Logic.Persona;
@@ -40,7 +41,7 @@ public class Principal extends JFrame {
    private JTable tblOfertasEnSolicitud;
    private JTable tblMisSolicitudes;
 
-   private BolsaEmpleo controlador;
+   private IBolsaEmpleo controlador;
    private Persona personaActual;
    private Empresa empresaActual;
 
@@ -75,7 +76,7 @@ public class Principal extends JFrame {
     * @param controlador   instancia compartida de BolsaEmpleo
     * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
-   public Principal(BolsaEmpleo controlador, Object usuarioActual) {
+   public Principal(IBolsaEmpleo controlador, Object usuarioActual) {
       setForeground(new Color(0, 0, 0));
       this.controlador = controlador;
 
@@ -574,15 +575,14 @@ public class Principal extends JFrame {
       panel_5.setLayout(null);
 
       if (empresaActual != null) {
-    	    tabbedPane.setEnabledAt(0, false);
-    	    tabbedPane.setEnabledAt(1, false);
-    	    tabbedPane.setSelectedIndex(2);
-
-    	} else if (personaActual != null) {
-    	    tabbedPane.setEnabledAt(2, false);
-    	    tabbedPane.setEnabledAt(3, false);
-    	    tabbedPane.setSelectedIndex(0);
-    	}
+         tabbedPane.setEnabledAt(0, false);
+         tabbedPane.setEnabledAt(1, false);
+         tabbedPane.setSelectedIndex(2);
+      } else if (personaActual != null) {
+         tabbedPane.setEnabledAt(2, false);
+         tabbedPane.setEnabledAt(3, false);
+         tabbedPane.setSelectedIndex(0);
+      }
 
       if (personaActual != null) {
          lblNombreEmp.setText(personaActual.getNombre());
@@ -914,8 +914,6 @@ public class Principal extends JFrame {
 
             ofertasContratTbl.setModel(modeloOfertas);
             solicitudesContratTbl.setModel(modeloSolicitudes);
-
-           
 
             DefaultTableModel modeloMayor = new DefaultTableModel(
                new Object[] { "Nombre", "Puesto", "Coincidencia" },

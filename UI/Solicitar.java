@@ -1,9 +1,11 @@
 package UI;
 
 import Logic.BolsaEmpleo;
+import Logic.IBolsaEmpleo;
 import Logic.Persona;
 import Logic.Solicitud;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,9 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 public class Solicitar extends JDialog {
 
@@ -26,7 +27,7 @@ public class Solicitar extends JDialog {
    private JTextField textField;
    private JTextField textField_1;
 
-   private BolsaEmpleo controlador;
+   private IBolsaEmpleo controlador;
    private Persona solicitante;
 
    public static void main(String[] args) {
@@ -45,12 +46,12 @@ public class Solicitar extends JDialog {
    }
 
    public Solicitar(
-      BolsaEmpleo controlador,
+      IBolsaEmpleo controlador,
       Persona solicitante,
       String puestoSugerido,
       int experienciaSugerida
    ) {
-   	setBackground(new Color(255, 255, 240));
+      setBackground(new Color(255, 255, 240));
       this.controlador = controlador;
       this.solicitante = solicitante;
 
@@ -58,9 +59,7 @@ public class Solicitar extends JDialog {
       setBounds(100, 100, 450, 428);
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(255, 255, 240));
-      contentPanel.setBorder(
-         new LineBorder(new Color(205, 133, 63))
-      );
+      contentPanel.setBorder(new LineBorder(new Color(205, 133, 63)));
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
       {
@@ -126,9 +125,7 @@ public class Solicitar extends JDialog {
       {
          JPanel buttonPane = new JPanel();
          buttonPane.setBackground(new Color(255, 255, 240));
-         buttonPane.setBorder(
-            new LineBorder(new Color(205, 133, 63))
-         );
+         buttonPane.setBorder(new LineBorder(new Color(205, 133, 63)));
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {

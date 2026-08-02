@@ -6,6 +6,9 @@ public class Solicitud implements Serializable {
 
    private static final long serialVersionUID = 1L;
 
+   protected static int contId = 1;
+   private int idSolicitud;
+
    private Persona solicitante;
    private String puestoDeseado;
    private float salarioMinDeseado;
@@ -19,11 +22,16 @@ public class Solicitud implements Serializable {
       float salarioMaxDeseado,
       boolean dispMudanza
    ) {
+      this.idSolicitud = contId++;
       this.solicitante = solicitante;
       this.puestoDeseado = puestoDeseado;
       this.salarioMinDeseado = salarioMinDeseado;
       this.salarioMaxDeseado = salarioMaxDeseado;
       this.dispMudanza = dispMudanza;
+   }
+
+   public int getIdSolicitud() {
+      return idSolicitud;
    }
 
    public Persona getSolicitante() {
@@ -64,5 +72,22 @@ public class Solicitud implements Serializable {
 
    public void setDispMudanza(boolean dispMudanza) {
       this.dispMudanza = dispMudanza;
+   }
+
+   @Override
+   public boolean equals(Object obj) {
+      if (this == obj) {
+         return true;
+      }
+      if (!(obj instanceof Solicitud)) {
+         return false;
+      }
+
+      return this.idSolicitud == ((Solicitud) obj).idSolicitud;
+   }
+
+   @Override
+   public int hashCode() {
+      return Integer.hashCode(idSolicitud);
    }
 }
