@@ -11,15 +11,36 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Servidor {
 
    private final int puerto;
    private final BolsaEmpleo controlador;
+   private final ScheduledExecutorService programadorRespaldos =
+      Executors.newSingleThreadScheduledExecutor();
 
    public Servidor(int puerto, BolsaEmpleo controlador) {
       this.puerto = puerto;
       this.controlador = controlador;
+   }
+
+   public void iniciarRespaldosAutomaticos(int intervaloMinutos) {
+      programadorRespaldos.scheduleAtFixedRate(
+         controlador::crearRespaldo,
+         0,
+         intervaloMinutos,
+         TimeUnit.MINUTES
+      );
+      System.out.println(
+         "Respaldo automatico programado cada " +
+            intervaloMinutos +
+            " minuto(s)."
+      );
    }
 
    public void iniciar() throws IOException {
@@ -44,14 +65,83 @@ public class Servidor {
 
    public static void main(String[] args) throws IOException {
       int puerto = 5000;
+      int intervaloRespaldoMinutos = 5;
 
       if (args.length > 0) {
          puerto = Integer.parseInt(args[0]);
       }
+      if (args.length > 1) {
+         intervaloRespaldoMinutos = Integer.parseInt(args[1]);
+      }
 
       BolsaEmpleo controlador = new BolsaEmpleo();
       Servidor servidor = new Servidor(puerto, controlador);
-      servidor.iniciar();
+
+      servidor.iniciarRespaldosAutomaticos(intervaloRespaldoMinutos);
+
+      Thread hiloServidor = new Thread(() -> {
+         try {
+            servidor.iniciar();
+         } catch (IOException e) {
+            System.out.println("El servidor se detuvo: " + e.getMessage());
+         }
+      });
+      hiloServidor.setDaemon(true);
+      hiloServidor.start();
+
+      servidor.consolaAdministracion(controlador);
+   }
+
+   private void consolaAdministracion(BolsaEmpleo controlador) {
+      Scanner lector = new Scanner(System.in);
+
+      System.out.println();
+      System.out.println(
+         "Consola de administracion: respaldo | listar | restaurar <nombre> | salir"
+      );
+
+      while (true) {
+         System.out.print("> ");
+         String linea = lector.nextLine().trim();
+
+         if (linea.isEmpty()) {
+            continue;
+         }
+
+         if (linea.equalsIgnoreCase("salir")) {
+            System.out.println(
+               "Cerrando consola de administracion (el servidor sigue activo)."
+            );
+            break;
+         }
+
+         if (linea.equalsIgnoreCase("respaldo")) {
+            controlador.crearRespaldo();
+            continue;
+         }
+
+         if (linea.equalsIgnoreCase("listar")) {
+            List<String> respaldos = controlador.listarRespaldos();
+            if (respaldos.isEmpty()) {
+               System.out.println("No hay respaldos todavia.");
+            } else {
+               for (String nombre : respaldos) {
+                  System.out.println("  - " + nombre);
+               }
+            }
+            continue;
+         }
+
+         if (linea.toLowerCase().startsWith("restaurar ")) {
+            String nombre = linea.substring("restaurar ".length()).trim();
+            controlador.restaurar(nombre);
+            continue;
+         }
+
+         System.out.println(
+            "Comando desconocido. Use: respaldo | listar | restaurar <nombre> | salir"
+         );
+      }
    }
 
    private static class ManejadorCliente implements Runnable {
@@ -209,6 +299,9 @@ public class Servidor {
                }
             }
          } catch (Exception e) {
+            // Cualquier problema al despachar (parametro con el tipo equivocado,
+            // etc.) se devuelve como una Respuesta de error en vez de tumbar
+            // el hilo del cliente o el servidor completo.
             return Respuesta.error(
                "Error procesando '" + accion + "': " + e.getMessage()
             );
