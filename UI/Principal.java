@@ -574,12 +574,15 @@ public class Principal extends JFrame {
       panel_5.setLayout(null);
 
       if (empresaActual != null) {
-         tabbedPane.setEnabledAt(0, false);
-         tabbedPane.setEnabledAt(1, false);
-      } else if (personaActual != null) {
-         tabbedPane.setEnabledAt(2, false);
-         tabbedPane.setEnabledAt(3, false);
-      }
+    	    tabbedPane.setEnabledAt(0, false);
+    	    tabbedPane.setEnabledAt(1, false);
+    	    tabbedPane.setSelectedIndex(2);
+
+    	} else if (personaActual != null) {
+    	    tabbedPane.setEnabledAt(2, false);
+    	    tabbedPane.setEnabledAt(3, false);
+    	    tabbedPane.setSelectedIndex(0);
+    	}
 
       if (personaActual != null) {
          lblNombreEmp.setText(personaActual.getNombre());
