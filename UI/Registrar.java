@@ -551,7 +551,7 @@ public class Registrar extends JDialog {
 
                         JOptionPane.showMessageDialog(
                            Registrar.this,
-                           "Registro exitoso.",
+                           "Registro exitoso.\nSu usuario es: " + usuario.getUsername(),
                            "Registrar",
                            JOptionPane.INFORMATION_MESSAGE
                         );
