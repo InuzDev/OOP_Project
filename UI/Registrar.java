@@ -646,5 +646,7 @@ public class Registrar extends JDialog {
       panelUniversitario.setVisible(true);
       panelTecnico.setVisible(false);
       panelObrero.setVisible(false);
+      setLocationRelativeTo(null);
+      
    }
 }

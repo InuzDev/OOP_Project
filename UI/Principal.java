@@ -10,6 +10,7 @@ import Logic.Solicitud;
 import Logic.Tecnico;
 import Logic.Universitario;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +45,7 @@ public class Principal extends JFrame {
    private IBolsaEmpleo controlador;
    private Persona personaActual;
    private Empresa empresaActual;
+   private Dimension dim = null;
 
    private List<Solicitud> misSolicitudesActuales = new ArrayList<>();
    private List<Oferta> ofertasEnSolicitud = new ArrayList<>();
@@ -83,9 +85,14 @@ public class Principal extends JFrame {
          this.empresaActual = (Empresa) usuarioActual;
       }
 
+      setResizable(false);
       setTitle("Bolsa de Empleos");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 1057, 751);
+
+      dim = getToolkit().getScreenSize();
+      setSize(dim.width, dim.height - 38);
+      setLocationRelativeTo(null);
 
       JMenuBar menuBar = new JMenuBar();
       menuBar.setBackground(new Color(255, 255, 240));
@@ -94,8 +101,21 @@ public class Principal extends JFrame {
       JMenu mnNewMenu = new JMenu("Administracion");
       menuBar.add(mnNewMenu);
 
-      JMenuItem mntmNewMenuItem = new JMenuItem("Manejar Solicitudes");
+      JMenuItem mntmNewMenuItem = new JMenuItem("Datos");
       mnNewMenu.add(mntmNewMenuItem);
+      
+      mntmNewMenuItem.addActionListener(new ActionListener() {
+    	    @Override
+    	    public void actionPerformed(ActionEvent e) {
+
+    	        DatosBolsa dialogo = new DatosBolsa(controlador);
+    	        dialogo.setModal(true);
+    	        dialogo.setLocationRelativeTo(Principal.this);
+    	        dialogo.setVisible(true);
+
+    	    }
+    	});
+      
       contentPane = new JPanel();
       contentPane.setBorder(
          new TitledBorder(

@@ -45,6 +45,7 @@ public class ModificarEmpleado extends JDialog {
       getContentPane().setBackground(new Color(205, 133, 63));
       setTitle("Datos");
       setBounds(100, 100, 425, 492);
+      setLocationRelativeTo(null); 
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(205, 133, 63));
       contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

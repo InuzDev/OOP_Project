@@ -57,6 +57,7 @@ public class Solicitar extends JDialog {
 
       setTitle("Solicitud");
       setBounds(100, 100, 450, 428);
+      setLocationRelativeTo(null);
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(new LineBorder(new Color(205, 133, 63)));

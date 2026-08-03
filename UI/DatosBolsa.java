@@ -46,6 +46,8 @@ public class DatosBolsa extends JDialog {
 		setBackground(new Color(255, 250, 240));
 		setTitle("Datos");
 		setBounds(100, 100, 1003, 774);
+		setLocationRelativeTo(null);
+		  
 		getContentPane().setLayout(new BorderLayout());
 		
 		contentPanel.setBackground(new Color(255, 255, 240));

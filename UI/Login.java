@@ -45,6 +45,7 @@ public class Login extends JDialog {
 
       setTitle("Login");
       setBounds(100, 100, 450, 290);
+      setLocationRelativeTo(null);
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(new LineBorder(new Color(139, 69, 19)));
