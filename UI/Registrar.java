@@ -111,6 +111,7 @@ public class Registrar extends JDialog {
       panelUniversitario.add(carreraTxt);
 
       JPanel panelTecnico = new JPanel();
+      panelTecnico.setBackground(new Color(255, 255, 240));
       panelTecnico.setLayout(null);
       panelTecnico.setBorder(
          new TitledBorder(
@@ -135,6 +136,7 @@ public class Registrar extends JDialog {
       panelTecnico.add(tecnicoTxt);
 
       JPanel panelObrero = new JPanel();
+      panelObrero.setBackground(new Color(255, 255, 240));
       panelObrero.setLayout(null);
       panelObrero.setBorder(
          new TitledBorder(
