@@ -43,8 +43,9 @@ public class Login extends JDialog {
    public Login(IBolsaEmpleo controlador) {
       this.controlador = controlador;
 
-      setTitle("Login");
+      setTitle("Login  -  Jobseeker");
       setBounds(100, 100, 450, 290);
+      setLocationRelativeTo(null);
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setBackground(new Color(255, 255, 240));
       contentPanel.setBorder(new LineBorder(new Color(139, 69, 19)));

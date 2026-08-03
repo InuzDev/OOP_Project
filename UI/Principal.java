@@ -10,7 +10,9 @@ import Logic.Solicitud;
 import Logic.Tecnico;
 import Logic.Universitario;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class Principal extends JFrame {
    private IBolsaEmpleo controlador;
    private Persona personaActual;
    private Empresa empresaActual;
+   private Dimension dim = null;
 
    private List<Solicitud> misSolicitudesActuales = new ArrayList<>();
    private List<Oferta> ofertasEnSolicitud = new ArrayList<>();
@@ -72,9 +75,6 @@ public class Principal extends JFrame {
 
    /**
     * Create the frame.
-    *
-    * @param controlador   instancia compartida de BolsaEmpleo
-    * @param usuarioActual el Persona o Empresa que inicio sesion (puede ser null en pruebas)
     */
    public Principal(IBolsaEmpleo controlador, Object usuarioActual) {
       setForeground(new Color(0, 0, 0));
@@ -86,9 +86,14 @@ public class Principal extends JFrame {
          this.empresaActual = (Empresa) usuarioActual;
       }
 
+      setResizable(false);
       setTitle("Bolsa de Empleos");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 1057, 751);
+
+      dim = getToolkit().getScreenSize();
+      setSize(dim.width, dim.height - 38);
+      setLocationRelativeTo(null);
 
       JMenuBar menuBar = new JMenuBar();
       menuBar.setBackground(new Color(255, 255, 240));
@@ -97,8 +102,49 @@ public class Principal extends JFrame {
       JMenu mnNewMenu = new JMenu("Administracion");
       menuBar.add(mnNewMenu);
 
-      JMenuItem mntmNewMenuItem = new JMenuItem("Manejar Solicitudes");
+      JMenuItem mntmNewMenuItem = new JMenuItem("Datos");
       mnNewMenu.add(mntmNewMenuItem);
+
+      mntmNewMenuItem.addActionListener(
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               DatosBolsa dialogo = new DatosBolsa(controlador);
+               dialogo.setModal(true);
+               dialogo.setLocationRelativeTo(Principal.this);
+               dialogo.setVisible(true);
+            }
+         }
+      );
+
+      JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
+      mnNewMenu.add(mntmCerrarSesion);
+
+      mntmCerrarSesion.addActionListener(
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               int confirmacion = JOptionPane.showConfirmDialog(
+                  Principal.this,
+                  "¿Seguro que desea cerrar sesion?",
+                  "Cerrar Sesion",
+                  JOptionPane.YES_NO_OPTION
+               );
+
+               if (confirmacion != JOptionPane.YES_OPTION) {
+                  return;
+               }
+
+               // Se reutiliza el mismo controlador (la conexion al servidor, si
+               // es remoto, se mantiene abierta) - solo se vuelve a pedir login.
+               Login login = new Login(controlador);
+               login.setLocationRelativeTo(null);
+               login.setVisible(true);
+               dispose();
+            }
+         }
+      );
+
       contentPane = new JPanel();
       contentPane.setBorder(
          new TitledBorder(
@@ -116,7 +162,7 @@ public class Principal extends JFrame {
       JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
       tabbedPane.setBackground(new Color(255, 255, 255));
       tabbedPane.setBorder(new LineBorder(new Color(160, 82, 45)));
-      tabbedPane.setBounds(0, 47, 1039, 631);
+      tabbedPane.setBounds(0, 47, 1914, 948);
       contentPane.add(tabbedPane);
 
       JPanel panelEmpleado = new JPanel();
@@ -126,7 +172,7 @@ public class Principal extends JFrame {
       panelEmpleado.setLayout(null);
 
       JPanel panel_4 = new JPanel();
-      panel_4.setBounds(44, 71, 388, 466);
+      panel_4.setBounds(44, 71, 663, 737);
       panelEmpleado.add(panel_4);
       panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
 
@@ -137,31 +183,36 @@ public class Principal extends JFrame {
       scrollMisSolicitudes.setViewportView(tblMisSolicitudes);
 
       JLabel lblNewLabel_17 = new JLabel("Mis solicitudes actuales");
+      lblNewLabel_17.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_17.setForeground(new Color(139, 69, 19));
-      lblNewLabel_17.setBounds(44, 42, 177, 16);
+      lblNewLabel_17.setBounds(44, 42, 277, 16);
       panelEmpleado.add(lblNewLabel_17);
 
       JButton btnRetirarSolicitud = new JButton("Retirar");
+      btnRetirarSolicitud.setFont(new Font("Tahoma", Font.PLAIN, 21));
       btnRetirarSolicitud.setBackground(new Color(255, 255, 255));
       btnRetirarSolicitud.setForeground(new Color(139, 69, 19));
-      btnRetirarSolicitud.setBounds(335, 550, 97, 25);
+      btnRetirarSolicitud.setBounds(539, 822, 168, 34);
       panelEmpleado.add(btnRetirarSolicitud);
 
       JLabel lblNewLabel_18 = new JLabel("Mis datos");
+      lblNewLabel_18.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_18.setForeground(new Color(139, 69, 19));
-      lblNewLabel_18.setBounds(540, 46, 56, 16);
+      lblNewLabel_18.setBounds(1020, 46, 154, 16);
       panelEmpleado.add(lblNewLabel_18);
 
       JPanel panel = new JPanel();
-      panel.setBounds(539, 71, 413, 466);
+      panel.setBounds(1021, 71, 663, 737);
       panelEmpleado.add(panel);
       panel.setLayout(null);
 
       JLabel lblNewLabel_19 = new JLabel("Empleado:");
-      lblNewLabel_19.setBounds(12, 408, 62, 16);
+      lblNewLabel_19.setFont(new Font("Tahoma", Font.PLAIN, 24));
+      lblNewLabel_19.setBounds(12, 632, 139, 32);
       panel.add(lblNewLabel_19);
 
       JButton btnRenunciarEmpleo = new JButton("Renunciar");
+      btnRenunciarEmpleo.setFont(new Font("Tahoma", Font.PLAIN, 21));
       btnRenunciarEmpleo.setBackground(new Color(255, 255, 255));
       btnRenunciarEmpleo.setForeground(new Color(139, 69, 19));
       btnRenunciarEmpleo.addActionListener(
@@ -169,67 +220,89 @@ public class Principal extends JFrame {
             public void actionPerformed(ActionEvent e) {}
          }
       );
-      btnRenunciarEmpleo.setBounds(304, 404, 97, 25);
+      btnRenunciarEmpleo.setBounds(480, 634, 171, 38);
       panel.add(btnRenunciarEmpleo);
 
+      JButton btnModificarDatos = new JButton("Modificar Datos");
+      btnModificarDatos.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      btnModificarDatos.setBackground(new Color(255, 255, 255));
+      btnModificarDatos.setForeground(new Color(139, 69, 19));
+      btnModificarDatos.setBounds(670, 634, 220, 38);
+      panel.add(btnModificarDatos);
+
       JLabel lblNewLabel_20 = new JLabel("Nombre:");
-      lblNewLabel_20.setBounds(12, 37, 56, 16);
+      lblNewLabel_20.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_20.setBounds(12, 65, 139, 16);
       panel.add(lblNewLabel_20);
 
       JLabel lblNewLabel_21 = new JLabel("Cedula: ");
-      lblNewLabel_21.setBounds(12, 90, 56, 16);
+      lblNewLabel_21.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_21.setBounds(12, 146, 139, 16);
       panel.add(lblNewLabel_21);
 
       JLabel lblSexo = new JLabel("Sexo: ");
-      lblSexo.setBounds(12, 196, 56, 16);
+      lblSexo.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblSexo.setBounds(12, 308, 101, 16);
       panel.add(lblSexo);
 
       JLabel lblNewLabel_22 = new JLabel("Telefono:");
-      lblNewLabel_22.setBounds(12, 143, 56, 16);
+      lblNewLabel_22.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_22.setBounds(12, 227, 101, 16);
       panel.add(lblNewLabel_22);
 
       JLabel lblNewLabel_23 = new JLabel("Correo:");
-      lblNewLabel_23.setBounds(12, 249, 56, 16);
+      lblNewLabel_23.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_23.setBounds(12, 389, 101, 16);
       panel.add(lblNewLabel_23);
 
       JLabel lblNewLabel_24 = new JLabel("Provincia:");
-      lblNewLabel_24.setBounds(12, 302, 56, 16);
+      lblNewLabel_24.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_24.setBounds(12, 470, 101, 16);
       panel.add(lblNewLabel_24);
 
       JLabel lblNewLabel_25 = new JLabel("Educacion:");
-      lblNewLabel_25.setBounds(12, 355, 62, 16);
+      lblNewLabel_25.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_25.setBounds(12, 551, 118, 16);
       panel.add(lblNewLabel_25);
 
       JLabel lblNombreEmp = new JLabel("N/A");
-      lblNombreEmp.setBounds(80, 37, 258, 16);
+      lblNombreEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNombreEmp.setBounds(176, 53, 363, 38);
       panel.add(lblNombreEmp);
 
       JLabel lblCedulaEmp = new JLabel("N/A");
-      lblCedulaEmp.setBounds(80, 90, 258, 16);
+      lblCedulaEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblCedulaEmp.setBounds(176, 138, 363, 32);
       panel.add(lblCedulaEmp);
 
       JLabel lblTelefonoEmp = new JLabel("N/A");
-      lblTelefonoEmp.setBounds(80, 143, 258, 16);
+      lblTelefonoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblTelefonoEmp.setBounds(176, 219, 363, 32);
       panel.add(lblTelefonoEmp);
 
       JLabel lblSexoEmp = new JLabel("N/A");
-      lblSexoEmp.setBounds(80, 196, 258, 16);
+      lblSexoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblSexoEmp.setBounds(176, 300, 363, 32);
       panel.add(lblSexoEmp);
 
       JLabel lblCorreoEmp = new JLabel("N/A");
-      lblCorreoEmp.setBounds(80, 249, 258, 16);
+      lblCorreoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblCorreoEmp.setBounds(176, 381, 363, 32);
       panel.add(lblCorreoEmp);
 
       JLabel lblProvinciaEmp = new JLabel("N/A");
-      lblProvinciaEmp.setBounds(80, 302, 258, 16);
+      lblProvinciaEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblProvinciaEmp.setBounds(176, 462, 363, 32);
       panel.add(lblProvinciaEmp);
 
       JLabel lblTipoEmpleado = new JLabel("N/A");
-      lblTipoEmpleado.setBounds(80, 355, 258, 16);
+      lblTipoEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblTipoEmpleado.setBounds(176, 543, 363, 32);
       panel.add(lblTipoEmpleado);
 
       JLabel lblEstaEmpleado = new JLabel("N/A");
-      lblEstaEmpleado.setBounds(80, 408, 190, 16);
+      lblEstaEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 24));
+      lblEstaEmpleado.setBounds(176, 640, 237, 24);
       panel.add(lblEstaEmpleado);
 
       JPanel panelSolicitar = new JPanel();
@@ -239,7 +312,7 @@ public class Principal extends JFrame {
       panelSolicitar.setLayout(null);
 
       JScrollPane scrollPane = new JScrollPane();
-      scrollPane.setBounds(33, 40, 442, 510);
+      scrollPane.setBounds(33, 40, 737, 824);
       panelSolicitar.add(scrollPane);
 
       tblOfertasEnSolicitud = new JTable();
@@ -248,118 +321,143 @@ public class Principal extends JFrame {
       JPanel panel_1 = new JPanel();
       panel_1.setBorder(new LineBorder(new Color(139, 69, 19)));
       panel_1.setLayout(null);
-      panel_1.setBounds(508, 43, 310, 507);
+      panel_1.setBounds(903, 40, 658, 824);
       panelSolicitar.add(panel_1);
 
       JLabel label_10 = new JLabel("Puesto: ");
-      label_10.setBounds(12, 27, 56, 16);
+      label_10.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_10.setBounds(12, 54, 121, 16);
       panel_1.add(label_10);
 
       JLabel label_11 = new JLabel("Vacantes: ");
-      label_11.setBounds(12, 70, 68, 16);
+      label_11.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_11.setBounds(12, 124, 121, 16);
       panel_1.add(label_11);
 
       JLabel label_12 = new JLabel("Sexo:");
-      label_12.setBounds(12, 156, 56, 16);
+      label_12.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_12.setBounds(12, 264, 121, 16);
       panel_1.add(label_12);
 
       JLabel label_13 = new JLabel("Licencia: ");
-      label_13.setBounds(12, 113, 56, 16);
+      label_13.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_13.setBounds(12, 194, 121, 16);
       panel_1.add(label_13);
 
       JLabel label_14 = new JLabel("Mudanza:");
-      label_14.setBounds(12, 199, 56, 16);
+      label_14.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_14.setBounds(12, 334, 121, 16);
       panel_1.add(label_14);
 
       JLabel label_15 = new JLabel("Salario Min:");
-      label_15.setBounds(12, 242, 78, 16);
+      label_15.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_15.setBounds(12, 404, 121, 16);
       panel_1.add(label_15);
 
       JLabel label_16 = new JLabel("Provincia:");
-      label_16.setBounds(12, 328, 68, 16);
+      label_16.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_16.setBounds(12, 544, 121, 16);
       panel_1.add(label_16);
 
       JLabel label_17 = new JLabel("Salario Max:");
-      label_17.setBounds(12, 285, 78, 16);
+      label_17.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_17.setBounds(12, 474, 121, 16);
       panel_1.add(label_17);
 
       JLabel label_18 = new JLabel("Experiencia:");
-      label_18.setBounds(12, 371, 78, 16);
+      label_18.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_18.setBounds(12, 614, 121, 16);
       panel_1.add(label_18);
 
       JLabel label_19 = new JLabel("Estado:");
-      label_19.setBounds(12, 457, 56, 16);
+      label_19.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_19.setBounds(12, 754, 121, 16);
       panel_1.add(label_19);
 
       JLabel label_20 = new JLabel("Descripcion:");
-      label_20.setBounds(12, 414, 88, 16);
+      label_20.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_20.setBounds(12, 684, 121, 16);
       panel_1.add(label_20);
 
       JLabel lblPuestoSolicitar = new JLabel("N/A");
-      lblPuestoSolicitar.setBounds(102, 27, 184, 16);
+      lblPuestoSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblPuestoSolicitar.setBounds(140, 49, 390, 26);
       panel_1.add(lblPuestoSolicitar);
 
       JLabel lblVacantesSolicitar = new JLabel("N/A");
-      lblVacantesSolicitar.setBounds(102, 70, 184, 16);
+      lblVacantesSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblVacantesSolicitar.setBounds(140, 120, 390, 26);
       panel_1.add(lblVacantesSolicitar);
 
       JLabel lblLicenciaNecesitada = new JLabel("N/A");
-      lblLicenciaNecesitada.setBounds(102, 113, 184, 16);
+      lblLicenciaNecesitada.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblLicenciaNecesitada.setBounds(140, 190, 390, 26);
       panel_1.add(lblLicenciaNecesitada);
 
       JLabel lblSexoSolicitar = new JLabel("N/A");
-      lblSexoSolicitar.setBounds(102, 156, 184, 16);
+      lblSexoSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblSexoSolicitar.setBounds(140, 260, 390, 26);
       panel_1.add(lblSexoSolicitar);
 
       JLabel lblMudanzaSolicitar = new JLabel("N/A");
-      lblMudanzaSolicitar.setBounds(102, 199, 184, 16);
+      lblMudanzaSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblMudanzaSolicitar.setBounds(140, 330, 390, 26);
       panel_1.add(lblMudanzaSolicitar);
 
       JLabel lblSalarioMinSolicitar = new JLabel("N/A");
-      lblSalarioMinSolicitar.setBounds(102, 242, 184, 16);
+      lblSalarioMinSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblSalarioMinSolicitar.setBounds(140, 400, 390, 26);
       panel_1.add(lblSalarioMinSolicitar);
 
       JLabel lblSalarioMaxSolic = new JLabel("N/A");
-      lblSalarioMaxSolic.setBounds(102, 285, 184, 16);
+      lblSalarioMaxSolic.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblSalarioMaxSolic.setBounds(140, 470, 390, 26);
       panel_1.add(lblSalarioMaxSolic);
 
       JLabel lblProvinciaSoli = new JLabel("N/A");
-      lblProvinciaSoli.setBounds(101, 328, 185, 16);
+      lblProvinciaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblProvinciaSoli.setBounds(139, 540, 391, 26);
       panel_1.add(lblProvinciaSoli);
 
       JLabel lblExperienciaSoli = new JLabel("N/A");
-      lblExperienciaSoli.setBounds(101, 371, 185, 16);
+      lblExperienciaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblExperienciaSoli.setBounds(139, 610, 391, 26);
       panel_1.add(lblExperienciaSoli);
 
       JLabel lblDescripcionSoli = new JLabel("N/A");
-      lblDescripcionSoli.setBounds(101, 414, 185, 16);
+      lblDescripcionSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblDescripcionSoli.setBounds(139, 680, 391, 26);
       panel_1.add(lblDescripcionSoli);
 
       JLabel lblEstadoOfertaSoli = new JLabel("N/A");
-      lblEstadoOfertaSoli.setBounds(98, 457, 188, 16);
+      lblEstadoOfertaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblEstadoOfertaSoli.setBounds(136, 750, 394, 26);
       panel_1.add(lblEstadoOfertaSoli);
 
       JLabel label_32 = new JLabel("Detalles de la oferta");
+      label_32.setFont(new Font("Tahoma", Font.PLAIN, 21));
       label_32.setForeground(new Color(139, 69, 19));
-      label_32.setBounds(508, 14, 122, 16);
+      label_32.setBounds(903, 11, 196, 26);
       panelSolicitar.add(label_32);
 
       JLabel lblNewLabel_26 = new JLabel("Ofertas de empleo");
+      lblNewLabel_26.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_26.setForeground(new Color(139, 69, 19));
-      lblNewLabel_26.setBounds(33, 11, 122, 16);
+      lblNewLabel_26.setBounds(33, 11, 205, 26);
       panelSolicitar.add(lblNewLabel_26);
 
       JPanel panel_2 = new JPanel();
       panel_2.setBorder(new LineBorder(new Color(139, 69, 19)));
       panel_2.setBackground(new Color(255, 255, 255));
       panel_2.setLayout(null);
-      panel_2.setBounds(826, 243, 196, 128);
+      panel_2.setBounds(1573, 406, 245, 103);
       panelSolicitar.add(panel_2);
 
       JButton btnSolicitar = new JButton("Solicitar");
+      btnSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
       btnSolicitar.setBackground(new Color(255, 255, 255));
       btnSolicitar.setForeground(new Color(139, 69, 19));
-      btnSolicitar.setBounds(8, 31, 180, 59);
+      btnSolicitar.setBounds(12, 22, 222, 59);
       panel_2.add(btnSolicitar);
 
       JPanel panelEmpresa = new JPanel();
@@ -371,7 +469,7 @@ public class Principal extends JFrame {
       panelEmpresa.setLayout(null);
 
       JPanel panelOfertaEmpresa = new JPanel();
-      panelOfertaEmpresa.setBounds(12, 41, 411, 536);
+      panelOfertaEmpresa.setBounds(92, 41, 736, 788);
       panelEmpresa.add(panelOfertaEmpresa);
       panelOfertaEmpresa.setLayout(
          new BoxLayout(panelOfertaEmpresa, BoxLayout.X_AXIS)
@@ -384,132 +482,159 @@ public class Principal extends JFrame {
       scrollOfertasEmpresa.setViewportView(ofertasEmpresaTbl);
 
       JLabel lblMisOfertas = new JLabel("Ofertas concurrentes");
+      lblMisOfertas.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblMisOfertas.setForeground(new Color(139, 69, 19));
       lblMisOfertas.setBackground(new Color(139, 69, 19));
-      lblMisOfertas.setBounds(293, 13, 130, 16);
+      lblMisOfertas.setBounds(632, 12, 196, 16);
       panelEmpresa.add(lblMisOfertas);
 
       JLabel lblNewLabel = new JLabel("Detalles de la oferta");
+      lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel.setForeground(new Color(139, 69, 19));
       lblNewLabel.setBackground(new Color(139, 69, 19));
-      lblNewLabel.setBounds(461, 41, 122, 16);
+      lblNewLabel.setBounds(947, 57, 228, 16);
       panelEmpresa.add(lblNewLabel);
 
       JPanel panelDatosOferta = new JPanel();
       panelDatosOferta.setBorder(new LineBorder(new Color(139, 69, 19)));
-      panelDatosOferta.setBounds(461, 70, 310, 507);
+      panelDatosOferta.setBounds(947, 86, 592, 743);
       panelEmpresa.add(panelDatosOferta);
       panelDatosOferta.setLayout(null);
 
       JLabel lblNewLabel_1 = new JLabel("Puesto: ");
-      lblNewLabel_1.setBounds(12, 27, 56, 16);
+      lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_1.setBounds(12, 47, 153, 16);
       panelDatosOferta.add(lblNewLabel_1);
 
       JLabel lblNewLabel_2 = new JLabel("Vacantes: ");
-      lblNewLabel_2.setBounds(12, 70, 68, 16);
+      lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_2.setBounds(12, 110, 153, 16);
       panelDatosOferta.add(lblNewLabel_2);
 
       JLabel lblNewLabel_3 = new JLabel("Sexo:");
-      lblNewLabel_3.setBounds(12, 156, 56, 16);
+      lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_3.setBounds(12, 236, 153, 16);
       panelDatosOferta.add(lblNewLabel_3);
 
       JLabel lblNewLabel_4 = new JLabel("Licencia: ");
-      lblNewLabel_4.setBounds(12, 113, 56, 16);
+      lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_4.setBounds(12, 173, 153, 16);
       panelDatosOferta.add(lblNewLabel_4);
 
       JLabel lblNewLabel_5 = new JLabel("Mudanza:");
-      lblNewLabel_5.setBounds(12, 199, 56, 16);
+      lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_5.setBounds(12, 299, 153, 16);
       panelDatosOferta.add(lblNewLabel_5);
 
       JLabel lblNewLabel_6 = new JLabel("Salario Min:");
-      lblNewLabel_6.setBounds(12, 242, 78, 16);
+      lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_6.setBounds(12, 362, 153, 16);
       panelDatosOferta.add(lblNewLabel_6);
 
       JLabel lblNewLabel_7 = new JLabel("Provincia:");
-      lblNewLabel_7.setBounds(12, 328, 68, 16);
+      lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_7.setBounds(12, 488, 153, 16);
       panelDatosOferta.add(lblNewLabel_7);
 
       JLabel lblNewLabel_8 = new JLabel("Salario Max:");
-      lblNewLabel_8.setBounds(12, 285, 78, 16);
+      lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_8.setBounds(12, 425, 153, 16);
       panelDatosOferta.add(lblNewLabel_8);
 
       JLabel lblNewLabel_9 = new JLabel("Experiencia:");
-      lblNewLabel_9.setBounds(12, 371, 112, 16);
+      lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_9.setBounds(12, 551, 153, 16);
       panelDatosOferta.add(lblNewLabel_9);
 
       JLabel lblNewLabel_10 = new JLabel("Estado:");
-      lblNewLabel_10.setBounds(12, 457, 56, 16);
+      lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_10.setBounds(12, 677, 153, 16);
       panelDatosOferta.add(lblNewLabel_10);
 
       JLabel lblNewLabel_11 = new JLabel("Descripcion:");
-      lblNewLabel_11.setBounds(12, 414, 88, 16);
+      lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_11.setBounds(12, 614, 153, 16);
       panelDatosOferta.add(lblNewLabel_11);
 
       JLabel lblNewLabel_12 = new JLabel("N/A");
-      lblNewLabel_12.setBounds(133, 27, 56, 16);
+      lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      lblNewLabel_12.setBounds(137, 42, 419, 26);
       panelDatosOferta.add(lblNewLabel_12);
 
       JLabel label = new JLabel("N/A");
-      label.setBounds(133, 70, 56, 16);
+      label.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label.setBounds(137, 105, 419, 26);
       panelDatosOferta.add(label);
 
       JLabel label_1 = new JLabel("N/A");
-      label_1.setBounds(133, 113, 56, 16);
+      label_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_1.setBounds(137, 168, 419, 26);
       panelDatosOferta.add(label_1);
 
       JLabel label_2 = new JLabel("N/A");
-      label_2.setBounds(133, 156, 56, 16);
+      label_2.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_2.setBounds(137, 231, 419, 26);
       panelDatosOferta.add(label_2);
 
       JLabel label_3 = new JLabel("N/A");
-      label_3.setBounds(133, 199, 56, 16);
+      label_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_3.setBounds(137, 294, 419, 26);
       panelDatosOferta.add(label_3);
 
       JLabel label_4 = new JLabel("N/A");
-      label_4.setBounds(133, 242, 56, 16);
+      label_4.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_4.setBounds(137, 357, 419, 26);
       panelDatosOferta.add(label_4);
 
       JLabel label_5 = new JLabel("N/A");
-      label_5.setBounds(133, 285, 56, 16);
+      label_5.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_5.setBounds(137, 420, 419, 26);
       panelDatosOferta.add(label_5);
 
       JLabel label_6 = new JLabel("N/A");
-      label_6.setBounds(133, 328, 56, 16);
+      label_6.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_6.setBounds(137, 483, 419, 26);
       panelDatosOferta.add(label_6);
 
       JLabel label_7 = new JLabel("N/A");
-      label_7.setBounds(136, 371, 56, 16);
+      label_7.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_7.setBounds(137, 546, 419, 26);
       panelDatosOferta.add(label_7);
 
       JLabel label_8 = new JLabel("N/A");
-      label_8.setBounds(133, 414, 56, 16);
+      label_8.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_8.setBounds(137, 609, 419, 26);
       panelDatosOferta.add(label_8);
 
       JLabel label_9 = new JLabel("N/A");
-      label_9.setBounds(133, 457, 56, 16);
+      label_9.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      label_9.setBounds(137, 672, 419, 26);
       panelDatosOferta.add(label_9);
 
       JPanel panelManejoOfertas = new JPanel();
       panelManejoOfertas.setBorder(new LineBorder(new Color(139, 69, 19)));
-      panelManejoOfertas.setBounds(799, 168, 223, 254);
+      panelManejoOfertas.setBounds(1587, 313, 291, 289);
       panelEmpresa.add(panelManejoOfertas);
       panelManejoOfertas.setLayout(null);
 
       JLabel lblNewLabel_13 = new JLabel("Manejo de Ofertas");
+      lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_13.setForeground(new Color(139, 69, 19));
-      lblNewLabel_13.setBounds(12, 13, 129, 16);
+      lblNewLabel_13.setBounds(12, 13, 172, 16);
       panelManejoOfertas.add(lblNewLabel_13);
 
       JButton agregarOfertaBtn = new JButton("Agregar ");
+      agregarOfertaBtn.setFont(new Font("Tahoma", Font.PLAIN, 21));
       agregarOfertaBtn.setForeground(new Color(139, 69, 19));
       agregarOfertaBtn.setBackground(new Color(255, 255, 255));
-      agregarOfertaBtn.setBounds(23, 62, 180, 59);
+      agregarOfertaBtn.setBounds(12, 85, 265, 59);
       panelManejoOfertas.add(agregarOfertaBtn);
 
       JButton btnHabilDeshabil = new JButton("Habilitar/Deshabilitar");
+      btnHabilDeshabil.setFont(new Font("Tahoma", Font.PLAIN, 21));
       btnHabilDeshabil.setBackground(new Color(255, 255, 255));
       btnHabilDeshabil.setForeground(new Color(139, 69, 19));
-      btnHabilDeshabil.setBounds(24, 141, 180, 59);
+      btnHabilDeshabil.setBounds(12, 157, 265, 59);
       panelManejoOfertas.add(btnHabilDeshabil);
 
       JPanel panelContratEmpresa = new JPanel();
@@ -519,7 +644,7 @@ public class Principal extends JFrame {
       panelContratEmpresa.setLayout(null);
 
       JPanel panel_3 = new JPanel();
-      panel_3.setBounds(12, 39, 372, 507);
+      panel_3.setBounds(29, 39, 513, 774);
       panelContratEmpresa.add(panel_3);
       panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
 
@@ -530,17 +655,19 @@ public class Principal extends JFrame {
       scrollOfertasContrat.setViewportView(ofertasContratTbl);
 
       JLabel lblNewLabel_14 = new JLabel("Ofertas concurrentes");
+      lblNewLabel_14.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_14.setForeground(new Color(139, 69, 19));
-      lblNewLabel_14.setBounds(253, 13, 130, 16);
+      lblNewLabel_14.setBounds(29, 13, 196, 26);
       panelContratEmpresa.add(lblNewLabel_14);
 
       JLabel lblNewLabel_15 = new JLabel("Solicitudes");
+      lblNewLabel_15.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_15.setForeground(new Color(139, 69, 19));
-      lblNewLabel_15.setBounds(457, 39, 67, 16);
+      lblNewLabel_15.setBounds(591, 39, 138, 16);
       panelContratEmpresa.add(lblNewLabel_15);
 
       JPanel panel_6 = new JPanel();
-      panel_6.setBounds(457, 68, 477, 222);
+      panel_6.setBounds(591, 68, 1281, 311);
       panelContratEmpresa.add(panel_6);
       panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.X_AXIS));
 
@@ -551,28 +678,36 @@ public class Principal extends JFrame {
       scrollSolicitudesContrat.setViewportView(solicitudesContratTbl);
 
       JLabel lblNewLabel_16 = new JLabel("Solicitudes con mayor coincidencia");
+      lblNewLabel_16.setFont(new Font("Tahoma", Font.PLAIN, 21));
       lblNewLabel_16.setForeground(new Color(139, 69, 19));
-      lblNewLabel_16.setBounds(457, 356, 220, 16);
+      lblNewLabel_16.setBounds(591, 466, 332, 26);
       panelContratEmpresa.add(lblNewLabel_16);
 
       JScrollPane scrollMayorCoin = new JScrollPane();
-      scrollMayorCoin.setBounds(457, 385, 477, 161);
+      scrollMayorCoin.setBounds(591, 495, 1281, 318);
       panelContratEmpresa.add(scrollMayorCoin);
 
       solitMayorCoinTbl = new JTable();
       scrollMayorCoin.setViewportView(solitMayorCoinTbl);
 
       JButton btnNewButton_1 = new JButton("Contratar");
+      btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
       btnNewButton_1.setForeground(new Color(139, 69, 19));
       btnNewButton_1.setBackground(new Color(255, 255, 255));
-      btnNewButton_1.setBounds(838, 559, 97, 25);
+      btnNewButton_1.setBounds(1734, 826, 138, 35);
       panelContratEmpresa.add(btnNewButton_1);
 
       JPanel panel_5 = new JPanel();
       panel_5.setBackground(new Color(205, 133, 63));
-      panel_5.setBounds(1, -11, 1036, 82);
+      panel_5.setBounds(1, -11, 1913, 82);
       contentPane.add(panel_5);
       panel_5.setLayout(null);
+      
+      JLabel lblNewLabel_27 = new JLabel("Bolsa de Empleo - Jobseeker");
+      lblNewLabel_27.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+      lblNewLabel_27.setForeground(new Color(255, 255, 240));
+      lblNewLabel_27.setBounds(37, 20, 689, 33);
+      panel_5.add(lblNewLabel_27);
 
       if (empresaActual != null) {
          tabbedPane.setEnabledAt(0, false);
@@ -671,6 +806,32 @@ public class Principal extends JFrame {
                      JOptionPane.WARNING_MESSAGE
                   );
                }
+            }
+         }
+      );
+
+      btnModificarDatos.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               if (personaActual == null) {
+                  return;
+               }
+
+               ModificarEmpleado dialogo = new ModificarEmpleado(
+                  controlador,
+                  personaActual
+               );
+               dialogo.setModal(true);
+               dialogo.setLocationRelativeTo(Principal.this);
+               dialogo.setVisible(true);
+
+               // Reflejar cualquier cambio en las etiquetas de "Mis datos".
+               lblNombreEmp.setText(personaActual.getNombre());
+               lblCedulaEmp.setText(personaActual.getCedula());
+               lblTelefonoEmp.setText(personaActual.getNumeroTelefono());
+               lblSexoEmp.setText(personaActual.getSexo());
+               lblCorreoEmp.setText(personaActual.getCorreo());
+               lblProvinciaEmp.setText(personaActual.getProvincia());
             }
          }
       );
@@ -897,9 +1058,6 @@ public class Principal extends JFrame {
                   });
                }
 
-               // Nota: idealmente esto se filtraria a las solicitudes relevantes para
-               // cada oferta. Por ahora se muestran todas las solicitudes activas del
-               // sistema, ya que el algoritmo de coincidencia aun no esta implementado.
                solicitudesParaContratar.addAll(
                   controlador.showListSolicitudes()
                );

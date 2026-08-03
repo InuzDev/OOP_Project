@@ -56,6 +56,109 @@ public class BolsaEmpleo implements IBolsaEmpleo {
       }
    }
 
+   // Deliberadamente NO forman parte de IBolsaEmpleo: solo Servidor tiene
+   // una referencia directa a BolsaEmpleo (no a la interfaz), asi que solo
+   // quien opera el servidor puede respaldar/restaurar. Ningun cliente
+   // remoto (BolsaEmpleoRemoto) puede alcanzar estos metodos, ya que ni
+   // siquiera existen en el contrato que los clientes conocen.
+
+   private static final String CARPETA_RESPALDOS = "Backups";
+
+   public synchronized boolean crearRespaldo() {
+      try {
+         String marcaTiempo = new java.text.SimpleDateFormat(
+            "yyyyMMdd_HHmmss"
+         ).format(new java.util.Date());
+
+         File carpetaDestino = new File(CARPETA_RESPALDOS, marcaTiempo);
+         carpetaDestino.mkdirs();
+
+         copiarArchivo(filePersonal, new File(carpetaDestino, "personal.dat"));
+         copiarArchivo(fileEmpresas, new File(carpetaDestino, "centros.dat"));
+         copiarArchivo(
+            fileSolicitudes,
+            new File(carpetaDestino, "solicitudes.dat")
+         );
+
+         System.out.println("Respaldo creado: " + carpetaDestino.getPath());
+         return true;
+      } catch (IOException e) {
+         System.out.println("No se pudo crear el respaldo: " + e.getMessage());
+         return false;
+      }
+   }
+
+   /** Lista los nombres de las carpetas de respaldo, la mas reciente primero. */
+   public java.util.List<String> listarRespaldos() {
+      File carpeta = new File(CARPETA_RESPALDOS);
+      java.util.List<String> nombres = new java.util.ArrayList<>();
+
+      File[] subcarpetas = carpeta.listFiles(File::isDirectory);
+      if (subcarpetas != null) {
+         for (File f : subcarpetas) {
+            nombres.add(f.getName());
+         }
+      }
+
+      java.util.Collections.sort(nombres, java.util.Collections.reverseOrder());
+      return nombres;
+   }
+
+   /**
+    * Restaura un respaldo por nombre de carpeta (ver listarRespaldos()):
+    * sobreescribe los .dat actuales con los del respaldo y recarga las
+    * listas en memoria para que el cambio se refleje de inmediato en el
+    * servidor en ejecucion, sin necesidad de reiniciarlo.
+    */
+   public synchronized boolean restaurar(String nombreRespaldo) {
+      File carpetaRespaldo = new File(CARPETA_RESPALDOS, nombreRespaldo);
+      if (!carpetaRespaldo.exists()) {
+         System.out.println("No existe el respaldo: " + nombreRespaldo);
+         return false;
+      }
+
+      try {
+         copiarArchivo(
+            new File(carpetaRespaldo, "personal.dat").getPath(),
+            new File(filePersonal)
+         );
+         copiarArchivo(
+            new File(carpetaRespaldo, "centros.dat").getPath(),
+            new File(fileEmpresas)
+         );
+         copiarArchivo(
+            new File(carpetaRespaldo, "solicitudes.dat").getPath(),
+            new File(fileSolicitudes)
+         );
+
+         // Recargar en memoria desde los archivos recien restaurados, para
+         // que el servidor ya en ejecucion refleje el cambio de inmediato.
+         listPersonal = loadList(filePersonal);
+         listEmpresas = loadList(fileEmpresas);
+         listSolicitudes = loadList(fileSolicitudes);
+
+         System.out.println("Respaldo restaurado: " + nombreRespaldo);
+         return true;
+      } catch (IOException e) {
+         System.out.println(
+            "No se pudo restaurar el respaldo: " + e.getMessage()
+         );
+         return false;
+      }
+   }
+
+   private void copiarArchivo(String origen, File destino) throws IOException {
+      File archivoOrigen = new File(origen);
+      if (!archivoOrigen.exists()) {
+         return; // nada que respaldar/restaurar todavia
+      }
+      java.nio.file.Files.copy(
+         archivoOrigen.toPath(),
+         destino.toPath(),
+         java.nio.file.StandardCopyOption.REPLACE_EXISTING
+      );
+   }
+
    public Object login(String username, String password) {
       for (Persona pers : listPersonal) {
          Usuario user = pers.getUsuarioEmpleado();
@@ -348,6 +451,38 @@ public class BolsaEmpleo implements IBolsaEmpleo {
 
       oferta.setActiva(!oferta.isActiva());
       saveList(listEmpresas, fileEmpresas);
+
+      return true;
+   }
+
+   public synchronized boolean actualizarPersonal(
+      int numIdentificador,
+      String nombre,
+      String cedula,
+      String sexo,
+      String numeroTelefono,
+      String correo,
+      String provincia,
+      int aniosExperiencia
+   ) {
+      // Igual que en contratar()/renunciar(): se busca el objeto real por
+      // su ID en vez de recibir la Persona ya modificada, ya que sobre
+      // sockets esa Persona seria una copia deserializada sin relacion de
+      // identidad con la almacenada en listPersonal.
+      Persona personaReal = searchPersonalById(numIdentificador);
+      if (personaReal == null) {
+         return false;
+      }
+
+      personaReal.setNombre(nombre);
+      personaReal.setCedula(cedula);
+      personaReal.setSexo(sexo);
+      personaReal.setNumeroTelefono(numeroTelefono);
+      personaReal.setCorreo(correo);
+      personaReal.setProvincia(provincia);
+      personaReal.setAniosExperiencia(aniosExperiencia);
+
+      saveList(listPersonal, filePersonal);
 
       return true;
    }

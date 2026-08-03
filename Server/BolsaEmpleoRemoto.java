@@ -241,4 +241,28 @@ public class BolsaEmpleoRemoto implements IBolsaEmpleo {
          oferta
       );
    }
+
+   @Override
+   public boolean actualizarPersonal(
+      int numIdentificador,
+      String nombre,
+      String cedula,
+      String sexo,
+      String numeroTelefono,
+      String correo,
+      String provincia,
+      int aniosExperiencia
+   ) {
+      return (Boolean) enviarPeticion(
+         Peticion.ACTUALIZAR_PERSONAL,
+         numIdentificador,
+         nombre,
+         cedula,
+         sexo,
+         numeroTelefono,
+         correo,
+         provincia,
+         aniosExperiencia
+      );
+   }
 }
