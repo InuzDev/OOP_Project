@@ -267,42 +267,42 @@ public class Principal extends JFrame {
 
       JLabel lblNombreEmp = new JLabel("N/A");
       lblNombreEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblNombreEmp.setBounds(176, 65, 363, 16);
+      lblNombreEmp.setBounds(176, 57, 363, 32);
       panel.add(lblNombreEmp);
 
       JLabel lblCedulaEmp = new JLabel("N/A");
       lblCedulaEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblCedulaEmp.setBounds(176, 146, 363, 16);
+      lblCedulaEmp.setBounds(176, 138, 363, 32);
       panel.add(lblCedulaEmp);
 
       JLabel lblTelefonoEmp = new JLabel("N/A");
       lblTelefonoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblTelefonoEmp.setBounds(176, 227, 363, 16);
+      lblTelefonoEmp.setBounds(176, 219, 363, 32);
       panel.add(lblTelefonoEmp);
 
       JLabel lblSexoEmp = new JLabel("N/A");
       lblSexoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblSexoEmp.setBounds(176, 308, 363, 16);
+      lblSexoEmp.setBounds(176, 300, 363, 32);
       panel.add(lblSexoEmp);
 
       JLabel lblCorreoEmp = new JLabel("N/A");
       lblCorreoEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblCorreoEmp.setBounds(176, 389, 363, 16);
+      lblCorreoEmp.setBounds(176, 381, 363, 32);
       panel.add(lblCorreoEmp);
 
       JLabel lblProvinciaEmp = new JLabel("N/A");
       lblProvinciaEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblProvinciaEmp.setBounds(176, 470, 363, 16);
+      lblProvinciaEmp.setBounds(176, 462, 363, 32);
       panel.add(lblProvinciaEmp);
 
       JLabel lblTipoEmpleado = new JLabel("N/A");
       lblTipoEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblTipoEmpleado.setBounds(176, 551, 363, 16);
+      lblTipoEmpleado.setBounds(176, 543, 363, 32);
       panel.add(lblTipoEmpleado);
 
       JLabel lblEstaEmpleado = new JLabel("N/A");
       lblEstaEmpleado.setFont(new Font("Tahoma", Font.PLAIN, 24));
-      lblEstaEmpleado.setBounds(176, 640, 237, 16);
+      lblEstaEmpleado.setBounds(176, 640, 237, 24);
       panel.add(lblEstaEmpleado);
 
       JPanel panelSolicitar = new JPanel();
@@ -381,57 +381,57 @@ public class Principal extends JFrame {
 
       JLabel lblPuestoSolicitar = new JLabel("N/A");
       lblPuestoSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblPuestoSolicitar.setBounds(140, 54, 390, 16);
+      lblPuestoSolicitar.setBounds(140, 49, 390, 26);
       panel_1.add(lblPuestoSolicitar);
 
       JLabel lblVacantesSolicitar = new JLabel("N/A");
       lblVacantesSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblVacantesSolicitar.setBounds(140, 124, 390, 16);
+      lblVacantesSolicitar.setBounds(140, 120, 390, 26);
       panel_1.add(lblVacantesSolicitar);
 
       JLabel lblLicenciaNecesitada = new JLabel("N/A");
       lblLicenciaNecesitada.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblLicenciaNecesitada.setBounds(140, 194, 390, 16);
+      lblLicenciaNecesitada.setBounds(140, 190, 390, 26);
       panel_1.add(lblLicenciaNecesitada);
 
       JLabel lblSexoSolicitar = new JLabel("N/A");
       lblSexoSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblSexoSolicitar.setBounds(140, 264, 390, 16);
+      lblSexoSolicitar.setBounds(140, 260, 390, 26);
       panel_1.add(lblSexoSolicitar);
 
       JLabel lblMudanzaSolicitar = new JLabel("N/A");
       lblMudanzaSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblMudanzaSolicitar.setBounds(140, 334, 390, 16);
+      lblMudanzaSolicitar.setBounds(140, 330, 390, 26);
       panel_1.add(lblMudanzaSolicitar);
 
       JLabel lblSalarioMinSolicitar = new JLabel("N/A");
       lblSalarioMinSolicitar.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblSalarioMinSolicitar.setBounds(140, 404, 390, 16);
+      lblSalarioMinSolicitar.setBounds(140, 400, 390, 26);
       panel_1.add(lblSalarioMinSolicitar);
 
       JLabel lblSalarioMaxSolic = new JLabel("N/A");
       lblSalarioMaxSolic.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblSalarioMaxSolic.setBounds(140, 474, 390, 16);
+      lblSalarioMaxSolic.setBounds(140, 470, 390, 26);
       panel_1.add(lblSalarioMaxSolic);
 
       JLabel lblProvinciaSoli = new JLabel("N/A");
       lblProvinciaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblProvinciaSoli.setBounds(139, 544, 391, 16);
+      lblProvinciaSoli.setBounds(139, 540, 391, 26);
       panel_1.add(lblProvinciaSoli);
 
       JLabel lblExperienciaSoli = new JLabel("N/A");
       lblExperienciaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblExperienciaSoli.setBounds(139, 614, 391, 16);
+      lblExperienciaSoli.setBounds(139, 610, 391, 26);
       panel_1.add(lblExperienciaSoli);
 
       JLabel lblDescripcionSoli = new JLabel("N/A");
       lblDescripcionSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblDescripcionSoli.setBounds(139, 684, 391, 16);
+      lblDescripcionSoli.setBounds(139, 680, 391, 26);
       panel_1.add(lblDescripcionSoli);
 
       JLabel lblEstadoOfertaSoli = new JLabel("N/A");
       lblEstadoOfertaSoli.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblEstadoOfertaSoli.setBounds(136, 754, 394, 16);
+      lblEstadoOfertaSoli.setBounds(136, 750, 394, 26);
       panel_1.add(lblEstadoOfertaSoli);
 
       JLabel label_32 = new JLabel("Detalles de la oferta");
@@ -558,57 +558,57 @@ public class Principal extends JFrame {
 
       JLabel lblNewLabel_12 = new JLabel("N/A");
       lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblNewLabel_12.setBounds(137, 47, 419, 16);
+      lblNewLabel_12.setBounds(137, 42, 419, 26);
       panelDatosOferta.add(lblNewLabel_12);
 
       JLabel label = new JLabel("N/A");
       label.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label.setBounds(137, 110, 419, 16);
+      label.setBounds(137, 105, 419, 26);
       panelDatosOferta.add(label);
 
       JLabel label_1 = new JLabel("N/A");
       label_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_1.setBounds(137, 173, 419, 16);
+      label_1.setBounds(137, 168, 419, 26);
       panelDatosOferta.add(label_1);
 
       JLabel label_2 = new JLabel("N/A");
       label_2.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_2.setBounds(137, 236, 419, 16);
+      label_2.setBounds(137, 231, 419, 26);
       panelDatosOferta.add(label_2);
 
       JLabel label_3 = new JLabel("N/A");
       label_3.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_3.setBounds(137, 299, 419, 16);
+      label_3.setBounds(137, 294, 419, 26);
       panelDatosOferta.add(label_3);
 
       JLabel label_4 = new JLabel("N/A");
       label_4.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_4.setBounds(137, 362, 419, 16);
+      label_4.setBounds(137, 357, 419, 26);
       panelDatosOferta.add(label_4);
 
       JLabel label_5 = new JLabel("N/A");
       label_5.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_5.setBounds(137, 425, 419, 16);
+      label_5.setBounds(137, 420, 419, 26);
       panelDatosOferta.add(label_5);
 
       JLabel label_6 = new JLabel("N/A");
       label_6.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_6.setBounds(137, 488, 419, 16);
+      label_6.setBounds(137, 483, 419, 26);
       panelDatosOferta.add(label_6);
 
       JLabel label_7 = new JLabel("N/A");
       label_7.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_7.setBounds(137, 551, 419, 16);
+      label_7.setBounds(137, 546, 419, 26);
       panelDatosOferta.add(label_7);
 
       JLabel label_8 = new JLabel("N/A");
       label_8.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_8.setBounds(137, 614, 419, 16);
+      label_8.setBounds(137, 609, 419, 26);
       panelDatosOferta.add(label_8);
 
       JLabel label_9 = new JLabel("N/A");
       label_9.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      label_9.setBounds(137, 677, 419, 16);
+      label_9.setBounds(137, 672, 419, 26);
       panelDatosOferta.add(label_9);
 
       JPanel panelManejoOfertas = new JPanel();
@@ -702,6 +702,12 @@ public class Principal extends JFrame {
       panel_5.setBounds(1, -11, 1913, 82);
       contentPane.add(panel_5);
       panel_5.setLayout(null);
+      
+      JLabel lblNewLabel_27 = new JLabel("Bolsa de Empleo - Jobseeker");
+      lblNewLabel_27.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 22));
+      lblNewLabel_27.setForeground(new Color(255, 255, 240));
+      lblNewLabel_27.setBounds(37, 20, 689, 33);
+      panel_5.add(lblNewLabel_27);
 
       if (empresaActual != null) {
          tabbedPane.setEnabledAt(0, false);
