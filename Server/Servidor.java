@@ -294,14 +294,24 @@ public class Servidor {
                      return Respuesta.ok(
                         controlador.buscarMejoresCandidatos((Oferta) p[0])
                      );
+                  case Peticion.ACTUALIZAR_PERSONAL:
+                     return Respuesta.ok(
+                        controlador.actualizarPersonal(
+                           (Integer) p[0],
+                           (String) p[1],
+                           (String) p[2],
+                           (String) p[3],
+                           (String) p[4],
+                           (String) p[5],
+                           (String) p[6],
+                           (Integer) p[7]
+                        )
+                     );
                   default:
                      return Respuesta.error("Accion desconocida: " + accion);
                }
             }
          } catch (Exception e) {
-            // Cualquier problema al despachar (parametro con el tipo equivocado,
-            // etc.) se devuelve como una Respuesta de error en vez de tumbar
-            // el hilo del cliente o el servidor completo.
             return Respuesta.error(
                "Error procesando '" + accion + "': " + e.getMessage()
             );

@@ -12,6 +12,7 @@ import Logic.Universitario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Font;
 
 public class Principal extends JFrame {
 
@@ -104,19 +104,47 @@ public class Principal extends JFrame {
 
       JMenuItem mntmNewMenuItem = new JMenuItem("Datos");
       mnNewMenu.add(mntmNewMenuItem);
-      
-      mntmNewMenuItem.addActionListener(new ActionListener() {
-    	    @Override
-    	    public void actionPerformed(ActionEvent e) {
 
-    	        DatosBolsa dialogo = new DatosBolsa(controlador);
-    	        dialogo.setModal(true);
-    	        dialogo.setLocationRelativeTo(Principal.this);
-    	        dialogo.setVisible(true);
+      mntmNewMenuItem.addActionListener(
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               DatosBolsa dialogo = new DatosBolsa(controlador);
+               dialogo.setModal(true);
+               dialogo.setLocationRelativeTo(Principal.this);
+               dialogo.setVisible(true);
+            }
+         }
+      );
 
-    	    }
-    	});
-      
+      JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
+      mnNewMenu.add(mntmCerrarSesion);
+
+      mntmCerrarSesion.addActionListener(
+         new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               int confirmacion = JOptionPane.showConfirmDialog(
+                  Principal.this,
+                  "¿Seguro que desea cerrar sesion?",
+                  "Cerrar Sesion",
+                  JOptionPane.YES_NO_OPTION
+               );
+
+               if (confirmacion != JOptionPane.YES_OPTION) {
+                  return;
+               }
+
+               // Se reutiliza el mismo controlador (la conexion al servidor, si
+               // es remoto, se mantiene abierta) - solo se vuelve a pedir login.
+               Login login = new Login(controlador);
+               login.setLocationRelativeTo(null);
+               login.setVisible(true);
+               dispose();
+            }
+         }
+      );
+
       contentPane = new JPanel();
       contentPane.setBorder(
          new TitledBorder(
@@ -194,6 +222,13 @@ public class Principal extends JFrame {
       );
       btnRenunciarEmpleo.setBounds(480, 634, 171, 38);
       panel.add(btnRenunciarEmpleo);
+
+      JButton btnModificarDatos = new JButton("Modificar Datos");
+      btnModificarDatos.setFont(new Font("Tahoma", Font.PLAIN, 21));
+      btnModificarDatos.setBackground(new Color(255, 255, 255));
+      btnModificarDatos.setForeground(new Color(139, 69, 19));
+      btnModificarDatos.setBounds(670, 634, 220, 38);
+      panel.add(btnModificarDatos);
 
       JLabel lblNewLabel_20 = new JLabel("Nombre:");
       lblNewLabel_20.setFont(new Font("Tahoma", Font.PLAIN, 21));
@@ -765,6 +800,32 @@ public class Principal extends JFrame {
                      JOptionPane.WARNING_MESSAGE
                   );
                }
+            }
+         }
+      );
+
+      btnModificarDatos.addActionListener(
+         new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               if (personaActual == null) {
+                  return;
+               }
+
+               ModificarEmpleado dialogo = new ModificarEmpleado(
+                  controlador,
+                  personaActual
+               );
+               dialogo.setModal(true);
+               dialogo.setLocationRelativeTo(Principal.this);
+               dialogo.setVisible(true);
+
+               // Reflejar cualquier cambio en las etiquetas de "Mis datos".
+               lblNombreEmp.setText(personaActual.getNombre());
+               lblCedulaEmp.setText(personaActual.getCedula());
+               lblTelefonoEmp.setText(personaActual.getNumeroTelefono());
+               lblSexoEmp.setText(personaActual.getSexo());
+               lblCorreoEmp.setText(personaActual.getCorreo());
+               lblProvinciaEmp.setText(personaActual.getProvincia());
             }
          }
       );

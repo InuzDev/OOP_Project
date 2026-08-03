@@ -455,6 +455,38 @@ public class BolsaEmpleo implements IBolsaEmpleo {
       return true;
    }
 
+   public synchronized boolean actualizarPersonal(
+      int numIdentificador,
+      String nombre,
+      String cedula,
+      String sexo,
+      String numeroTelefono,
+      String correo,
+      String provincia,
+      int aniosExperiencia
+   ) {
+      // Igual que en contratar()/renunciar(): se busca el objeto real por
+      // su ID en vez de recibir la Persona ya modificada, ya que sobre
+      // sockets esa Persona seria una copia deserializada sin relacion de
+      // identidad con la almacenada en listPersonal.
+      Persona personaReal = searchPersonalById(numIdentificador);
+      if (personaReal == null) {
+         return false;
+      }
+
+      personaReal.setNombre(nombre);
+      personaReal.setCedula(cedula);
+      personaReal.setSexo(sexo);
+      personaReal.setNumeroTelefono(numeroTelefono);
+      personaReal.setCorreo(correo);
+      personaReal.setProvincia(provincia);
+      personaReal.setAniosExperiencia(aniosExperiencia);
+
+      saveList(listPersonal, filePersonal);
+
+      return true;
+   }
+
    public double calcularCoincidencia(Oferta oferta, Solicitud solicitud) {
       double puntos = 0;
 
