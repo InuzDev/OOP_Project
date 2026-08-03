@@ -267,7 +267,7 @@ public class Principal extends JFrame {
 
       JLabel lblNombreEmp = new JLabel("N/A");
       lblNombreEmp.setFont(new Font("Tahoma", Font.PLAIN, 21));
-      lblNombreEmp.setBounds(176, 57, 363, 32);
+      lblNombreEmp.setBounds(176, 53, 363, 38);
       panel.add(lblNombreEmp);
 
       JLabel lblCedulaEmp = new JLabel("N/A");
