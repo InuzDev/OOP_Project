@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <projectDescription>
 	<name>OOP_Project</name>
-	<comment></comment>
+	<comment />
 	<projects>
 	</projects>
 	<buildSpec>
@@ -17,7 +17,7 @@
 	<filteredResources>
 		<filter>
 			<id>1784686497662</id>
-			<name></name>
+			<name />
 			<type>30</type>
 			<matcher>
 				<id>org.eclipse.core.resources.regexFilterMatcher</id>
