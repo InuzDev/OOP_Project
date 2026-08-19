@@ -59,6 +59,9 @@ public class AgregarOferta extends JDialog {
 
       setTitle("Ofertar");
       setBounds(100, 100, 530, 690);
+      
+      setLocationRelativeTo(null);
+      
       getContentPane().setLayout(new BorderLayout());
       contentPanel.setForeground(new Color(205, 133, 63));
       contentPanel.setBackground(new Color(255, 255, 240));

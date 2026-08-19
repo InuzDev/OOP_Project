@@ -51,6 +51,17 @@ public interface IBolsaEmpleo {
 
    boolean toggleOfertaActiva(String rncEmpresa, String codigoOferta);
 
+   boolean actualizarPersonal(
+      int numIdentificador,
+      String nombre,
+      String cedula,
+      String sexo,
+      String numeroTelefono,
+      String correo,
+      String provincia,
+      int aniosExperiencia
+   );
+
    double calcularCoincidencia(Oferta oferta, Solicitud solicitud);
 
    ArrayList<Solicitud> buscarMejoresCandidatos(Oferta oferta);

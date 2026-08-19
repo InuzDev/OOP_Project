@@ -18,10 +18,10 @@ public class Respuesta implements Serializable {
    }
 
    public static Respuesta error(String mensajeError) {
-      Respuesta r = new Respuesta();
-      r.exito = false;
-      r.mensajeError = mensajeError;
-      return r;
+      Respuesta resp = new Respuesta();
+      resp.exito = false;
+      resp.mensajeError = mensajeError;
+      return resp;
    }
 
    public boolean isExito() {

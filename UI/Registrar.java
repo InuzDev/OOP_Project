@@ -58,7 +58,7 @@ public class Registrar extends JDialog {
    private IBolsaEmpleo controlador;
 
    /**
-    * Launch the application (standalone testing only).
+    * Launch the application.
     */
    public static void main(String[] args) {
       try {
@@ -111,6 +111,7 @@ public class Registrar extends JDialog {
       panelUniversitario.add(carreraTxt);
 
       JPanel panelTecnico = new JPanel();
+      panelTecnico.setBackground(new Color(255, 255, 240));
       panelTecnico.setLayout(null);
       panelTecnico.setBorder(
          new TitledBorder(
@@ -135,6 +136,7 @@ public class Registrar extends JDialog {
       panelTecnico.add(tecnicoTxt);
 
       JPanel panelObrero = new JPanel();
+      panelObrero.setBackground(new Color(255, 255, 240));
       panelObrero.setLayout(null);
       panelObrero.setBorder(
          new TitledBorder(
@@ -551,7 +553,7 @@ public class Registrar extends JDialog {
 
                         JOptionPane.showMessageDialog(
                            Registrar.this,
-                           "Registro exitoso.",
+                           "Registro exitoso.\nSu usuario es: " + usuario.getUsername(),
                            "Registrar",
                            JOptionPane.INFORMATION_MESSAGE
                         );
@@ -646,5 +648,7 @@ public class Registrar extends JDialog {
       panelUniversitario.setVisible(true);
       panelTecnico.setVisible(false);
       panelObrero.setVisible(false);
+      setLocationRelativeTo(null);
+      
    }
 }
